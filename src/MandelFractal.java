@@ -8,15 +8,16 @@ import java.awt.image.BufferedImage;
 public class MandelFractal extends JPanel {
 
     protected BufferedImage canvas;
-    protected double xOffset;
-    protected double yOffset;
+    protected double xStart;
+    protected double yStart;
+    protected double xEnd;
+    protected double yEnd;
+    protected int iterations;
 
-    public MandelFractal(int xOffset, int yOffset, int x, int y){
-        this.xOffset = xOffset;
-        this.yOffset = yOffset;
-        setSize(x,y);
-        canvas = new BufferedImage(x,y,BufferedImage.TYPE_INT_ARGB);
-       generateMandlebrots();
+    public MandelFractal(double xStart, double yStart,double xEnd,double yEnd,int iterations  ){
+        setSize(600,480);
+        canvas = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
+        redrawFractal(xStart,yStart,xEnd,yEnd,iterations);
     }
 
 
@@ -26,20 +27,20 @@ public class MandelFractal extends JPanel {
         g2.drawImage(canvas, null, null);
     }
 
-    public void colourBackGround(Color c){
-        for (int x =0; x <canvas.getWidth(); x++){
-            for (int y = 0; y<canvas.getHeight();y++){
-                canvas.setRGB(x,y,c.getRGB());
-            }
-        }
-        repaint();
+    public void redrawFractal(double xStart, double yStart,double xEnd,double yEnd,int iterations ){
+        this.xStart=xStart;
+        this.yStart=yStart;
+        this.xEnd=xEnd;
+        this.yEnd=yEnd;
+        this.iterations=iterations;
+        generateMandlebrots();
     }
 
     public void generateMandlebrots(){
         for (int x = 0; x < canvas.getWidth(); x++){
             for (int y = 0; y < canvas.getHeight(); y++){
-                double realPart = (x+xOffset)/200.0;
-                double iPart = (y+yOffset)/200.0;
+                double realPart = xStart + (xEnd-xStart)*x/canvas.getWidth();
+                double iPart =yStart + (yEnd-yStart)*y/canvas.getHeight();
                 Complex iOfZero = new Complex(realPart,iPart);
                 Color pixelColour = colourPixel(iOfZero);
                 canvas.setRGB(x,y,pixelColour.getRGB());
@@ -50,11 +51,9 @@ public class MandelFractal extends JPanel {
 
     public Color colourPixel(Complex c) {
         Complex current = c;
-        int n = 100;
         int deviatesAt=0;
         boolean deviates = false;
-
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < iterations; i++) {
             double msquared = current.magnitudeSquared();
             if ((msquared > 4.0) && (!deviates)) {
                 deviatesAt = i;
@@ -64,9 +63,8 @@ public class MandelFractal extends JPanel {
         }
         Color returnColour;
         if (deviates){
-            int colorNo = deviatesAt*25/10;
-            int colourNo = deviatesAt*50/20;
-            returnColour = new Color(255-colorNo,0,255-colorNo);
+            int colourNo = deviatesAt*255/iterations;
+            returnColour = new Color(0,0,255-colourNo);
         }
         else{
             returnColour = Color.black;
