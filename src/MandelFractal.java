@@ -8,8 +8,8 @@ import java.awt.image.BufferedImage;
 public class MandelFractal extends JPanel {
 
     protected BufferedImage canvas;
-    protected int xOffset;
-    protected int yOffset;
+    protected double xOffset;
+    protected double yOffset;
 
     public MandelFractal(int xOffset, int yOffset, int x, int y){
         this.xOffset = xOffset;
@@ -38,7 +38,10 @@ public class MandelFractal extends JPanel {
     public void generateMandlebrots(){
         for (int x = 0; x < canvas.getWidth(); x++){
             for (int y = 0; y < canvas.getHeight(); y++){
-                Color pixelColour = colourPixel(new Complex(x+xOffset,y+yOffset));
+                double realPart = (x+xOffset)/200.0;
+                double iPart = (y+yOffset)/200.0;
+                Complex iOfZero = new Complex(realPart,iPart);
+                Color pixelColour = colourPixel(iOfZero);
                 canvas.setRGB(x,y,pixelColour.getRGB());
             }
         }
@@ -47,15 +50,27 @@ public class MandelFractal extends JPanel {
 
     public Color colourPixel(Complex c) {
         Complex current = c;
-        int n = 255;
-        int deviatesAt = n;
+        int n = 100;
+        int deviatesAt=0;
+        boolean deviates = false;
+
         for (int i = 0; i < n; i++) {
-            if ((current.getMagnitude() < 2) && (deviatesAt == n)) {
+            double msquared = current.magnitudeSquared();
+            if ((msquared > 4.0) && (!deviates)) {
                 deviatesAt = i;
+                deviates = true;
             }
             current = current.getSquare().add(c);
         }
-        Color returnColour = new Color(deviatesAt, 255, 255);
+        Color returnColour;
+        if (deviates){
+            int colorNo = deviatesAt*25/10;
+            int colourNo = deviatesAt*50/20;
+            returnColour = new Color(255-colorNo,0,255-colorNo);
+        }
+        else{
+            returnColour = Color.black;
+        }
         return returnColour;
     }
 }

@@ -12,8 +12,8 @@ public class MandelbrotViewer extends JFrame {
 
     public  MandelbrotViewer(String t){
         super(t);
-        setSize(500,600);
-        mandelbrotsPanel= new MandelFractal(0,0,500,500);
+        setSize(800,700);
+        mandelbrotsPanel= new MandelFractal(-400,-320,800,640);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Container pane = this.getContentPane();
         pane.add(mandelbrotsPanel);

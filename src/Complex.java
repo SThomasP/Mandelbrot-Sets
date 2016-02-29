@@ -13,17 +13,13 @@ public class Complex {
         this.realPart = realPart;
     }
 
-    public Double getReal(){
+    public double getReal(){
         return realPart;
     }
-    public Double getImaginary(){
+    public double getImaginary(){
         return imaginaryPart;
     }
 
-    public Double getMagnitude(){
-        double maggy = Math.sqrt(Math.pow(realPart,2) + Math.pow(imaginaryPart,2));
-        return maggy;
-    }
 
     public Complex getSquare(){
         double squaredReal = realPart*realPart - imaginaryPart*imaginaryPart;
@@ -31,8 +27,8 @@ public class Complex {
         return new Complex(squaredReal,squaredImaginary);
     }
 
-    public Double magnitudeSquared(){
-        return Math.pow(getMagnitude(), 2);
+    public double magnitudeSquared(){
+        return realPart*realPart +imaginaryPart*imaginaryPart;
     }
 
     public Complex add(Complex d){
