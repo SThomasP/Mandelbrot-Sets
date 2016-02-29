@@ -13,6 +13,8 @@ public class MandelFractal extends JPanel {
     protected double xEnd;
     protected double yEnd;
     protected int iterations;
+    protected int juliaX;
+    protected int juliaY;
 
     public MandelFractal(double xStart, double yStart,double xEnd,double yEnd,int iterations  ){
         setSize(600,480);
@@ -34,6 +36,37 @@ public class MandelFractal extends JPanel {
         this.yEnd=yEnd;
         this.iterations=iterations;
         generateMandlebrots();
+    }
+
+    public void redrawLines(int x, int y){
+
+    }
+
+    public void removeLines(){
+        for (int x = 0; x < canvas.getWidth();x++){
+            double realPart = xStart + (xEnd-xStart)*x/canvas.getWidth();
+            double iPart = yStart + (yEnd-yStart)*juliaY/canvas.getHeight();
+            Complex iOfZero = new Complex(realPart,iPart);
+            Color pixelColour = colourPixel(iOfZero);
+            canvas.setRGB(x,juliaY,pixelColour.getRGB());
+        }
+        for (int y = 0; y < canvas.getWidth();y++){
+            double realPart = xStart + (xEnd-xStart)*juliaX/canvas.getWidth();
+            double iPart = yStart + (yEnd-yStart)*y/canvas.getHeight();
+            Complex iOfZero = new Complex(realPart,iPart);
+            Color pixelColour = colourPixel(iOfZero);
+            canvas.setRGB(juliaX,y,pixelColour.getRGB());
+        }
+        repaint();
+    }
+
+    public void addLines(){
+        for (int x = 0; x < canvas.getWidth();x++){
+            canvas.setRGB(x,juliaY,Color.white.getRGB());
+        }
+        for (int y = 0; y < canvas.getWidth();y++){
+            canvas.setRGB(juliaX,y,Color.white.getRGB());
+        }
     }
 
     public void generateMandlebrots(){
@@ -64,7 +97,7 @@ public class MandelFractal extends JPanel {
         Color returnColour;
         if (deviates){
             int colourNo = deviatesAt*255/iterations;
-            returnColour = new Color(0,0,255-colourNo);
+            returnColour = new Color(255-colourNo,0,255-colourNo);
         }
         else{
             returnColour = Color.black;

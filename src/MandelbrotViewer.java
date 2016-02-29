@@ -26,7 +26,7 @@ public class MandelbrotViewer extends JFrame {
         redrawButton = new JButton("Redraw");
         xRange = new JLabel("X Range");
         yRange = new JLabel("Y Range");
-        iterationsLabel = new JLabel("Iterations count");
+        iterationsLabel = new JLabel("Iterations");
         xMin = new JTextField("-2");
         xMax = new JTextField("2");
         yMin = new JTextField("-1.6");
@@ -34,6 +34,11 @@ public class MandelbrotViewer extends JFrame {
         iterationsField = new JTextField("255");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Container pane = this.getContentPane();
+        pane.add(mandelbrotsPanel);
+        pane.add(redrawButton);
+        redrawButton.setLocation(475,510);
+        redrawButton.setSize(100,25);
+        redrawButton.addActionListener(new RedrawButtonAction(xMin,xMax,yMin,yMax,iterationsField,mandelbrotsPanel));
         pane.add(xMax);
         xMax.setLocation(60,530);
         xMax.setSize(50,25);
@@ -49,22 +54,22 @@ public class MandelbrotViewer extends JFrame {
         pane.add(xRange);
         xRange.setLocation(10,510);
         xRange.setSize(50,25);
+        pane.add(iterationsLabel);
+        iterationsLabel.setLocation(230,510);
+        iterationsLabel.setSize(100,25);
+        pane.add(iterationsField);
+        iterationsField.setLocation(290,510);
+        iterationsField.setSize(50,25);
         pane.add(yRange);
         yRange.setLocation(120,510);
         yRange.setSize(50,25);
-        pane.add(iterationsField);
-        pane.add(iterationsLabel);
-        pane.add(redrawButton);
-        redrawButton.addActionListener(new RedrawButtonAction(xMin,xMax,yMin,yMax,iterationsField,mandelbrotsPanel));
-        redrawButton.setLocation(475,510);
-        redrawButton.setSize(100,25);
-        pane.add(mandelbrotsPanel);
+        pane.setLayout(new BorderLayout());
         setResizable(false);
-        setVisible(true);
     }
 
     public static void main(String[] args){
 
         MandelbrotViewer mBV = new MandelbrotViewer("Mandelbrot Set");
+        mBV.setVisible(true);
     }
 }
