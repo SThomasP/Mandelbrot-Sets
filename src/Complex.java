@@ -20,6 +20,15 @@ public class Complex {
         return imaginaryPart;
     }
 
+    public String getStringValue(){
+        if(imaginaryPart<0){
+            return (realPart+" - "+Math.abs(imaginaryPart));
+        }
+        else{
+            return (realPart+" + "+Math.abs(imaginaryPart));
+        }
+    }
+
 
     public Complex getSquare(){
         double squaredReal = realPart*realPart - imaginaryPart*imaginaryPart;
