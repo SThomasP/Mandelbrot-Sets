@@ -22,10 +22,10 @@ public class Complex {
 
     public String getStringValue(){
         if(imaginaryPart<0){
-            return (realPart+" - "+Math.abs(imaginaryPart));
+            return (realPart+" - "+Math.abs(imaginaryPart)+"i");
         }
         else{
-            return (realPart+" + "+Math.abs(imaginaryPart));
+            return (realPart+" + "+Math.abs(imaginaryPart)+"i");
         }
     }
 
