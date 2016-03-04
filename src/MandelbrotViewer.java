@@ -9,6 +9,7 @@ public class MandelbrotViewer extends JFrame {
     protected MandelFractal mandelbrotFractal;
     protected JuliaFractal juliaFractal;
     protected JPanel buttonsPanel;
+    protected FavouritesPanel favouritesPanel;
 
 
     //setup the buttonsPanel,keep things neat and tidy
@@ -77,13 +78,15 @@ public class MandelbrotViewer extends JFrame {
         setSize(1000,600);
         mandelbrotFractal= new MandelFractal(-2,-1.6,2,1.6,255);
         juliaFractal = new JuliaFractal(-2,-1.6,2,1.6,255,new Complex(0,0));
-        mandelbrotFractal.addMouseListener(new MandelClickListener(juliaFractal,mandelbrotFractal));
+        favouritesPanel = new FavouritesPanel(juliaFractal);
+        mandelbrotFractal.addMouseListener(new MandelClickListener(juliaFractal,mandelbrotFractal,favouritesPanel));
         setupButtons();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Container pane = this.getContentPane();
         pane.add(mandelbrotFractal);
         pane.add(buttonsPanel);
         pane.add(juliaFractal);
+        pane.add(favouritesPanel);
         buttonsPanel.setLocation(0,480);
         pane.setLayout(new BorderLayout());
         setResizable(false);
