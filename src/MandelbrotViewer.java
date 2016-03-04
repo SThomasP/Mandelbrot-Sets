@@ -11,14 +11,13 @@ import java.awt.event.ActionListener;
  */
 public class MandelbrotViewer extends JFrame {
 
-    protected MandelFractal mandelbrotsPanel;
+    protected MandelFractal mandelbrotFractal;
     protected JuliaFractal juliaFractal;
     protected JPanel buttonsPanel;
 
 
     //setup the buttonsPanel,keep things neat and tidy
    protected void setupButtons(){
-       //TODO: Make the buttons panel, with everything in it, its own class
        buttonsPanel = new JPanel();
        buttonsPanel.setBorder(BorderFactory.createLineBorder(Color.black));
        buttonsPanel.setLocation(0,480);
@@ -27,8 +26,8 @@ public class MandelbrotViewer extends JFrame {
        JLabel xRange = new JLabel("X Range");
        JLabel yRange = new JLabel("Y Range");
        JLabel iterationsLabel = new JLabel("Iterations");
-       JTextField xMin = new JTextField("-2");
-       JTextField xMax = new JTextField("2");
+       JTextField xMin = new JTextField("-2.0");
+       JTextField xMax = new JTextField("2.0");
        JTextField yMin = new JTextField("-1.6");
        JTextField yMax = new JTextField("1.6");
        ButtonGroup bGroup = new ButtonGroup();
@@ -41,10 +40,17 @@ public class MandelbrotViewer extends JFrame {
        buttonsPanel.add(redrawButton);
        redrawButton.setLocation(475,30);
        redrawButton.setSize(100,25);
-       RedrawButtonAction redrawAction = new RedrawButtonAction(xMin,xMax,yMin,yMax,iterationsField,mandelbrotsPanel);
-       mButton.addItemListener(new FractalSelector(mandelbrotsPanel,redrawAction));
+       RedrawButtonAction redrawAction = new RedrawButtonAction(xMin,xMax,yMin,yMax,iterationsField,mandelbrotFractal);
+       mButton.addItemListener(new FractalSelector(mandelbrotFractal,redrawAction,xMin,xMax,yMin,yMax,iterationsField));
+       jButton.addItemListener(new FractalSelector(juliaFractal,redrawAction,xMin,xMax,yMin,yMax,iterationsField));
        redrawButton.addActionListener(redrawAction);
        buttonsPanel.add(xMax);
+       buttonsPanel.add(jButton);
+       jButton.setLocation(350, 50);
+       jButton.setSize(100,25);
+       buttonsPanel.add(mButton);
+       mButton.setLocation(350,20);
+       mButton.setSize(120,25);
        xMax.setLocation(60,50);
        xMax.setSize(50,25);
        buttonsPanel.add(xMin);
@@ -74,13 +80,13 @@ public class MandelbrotViewer extends JFrame {
     public  MandelbrotViewer(String t){
         super(t);
         setSize(1000,600);
-        mandelbrotsPanel= new MandelFractal(-2,-1.6,2,1.6,255);
+        mandelbrotFractal= new MandelFractal(-2,-1.6,2,1.6,255);
         juliaFractal = new JuliaFractal(-2,-1.6,2,1.6,255,new Complex(0,0));
-        mandelbrotsPanel.addMouseListener(new MandelClickListener(juliaFractal,mandelbrotsPanel));
+        mandelbrotFractal.addMouseListener(new MandelClickListener(juliaFractal,mandelbrotFractal));
         setupButtons();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Container pane = this.getContentPane();
-        pane.add(mandelbrotsPanel);
+        pane.add(mandelbrotFractal);
         pane.add(buttonsPanel);
         pane.add(juliaFractal);
         buttonsPanel.setLocation(0,480);

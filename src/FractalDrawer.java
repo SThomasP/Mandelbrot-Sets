@@ -61,7 +61,7 @@ public abstract class FractalDrawer extends JPanel {
         Color returnColour;
         if (deviates){
             int colourNo = deviatesAt*255/iterations;
-            returnColour = new Color(255-colourNo,0,255-colourNo);
+            returnColour = new Color(0,colourNo,100);
         }
         else{
             returnColour = Color.black;
