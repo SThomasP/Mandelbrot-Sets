@@ -12,7 +12,7 @@ public class RedrawButtonAction implements ActionListener {
     protected JTextField yMin;
     protected JTextField yMax;
     protected JTextField iterations;
-    protected MandelFractal mandelFractal;
+    protected FractalDrawer mandelFractal;
 
     public void actionPerformed(ActionEvent e) {
         Double x0 = new Double(xMin.getText());
@@ -23,6 +23,9 @@ public class RedrawButtonAction implements ActionListener {
         mandelFractal.redrawFractal(x0,y0,x1,y1,iterationCount);
     }
 
+    public void changeFractal(FractalDrawer f){
+        mandelFractal = f;
+    }
 
     public RedrawButtonAction(JTextField xMin, JTextField xMax, JTextField yMin, JTextField yMax, JTextField iterations, MandelFractal mandelFractal){
         this.xMax=xMax;

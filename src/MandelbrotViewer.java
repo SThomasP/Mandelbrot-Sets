@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 /**
  * Created by Steffan on 28/02/2016.
@@ -12,16 +13,7 @@ public class MandelbrotViewer extends JFrame {
 
     protected MandelFractal mandelbrotsPanel;
     protected JuliaFractal juliaFractal;
-    protected JButton redrawButton;
-    protected JLabel xRange;
-    protected JLabel yRange;
     protected JPanel buttonsPanel;
-    protected JLabel iterationsLabel;
-    protected JTextField xMin;
-    protected JTextField xMax;
-    protected JTextField yMin;
-    protected JTextField yMax;
-    protected JTextField iterationsField;
 
 
     //setup the buttonsPanel,keep things neat and tidy
@@ -31,20 +23,27 @@ public class MandelbrotViewer extends JFrame {
        buttonsPanel.setBorder(BorderFactory.createLineBorder(Color.black));
        buttonsPanel.setLocation(0,480);
        buttonsPanel.setSize(600,120);
-       redrawButton = new JButton("Redraw");
-       xRange = new JLabel("X Range");
-       yRange = new JLabel("Y Range");
-       iterationsLabel = new JLabel("Iterations");
-       xMin = new JTextField("-2");
-       xMax = new JTextField("2");
-       yMin = new JTextField("-1.6");
-       yMax = new JTextField("1.6");
-       iterationsField = new JTextField("255");
+       JButton  redrawButton = new JButton("Redraw");
+       JLabel xRange = new JLabel("X Range");
+       JLabel yRange = new JLabel("Y Range");
+       JLabel iterationsLabel = new JLabel("Iterations");
+       JTextField xMin = new JTextField("-2");
+       JTextField xMax = new JTextField("2");
+       JTextField yMin = new JTextField("-1.6");
+       JTextField yMax = new JTextField("1.6");
+       ButtonGroup bGroup = new ButtonGroup();
+       JRadioButton mButton = new JRadioButton("Mandelbrot Set");
+       mButton.setSelected(true);
+       JRadioButton jButton = new JRadioButton("Julia Set");
+       bGroup.add(jButton);
+       bGroup.add(mButton);
+       JTextField iterationsField = new JTextField("255");
        buttonsPanel.add(redrawButton);
        redrawButton.setLocation(475,30);
        redrawButton.setSize(100,25);
-       //TODO: Mandelbrot and Julia Set Selector via Radio Buttons changing the selected Fractal
-       redrawButton.addActionListener(new RedrawButtonAction(xMin,xMax,yMin,yMax,iterationsField,mandelbrotsPanel));
+       RedrawButtonAction redrawAction = new RedrawButtonAction(xMin,xMax,yMin,yMax,iterationsField,mandelbrotsPanel);
+       mButton.addItemListener(new FractalSelector(mandelbrotsPanel,redrawAction));
+       redrawButton.addActionListener(redrawAction);
        buttonsPanel.add(xMax);
        xMax.setLocation(60,50);
        xMax.setSize(50,25);
@@ -77,7 +76,7 @@ public class MandelbrotViewer extends JFrame {
         setSize(1000,600);
         mandelbrotsPanel= new MandelFractal(-2,-1.6,2,1.6,255);
         juliaFractal = new JuliaFractal(-2,-1.6,2,1.6,255,new Complex(0,0));
-        mandelbrotsPanel.addMouseListener(new MandelClickListner(juliaFractal,mandelbrotsPanel));
+        mandelbrotsPanel.addMouseListener(new MandelClickListener(juliaFractal,mandelbrotsPanel));
         setupButtons();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Container pane = this.getContentPane();

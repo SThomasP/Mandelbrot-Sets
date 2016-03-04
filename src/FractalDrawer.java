@@ -34,6 +34,10 @@ public abstract class FractalDrawer extends JPanel {
         return yEnd;
     }
 
+    public int getIterations(){
+        return iterations;
+    }
+
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;

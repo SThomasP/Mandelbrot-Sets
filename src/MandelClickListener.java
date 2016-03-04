@@ -5,12 +5,12 @@ import java.awt.event.MouseListener;
 /**
  * Created by Steffan on 29/02/2016.
  */
-public class MandelClickListner extends MouseAdapter {
+public class MandelClickListener extends MouseAdapter {
 
     private JuliaFractal jF;
     private MandelFractal mF;
 
-    public MandelClickListner(JuliaFractal jF, MandelFractal mF){
+    public MandelClickListener(JuliaFractal jF, MandelFractal mF){
         this.jF=jF;
         this.mF=mF;
     }
