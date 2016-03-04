@@ -1,10 +1,5 @@
-import com.sun.glass.ui.Screen;
-
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.EtchedBorder;
 import java.awt.*;
-import java.awt.event.ActionListener;
 
 /**
  * Created by Steffan on 28/02/2016.
