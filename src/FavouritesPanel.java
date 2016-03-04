@@ -21,6 +21,7 @@ public class FavouritesPanel extends JPanel {
         setSize(300,280);
         setLocation(600,320);
         setBorder(BorderFactory.createLineBorder(Color.black));
+        setLayout(new BorderLayout());
         addButton = new JButton("+");
         removeButton = new JButton("-");
         Font buttonFont = new Font("Arial",Font.BOLD,18);
@@ -49,6 +50,9 @@ public class FavouritesPanel extends JPanel {
         addButton.addActionListener(addListener);
         removeButton.addActionListener(removeListener);
         currentComplex = new JLabel();
+        currentComplex.setSize(getWidth(),50);
+        currentComplex.setVerticalAlignment(SwingConstants.CENTER);
+        currentComplex.setHorizontalAlignment(SwingConstants.CENTER);
         favouritedNumbers = new JList<>(listModel);
         favouritedNumbers.setCellRenderer(new ComplexCellRenderer());
         favouritedNumbers.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

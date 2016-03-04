@@ -38,6 +38,7 @@ public class JuliaFractal extends FractalDrawer {
     }
 
     public void generateJulias(){
+        //TODO: thread this method to make it run quicker for larger monitors
         for (int x = 0; x < canvas.getWidth(); x++){
             double realPart = xStart + (xEnd-xStart)*x/canvas.getWidth();
             for (int y = 0; y < canvas.getHeight(); y++){

@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
 /**
  * Created by Steffan on 28/02/2016.
@@ -13,6 +15,7 @@ public class MandelbrotViewer extends JFrame {
 
 
     //setup the buttonsPanel,keep things neat and tidy
+    //TODO: Move the buttonsPanel to its own class
    protected void setupButtons(){
        buttonsPanel = new JPanel();
        buttonsPanel.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -76,6 +79,36 @@ public class MandelbrotViewer extends JFrame {
     public  MandelbrotViewer(String t){
         super(t);
         setSize(1000,600);
+        addComponentListener(new ComponentListener() {
+            @Override
+            public void componentResized(ComponentEvent componentEvent) {
+                //TODO: add resize method sorting out the layouts of the favouritesPanel and buttonsPanel
+                mandelbrotFractal.setSize((int)Math.round(getWidth()*0.6),(int) Math.round(getWidth()*0.6/1.25));
+                juliaFractal.setSize((int) Math.round(getWidth()*0.4),(int) Math.round(getWidth()*0.4/1.25));
+                juliaFractal.setLocation(mandelbrotFractal.getWidth(),0);
+                mandelbrotFractal.generateMandlebrots();
+                juliaFractal.generateJulias();
+                buttonsPanel.setLocation(0, mandelbrotFractal.getHeight());
+                buttonsPanel.setSize(mandelbrotFractal.getWidth(),getHeight()- mandelbrotFractal.getHeight());
+                favouritesPanel.setLocation(mandelbrotFractal.getWidth(),juliaFractal.getHeight());
+                favouritesPanel.setSize((int) Math.round(juliaFractal.getWidth()*0.75), getHeight()-juliaFractal.getHeight());
+            }
+
+            @Override
+            public void componentMoved(ComponentEvent componentEvent) {
+
+            }
+
+            @Override
+            public void componentShown(ComponentEvent componentEvent) {
+
+            }
+
+            @Override
+            public void componentHidden(ComponentEvent componentEvent) {
+
+            }
+        });
         mandelbrotFractal= new MandelFractal(-2,-1.6,2,1.6,255);
         juliaFractal = new JuliaFractal(-2,-1.6,2,1.6,255,new Complex(0,0));
         favouritesPanel = new FavouritesPanel(juliaFractal);
@@ -89,12 +122,18 @@ public class MandelbrotViewer extends JFrame {
         pane.add(favouritesPanel);
         buttonsPanel.setLocation(0,480);
         pane.setLayout(new BorderLayout());
-        setResizable(false);
+        setResizable(true);
     }
 
     public static void main(String[] args){
 
-        MandelbrotViewer mBV = new MandelbrotViewer("Mandelbrot Set Stuff");
+        MandelbrotViewer mBV = new MandelbrotViewer("Mandelbrot Explorer");
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
         mBV.setVisible(true);
     }
 }

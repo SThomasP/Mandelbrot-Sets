@@ -11,7 +11,6 @@ public class ComplexCellRenderer extends JLabel implements ListCellRenderer<Comp
         setHorizontalAlignment(CENTER);
         setVerticalAlignment(CENTER);
     }
-//TODO Fix CellRender so cells appear selected when selected, somthing to do
     public Component getListCellRendererComponent(JList<? extends Complex> jList, Complex complex, int index, boolean isSelected, boolean hasFocus) {
 
         if (isSelected) {

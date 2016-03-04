@@ -45,6 +45,11 @@ public abstract class FractalDrawer extends JPanel {
         g2.drawImage(canvas, null, null);
     }
 
+    public void setSize(int width, int height){
+        super.setSize(width,height);
+        canvas= new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
+    }
+
     public abstract void redrawFractal(double xStart, double yStart,double xEnd,double yEnd,int iterations );
 
     public Color colourPixel(Complex zOfZero, Complex constant) {
