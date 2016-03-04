@@ -28,6 +28,15 @@ public class JuliaFractal extends FractalDrawer {
         generateJulias();
     }
 
+    public void changeConstant(Complex baseNo){
+        this.baseNo = baseNo;
+        generateJulias();
+    }
+
+    public Complex getConstant(){
+        return baseNo;
+    }
+
     public void generateJulias(){
         for (int x = 0; x < canvas.getWidth(); x++){
             double realPart = xStart + (xEnd-xStart)*x/canvas.getWidth();

@@ -7,9 +7,6 @@ import java.awt.image.BufferedImage;
  */
 public class MandelFractal extends FractalDrawer {
 
-    protected int juliaX;
-    protected int juliaY;
-
 
     public MandelFractal(double xStart, double yStart,double xEnd,double yEnd,int iterations  ){
         setSize(600,480);

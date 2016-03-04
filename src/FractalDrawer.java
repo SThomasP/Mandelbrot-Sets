@@ -18,9 +18,26 @@ public abstract class FractalDrawer extends JPanel {
         setBorder(BorderFactory.createLineBorder(Color.black));
     }
 
+    public double getxStart() {
+        return xStart;
+    }
+
+    public double getyStart() {
+        return yStart;
+    }
+
+    public double getxEnd() {
+        return xEnd;
+    }
+
+    public double getyEnd() {
+        return yEnd;
+    }
+
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+
         g2.drawImage(canvas, null, null);
     }
 

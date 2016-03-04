@@ -26,6 +26,7 @@ public class MandelbrotViewer extends JFrame {
 
     //setup the buttonsPanel,keep things neat and tidy
    protected void setupButtons(){
+       //TODO: Make the buttons panel, with everything in it, its own class
        buttonsPanel = new JPanel();
        buttonsPanel.setBorder(BorderFactory.createLineBorder(Color.black));
        buttonsPanel.setLocation(0,480);
@@ -42,6 +43,7 @@ public class MandelbrotViewer extends JFrame {
        buttonsPanel.add(redrawButton);
        redrawButton.setLocation(475,30);
        redrawButton.setSize(100,25);
+       //TODO: Mandelbrot and Julia Set Selector via Radio Buttons changing the selected Fractal
        redrawButton.addActionListener(new RedrawButtonAction(xMin,xMax,yMin,yMax,iterationsField,mandelbrotsPanel));
        buttonsPanel.add(xMax);
        xMax.setLocation(60,50);
@@ -75,6 +77,7 @@ public class MandelbrotViewer extends JFrame {
         setSize(1000,600);
         mandelbrotsPanel= new MandelFractal(-2,-1.6,2,1.6,255);
         juliaFractal = new JuliaFractal(-2,-1.6,2,1.6,255,new Complex(0,0));
+        mandelbrotsPanel.addMouseListener(new MandelClickListner(juliaFractal,mandelbrotsPanel));
         setupButtons();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Container pane = this.getContentPane();
@@ -88,7 +91,7 @@ public class MandelbrotViewer extends JFrame {
 
     public static void main(String[] args){
 
-        MandelbrotViewer mBV = new MandelbrotViewer("Mandelbrot Set");
+        MandelbrotViewer mBV = new MandelbrotViewer("Mandelbrot Set Stuff");
         mBV.setVisible(true);
     }
 }
