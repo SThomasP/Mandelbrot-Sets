@@ -19,6 +19,10 @@ public class FractalSelector implements ItemListener {
         if (e.getStateChange() == ItemEvent.SELECTED) {
             redrawButtonAction.changeFractal(fractalDrawer);
             xMin.setText(Double.toString(fractalDrawer.getxStart()));
+            xMax.setText(Double.toString(fractalDrawer.getxEnd()));
+            yMin.setText(Double.toString(fractalDrawer.getyStart()));
+            yMax.setText(Double.toString(fractalDrawer.getyEnd()));
+            iterations.setText(Integer.toString(fractalDrawer.getIterations()));
         }
     }
 
