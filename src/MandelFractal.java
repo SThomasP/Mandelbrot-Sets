@@ -14,7 +14,10 @@ public class MandelFractal extends FractalDrawer {
         redrawFractal(xStart,yStart,xEnd,yEnd,iterations);
     }
 
+    public void resetToDefault(){
+        redrawFractal(MandelbrotViewer.XSTART,MandelbrotViewer.YSTART,MandelbrotViewer.XEND,MandelbrotViewer.YEND,MandelbrotViewer.ITERATIONS);
 
+    }
 
     public void redrawFractal(double xStart, double yStart,double xEnd,double yEnd,int iterations ){
         this.xStart=xStart;

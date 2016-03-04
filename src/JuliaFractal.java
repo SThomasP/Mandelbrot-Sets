@@ -1,4 +1,3 @@
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -8,8 +7,9 @@ import java.awt.image.BufferedImage;
 public class JuliaFractal extends FractalDrawer {
 
     private Complex baseNo;
+    private FavouritesPanel fP;
 
-    public JuliaFractal(double xStart, double yStart,double xEnd,double yEnd,int iterations, Complex baseNo ){
+    public JuliaFractal(double xStart, double yStart,double xEnd,double yEnd,int iterations, Complex baseNo){
         setSize(400,320);
         setLocation(600,0);
         canvas = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
@@ -18,6 +18,14 @@ public class JuliaFractal extends FractalDrawer {
 
     }
 
+    public void setfP(FavouritesPanel fP) {
+        this.fP = fP;
+    }
+
+    public void resetToDefault(){
+        redrawFractal(MandelbrotViewer.XSTART,MandelbrotViewer.YSTART,MandelbrotViewer.XEND,MandelbrotViewer.YEND,MandelbrotViewer.ITERATIONS);
+        changeConstant(MandelbrotViewer.DEFAULT_C);
+    }
 
     public void redrawFractal(double xStart, double yStart, double xEnd, double yEnd, int iterations) {
         this.xStart=xStart;
@@ -31,6 +39,7 @@ public class JuliaFractal extends FractalDrawer {
     public void changeConstant(Complex baseNo){
         this.baseNo = baseNo;
         generateJulias();
+        fP.updateLabel();
     }
 
     public Complex getConstant(){

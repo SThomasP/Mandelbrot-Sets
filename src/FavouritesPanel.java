@@ -18,10 +18,11 @@ public class FavouritesPanel extends JPanel {
 
     public FavouritesPanel(JuliaFractal juliaFractal){
         this.juliaFractal = juliaFractal;
+        this.juliaFractal.setfP(this);
         setSize(300,280);
         setLocation(600,320);
         setBorder(BorderFactory.createLineBorder(Color.black));
-        setLayout(new BorderLayout());
+        setLayout(new FlowLayout());
         addButton = new JButton("+");
         removeButton = new JButton("-");
         Font buttonFont = new Font("Arial",Font.BOLD,18);

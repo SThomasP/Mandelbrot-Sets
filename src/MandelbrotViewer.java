@@ -10,130 +10,38 @@ public class MandelbrotViewer extends JFrame {
 
     protected MandelFractal mandelbrotFractal;
     protected JuliaFractal juliaFractal;
-    protected JPanel buttonsPanel;
+    protected RedrawButtonsPanel buttonsPanel;
     protected FavouritesPanel favouritesPanel;
+    public static  double XSTART = -2.0;
+    public static  double YSTART = -1.6;
+    public static  double XEND = 2.0;
+    public static  double YEND = 1.6;
+    public static  int ITERATIONS = 255;
+    public static  Complex DEFAULT_C = new Complex(0,0);
 
 
-    //setup the buttonsPanel,keep things neat and tidy
-    //TODO: Move the buttonsPanel to its own class
-   protected void setupButtons(){
-       buttonsPanel = new JPanel();
-       buttonsPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-       buttonsPanel.setLocation(0,480);
-       buttonsPanel.setSize(600,120);
-       JButton  redrawButton = new JButton("Redraw");
-       JLabel xRange = new JLabel("X Range");
-       JLabel yRange = new JLabel("Y Range");
-       JLabel iterationsLabel = new JLabel("Iterations");
-       JTextField xMin = new JTextField("-2.0");
-       JTextField xMax = new JTextField("2.0");
-       JTextField yMin = new JTextField("-1.6");
-       JTextField yMax = new JTextField("1.6");
-       ButtonGroup bGroup = new ButtonGroup();
-       JRadioButton mButton = new JRadioButton("Mandelbrot Set");
-       mButton.setSelected(true);
-       JRadioButton jButton = new JRadioButton("Julia Set");
-       bGroup.add(jButton);
-       bGroup.add(mButton);
-       JTextField iterationsField = new JTextField("255");
-       buttonsPanel.add(redrawButton);
-       redrawButton.setLocation(475,30);
-       redrawButton.setSize(100,25);
-       RedrawButtonAction redrawAction = new RedrawButtonAction(xMin,xMax,yMin,yMax,iterationsField,mandelbrotFractal);
-       mButton.addItemListener(new FractalSelector(mandelbrotFractal,redrawAction,xMin,xMax,yMin,yMax,iterationsField));
-       jButton.addItemListener(new FractalSelector(juliaFractal,redrawAction,xMin,xMax,yMin,yMax,iterationsField));
-       redrawButton.addActionListener(redrawAction);
-       buttonsPanel.add(xMax);
-       buttonsPanel.add(jButton);
-       jButton.setLocation(350, 50);
-       jButton.setSize(100,25);
-       buttonsPanel.add(mButton);
-       mButton.setLocation(350,20);
-       mButton.setSize(120,25);
-       xMax.setLocation(60,50);
-       xMax.setSize(50,25);
-       buttonsPanel.add(xMin);
-       xMin.setLocation(60,20);
-       xMin.setSize(50,25);
-       buttonsPanel.add(yMin);
-       yMin.setLocation(170,20);
-       yMin.setSize(50,25);
-       buttonsPanel.add(yMax);
-       yMax.setLocation(170,50);
-       yMax.setSize(50,25);
-       buttonsPanel.add(xRange);
-       xRange.setLocation(10,30);
-       xRange.setSize(50,25);
-       buttonsPanel.add(iterationsLabel);
-       iterationsLabel.setLocation(230,30);
-       iterationsLabel.setSize(100,25);
-       buttonsPanel.add(iterationsField);
-       iterationsField.setLocation(290,30);
-       iterationsField.setSize(50,25);
-       buttonsPanel.add(yRange);
-       yRange.setLocation(120,30);
-       yRange.setSize(50,25);
-       buttonsPanel.setLayout(new BorderLayout());
-   }
 
     public  MandelbrotViewer(String t){
         super(t);
         setSize(1000,600);
-        addComponentListener(new ComponentListener() {
-            @Override
-            public void componentResized(ComponentEvent componentEvent) {
-                //TODO: add resize method sorting out the layouts of the favouritesPanel and buttonsPanel
-                mandelbrotFractal.setSize((int)Math.round(getWidth()*0.6),(int) Math.round(getWidth()*0.6/1.25));
-                juliaFractal.setSize((int) Math.round(getWidth()*0.4),(int) Math.round(getWidth()*0.4/1.25));
-                juliaFractal.setLocation(mandelbrotFractal.getWidth(),0);
-                mandelbrotFractal.generateMandlebrots();
-                juliaFractal.generateJulias();
-                buttonsPanel.setLocation(0, mandelbrotFractal.getHeight());
-                buttonsPanel.setSize(mandelbrotFractal.getWidth(),getHeight()- mandelbrotFractal.getHeight());
-                favouritesPanel.setLocation(mandelbrotFractal.getWidth(),juliaFractal.getHeight());
-                favouritesPanel.setSize((int) Math.round(juliaFractal.getWidth()*0.75), getHeight()-juliaFractal.getHeight());
-            }
-
-            @Override
-            public void componentMoved(ComponentEvent componentEvent) {
-
-            }
-
-            @Override
-            public void componentShown(ComponentEvent componentEvent) {
-
-            }
-
-            @Override
-            public void componentHidden(ComponentEvent componentEvent) {
-
-            }
-        });
-        mandelbrotFractal= new MandelFractal(-2,-1.6,2,1.6,255);
-        juliaFractal = new JuliaFractal(-2,-1.6,2,1.6,255,new Complex(0,0));
+        mandelbrotFractal= new MandelFractal(XSTART,YSTART,XEND,YEND,ITERATIONS);
+        juliaFractal = new JuliaFractal(XSTART,YSTART,XEND,YEND,ITERATIONS,new Complex(0,0));
         favouritesPanel = new FavouritesPanel(juliaFractal);
-        mandelbrotFractal.addMouseListener(new MandelClickListener(juliaFractal,mandelbrotFractal,favouritesPanel));
-        setupButtons();
+        mandelbrotFractal.addMouseListener(new MandelClickListener(juliaFractal,mandelbrotFractal));
+        buttonsPanel = new RedrawButtonsPanel(mandelbrotFractal,juliaFractal);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Container pane = this.getContentPane();
         pane.add(mandelbrotFractal);
         pane.add(buttonsPanel);
         pane.add(juliaFractal);
         pane.add(favouritesPanel);
-        buttonsPanel.setLocation(0,480);
         pane.setLayout(new BorderLayout());
-        setResizable(true);
+        setResizable(false);
     }
 
     public static void main(String[] args){
 
         MandelbrotViewer mBV = new MandelbrotViewer("Mandelbrot Explorer");
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        }
-        catch (Exception e){
-            System.out.println(e);
-        }
         mBV.setVisible(true);
     }
 }
