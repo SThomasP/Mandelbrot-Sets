@@ -63,6 +63,7 @@ public class MandelbrotViewer extends JFrame {
         setResizable(true);
         add(exportButtons,bagConstraints);
         exportButtons.setLayout(new GridBagLayout());
+        exportButtons.setBorder(BorderFactory.createLineBorder(Color.black));
         bagConstraints = new GridBagConstraints();
         bagConstraints.anchor = GridBagConstraints.CENTER;
         bagConstraints.fill = GridBagConstraints.HORIZONTAL;

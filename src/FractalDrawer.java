@@ -74,8 +74,10 @@ public abstract class FractalDrawer extends JPanel {
 
     //sets the Aspect Ratio of the image to the ideal ratio
     public void correctAspectRatio(){
-        double aspectRatio =((xEnd-xStart)/(yEnd-yStart));
-        double idealRatio =((getWidth()/getHeight()));
+        double aspectRatio =( (xEnd-xStart)/(yEnd-yStart));
+        double width = getWidth();
+        double height = getHeight();
+        double idealRatio =(width/height);
         double median;
         if (aspectRatio>idealRatio){
             median = (yEnd+yStart)/2;

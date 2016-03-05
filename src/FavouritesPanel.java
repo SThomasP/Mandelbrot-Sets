@@ -4,6 +4,8 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
 /**
  * Created by Steffan on 04/03/2016.
@@ -23,6 +25,7 @@ public class FavouritesPanel extends JPanel {
         this.juliaFractal.setfP(this);
         setBorder(BorderFactory.createLineBorder(Color.black));
         setLayout(new GridBagLayout());
+        //TODO get so currentConstant and favouriteNumbers doesn't expand all the time
         currentComplex = new JLabel();
         currentComplex.setHorizontalAlignment(JLabel.CENTER);
         GridBagConstraints c = new GridBagConstraints();
@@ -73,8 +76,6 @@ public class FavouritesPanel extends JPanel {
 
         addButton.addActionListener(addListener);
         removeButton.addActionListener(removeListener);
-        currentComplex.setVerticalAlignment(SwingConstants.CENTER);
-        currentComplex.setHorizontalAlignment(SwingConstants.CENTER);
         favouriteNumbers = new JList<>(listModel);
         favouriteNumbers.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
