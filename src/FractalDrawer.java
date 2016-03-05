@@ -47,6 +47,23 @@ public abstract class FractalDrawer extends JPanel {
 
     public abstract void resetToDefault();
 
+
+    //sets the Aspect Ratio of the image to the correct 1.25, keeping the fractal looking nice
+    public void correctAspectRatio(){
+        double aspectRatio =((xEnd-xStart)/(yEnd-yStart));
+        double idealRation =((getWidth()/getHeight()));
+        double median;
+        if (aspectRatio>1.25){
+            median = (yEnd+yStart)/2;
+            yStart = median-(xEnd-xStart)/2.5;
+            yEnd = median+(xEnd-xStart)/2.5;
+        }
+        else if (aspectRatio<1.25){
+            median = (xEnd+xStart)/2;
+            xStart = median -(yEnd-yStart)*0.625;
+            xEnd =median +(yEnd-yStart)*0.625;
+        }
+    }
     public abstract void redrawFractal(double xStart, double yStart,double xEnd,double yEnd,int iterations );
 
     public Color colourPixel(Complex zOfZero, Complex constant) {

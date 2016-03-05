@@ -10,11 +10,10 @@ public class JuliaFractal extends FractalDrawer {
     private FavouritesPanel fP;
 
     public JuliaFractal(double xStart, double yStart,double xEnd,double yEnd,int iterations, Complex baseNo){
-        setSize(400,320);
-        setLocation(600,0);
-        canvas = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
+      //  canvas = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
+        setBackground(Color.green);
         this.baseNo = baseNo;
-        redrawFractal(xStart,yStart,xEnd,yEnd,iterations);
+       // redrawFractal(xStart,yStart,xEnd,yEnd,iterations);
 
     }
 
@@ -23,7 +22,7 @@ public class JuliaFractal extends FractalDrawer {
     }
 
     public void resetToDefault(){
-        redrawFractal(MandelbrotViewer.XSTART,MandelbrotViewer.YSTART,MandelbrotViewer.XEND,MandelbrotViewer.YEND,MandelbrotViewer.ITERATIONS);
+        redrawFractal(MandelbrotViewer.X_START,MandelbrotViewer.Y_START,MandelbrotViewer.X_END,MandelbrotViewer.Y_END,MandelbrotViewer.ITERATIONS);
         changeConstant(MandelbrotViewer.DEFAULT_C);
     }
 
@@ -33,6 +32,7 @@ public class JuliaFractal extends FractalDrawer {
         this.xEnd=xEnd;
         this.yEnd=yEnd;
         this.iterations=iterations;
+        correctAspectRatio();
         generateJulias();
     }
 

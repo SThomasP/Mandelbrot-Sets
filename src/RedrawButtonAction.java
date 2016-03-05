@@ -21,6 +21,10 @@ public class RedrawButtonAction implements ActionListener {
         Double y1 = new Double(yMax.getText());
         Integer iterationCount = new Integer(iterations.getText());
         mandelFractal.redrawFractal(x0,y0,x1,y1,iterationCount);
+        xMin.setText(Double.toString(mandelFractal.getxStart()));
+        xMax.setText(Double.toString(mandelFractal.getxEnd()));
+        yMin.setText(Double.toString(mandelFractal.getyStart()));
+        yMax.setText(Double.toString(mandelFractal.getyEnd()));
     }
 
     public void changeFractal(FractalDrawer f){
