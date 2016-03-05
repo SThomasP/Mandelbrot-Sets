@@ -24,7 +24,6 @@ public class FavouritesPanel extends JPanel {
         currentComplex = new JLabel();
         currentComplex.setHorizontalAlignment(JLabel.CENTER);
         GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.HORIZONTAL;
         c.anchor=GridBagConstraints.CENTER;
         c.gridx=0;
         c.gridy=0;

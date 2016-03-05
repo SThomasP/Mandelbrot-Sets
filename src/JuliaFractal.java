@@ -9,12 +9,13 @@ public class JuliaFractal extends FractalDrawer {
     private Complex baseNo;
     private FavouritesPanel fP;
 
-    public JuliaFractal(double xStart, double yStart,double xEnd,double yEnd,int iterations, Complex baseNo){
-      //  canvas = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
-        setBackground(Color.green);
-        this.baseNo = baseNo;
-       // redrawFractal(xStart,yStart,xEnd,yEnd,iterations);
-
+    public JuliaFractal(int parentWidth){
+        Dimension d = new Dimension((int) Math.round(parentWidth*0.4), (int) Math.round(parentWidth*0.4/1.25));
+        setPreferredSize(d);
+        setSize(d);
+        baseNo = MandelbrotViewer.DEFAULT_C;
+        canvas = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
+        redrawFractal(MandelbrotViewer.X_START,MandelbrotViewer.Y_START,MandelbrotViewer.X_END,MandelbrotViewer.Y_END,MandelbrotViewer.ITERATIONS);
     }
 
     public void setfP(FavouritesPanel fP) {
@@ -24,6 +25,11 @@ public class JuliaFractal extends FractalDrawer {
     public void resetToDefault(){
         redrawFractal(MandelbrotViewer.X_START,MandelbrotViewer.Y_START,MandelbrotViewer.X_END,MandelbrotViewer.Y_END,MandelbrotViewer.ITERATIONS);
         changeConstant(MandelbrotViewer.DEFAULT_C);
+    }
+
+    public void regenerateCanvas(){
+        canvas = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
+        resetToDefault();
     }
 
     public void redrawFractal(double xStart, double yStart, double xEnd, double yEnd, int iterations) {
