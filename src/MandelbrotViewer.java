@@ -22,12 +22,12 @@ public class MandelbrotViewer extends JFrame {
 
     public  MandelbrotViewer(String t){
         super(t);
-        setSize(1366,768);
+        setSize(1300,700);
         setLayout(new GridBagLayout());
         GridBagConstraints bagConstraints = new GridBagConstraints();
-        mandelbrotFractal= new MandelFractal(getWidth());
+        mandelbrotFractal= new MandelFractal();
         exportButtons = new JPanel();
-        juliaFractal = new JuliaFractal(getWidth());
+        juliaFractal = new JuliaFractal();
         favouritesPanel = new FavouritesPanel(juliaFractal);
         mandelbrotFractal.addMouseListener(new MandelClickListener(juliaFractal,mandelbrotFractal));
         buttonsPanel = new RedrawButtonsPanel(mandelbrotFractal,juliaFractal);
@@ -62,6 +62,13 @@ public class MandelbrotViewer extends JFrame {
         bagConstraints.weighty=0.3;
         setResizable(true);
         add(exportButtons,bagConstraints);
+        exportButtons.setLayout(new GridBagLayout());
+        bagConstraints = new GridBagConstraints();
+        bagConstraints.anchor = GridBagConstraints.CENTER;
+        bagConstraints.fill = GridBagConstraints.HORIZONTAL;
+        exportButtons.add(new JButton("Export Mandelbrot"),bagConstraints);
+        bagConstraints.gridy=1;
+        exportButtons.add(new JButton("Export Julia"),bagConstraints);
     }
 
     public static void main(String[] args){

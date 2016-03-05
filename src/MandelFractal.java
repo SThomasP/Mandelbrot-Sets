@@ -7,10 +7,9 @@ import java.awt.image.BufferedImage;
 public class MandelFractal extends FractalDrawer {
 
 
-    public MandelFractal(int parentWidth){
-        Dimension d = new Dimension((int) Math.round(parentWidth*0.6), (int) Math.round(parentWidth*0.6/1.25));
-        setPreferredSize(d);
-        setSize(d);
+    public MandelFractal(){
+        setSize(100,80);
+        setPreferredSize(new Dimension(100,80));
         canvas = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
         resetToDefault();
         setBackground(Color.blue);
@@ -29,10 +28,6 @@ public class MandelFractal extends FractalDrawer {
         this.iterations=iterations;
         correctAspectRatio();
         generateMandlebrots();
-    }
-
-    public void regenerateCanvas(){
-        canvas = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
     }
 
 

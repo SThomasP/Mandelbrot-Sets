@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.image.BufferedImage;
 
 /**
@@ -16,6 +18,28 @@ public abstract class FractalDrawer extends JPanel {
 
     public FractalDrawer(){
         setBorder(BorderFactory.createLineBorder(Color.black));
+        addComponentListener(new ComponentListener() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                canvas = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
+                redrawFractal(xStart,yStart,xEnd,yEnd,iterations);
+            }
+
+            @Override
+            public void componentMoved(ComponentEvent e) {
+
+            }
+
+            @Override
+            public void componentShown(ComponentEvent e) {
+
+            }
+
+            @Override
+            public void componentHidden(ComponentEvent e) {
+
+            }
+        });
     }
 
     public double getxStart() {
@@ -48,20 +72,20 @@ public abstract class FractalDrawer extends JPanel {
     public abstract void resetToDefault();
 
 
-    //sets the Aspect Ratio of the image to the correct 1.25, keeping the fractal looking nice
+    //sets the Aspect Ratio of the image to the ideal ratio
     public void correctAspectRatio(){
         double aspectRatio =((xEnd-xStart)/(yEnd-yStart));
-        double idealRation =((getWidth()/getHeight()));
+        double idealRatio =((getWidth()/getHeight()));
         double median;
-        if (aspectRatio>1.25){
+        if (aspectRatio>idealRatio){
             median = (yEnd+yStart)/2;
-            yStart = median-(xEnd-xStart)/2.5;
-            yEnd = median+(xEnd-xStart)/2.5;
+            yStart = median-(xEnd-xStart)/(2*idealRatio);
+            yEnd = median+(xEnd-xStart)/(2*idealRatio);
         }
-        else if (aspectRatio<1.25){
+        else if (aspectRatio<idealRatio){
             median = (xEnd+xStart)/2;
-            xStart = median -(yEnd-yStart)*0.625;
-            xEnd =median +(yEnd-yStart)*0.625;
+            xStart = median -(yEnd-yStart)*(idealRatio/2);
+            xEnd =median +(yEnd-yStart)*(idealRatio/2);
         }
     }
     public abstract void redrawFractal(double xStart, double yStart,double xEnd,double yEnd,int iterations );

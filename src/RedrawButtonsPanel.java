@@ -33,13 +33,14 @@ public class RedrawButtonsPanel extends JPanel {
         iterationsField = new JTextField("255");
         ResetButtonAction resetAction = new ResetButtonAction(xMin,xMax,yMin,yMax,iterationsField,mF);
         RedrawButtonAction redrawAction = new RedrawButtonAction(xMin,xMax,yMin,yMax,iterationsField,mF);
-        mButton.addItemListener(new FractalSelector(mF,redrawAction,xMin,xMax,yMin,yMax,iterationsField));
-        jButton.addItemListener(new FractalSelector(jF,redrawAction,xMin,xMax,yMin,yMax,iterationsField));
+        mButton.addItemListener(new FractalSelector(mF,redrawAction,resetAction,xMin,xMax,yMin,yMax,iterationsField));
+        jButton.addItemListener(new FractalSelector(jF,redrawAction,resetAction,xMin,xMax,yMin,yMax,iterationsField));
         resetButton.addActionListener(resetAction);
         redrawButton.addActionListener(redrawAction);
-        gBC.anchor=GridBagConstraints.CENTER;
+        gBC.anchor=GridBagConstraints.LINE_END;
         gBC.insets= new Insets(5,2,2,5);
         gBC.fill=GridBagConstraints.HORIZONTAL;
+
         gBC.gridheight=2;
         gBC.gridx=0;
         gBC.weightx = 0.5;

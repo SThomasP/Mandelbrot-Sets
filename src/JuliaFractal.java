@@ -9,12 +9,11 @@ public class JuliaFractal extends FractalDrawer {
     private Complex baseNo;
     private FavouritesPanel fP;
 
-    public JuliaFractal(int parentWidth){
-        Dimension d = new Dimension((int) Math.round(parentWidth*0.4), (int) Math.round(parentWidth*0.4/1.25));
-        setPreferredSize(d);
-        setSize(d);
+    public JuliaFractal(){
+        setSize(100,80);
+        setPreferredSize(new Dimension(100,80));
+        canvas =new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
         baseNo = MandelbrotViewer.DEFAULT_C;
-        canvas = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
         redrawFractal(MandelbrotViewer.X_START,MandelbrotViewer.Y_START,MandelbrotViewer.X_END,MandelbrotViewer.Y_END,MandelbrotViewer.ITERATIONS);
     }
 
@@ -25,11 +24,6 @@ public class JuliaFractal extends FractalDrawer {
     public void resetToDefault(){
         redrawFractal(MandelbrotViewer.X_START,MandelbrotViewer.Y_START,MandelbrotViewer.X_END,MandelbrotViewer.Y_END,MandelbrotViewer.ITERATIONS);
         changeConstant(MandelbrotViewer.DEFAULT_C);
-    }
-
-    public void regenerateCanvas(){
-        canvas = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
-        resetToDefault();
     }
 
     public void redrawFractal(double xStart, double yStart, double xEnd, double yEnd, int iterations) {
@@ -54,15 +48,17 @@ public class JuliaFractal extends FractalDrawer {
 
     public void generateJulias(){
         //TODO: thread this method to make it run quicker for larger monitors
-        for (int x = 0; x < canvas.getWidth(); x++){
-            double realPart = xStart + (xEnd-xStart)*x/canvas.getWidth();
-            for (int y = 0; y < canvas.getHeight(); y++){
-                double iPart =yStart + (yEnd-yStart)*y/canvas.getHeight();
+        for (int x = 0; x < getWidth(); x++){
+            double realPart = xStart + (xEnd-xStart)*x/getWidth();
+            for (int y = 0; y < getHeight(); y++){
+                double iPart =yStart + (yEnd-yStart)*y/getHeight();
                 Complex zOfZero = new Complex(realPart,iPart);
                 Color pixelColour = colourPixel(zOfZero,baseNo);
                 canvas.setRGB(x,y,pixelColour.getRGB());
+
             }
         }
         repaint();
     }
+
 }
