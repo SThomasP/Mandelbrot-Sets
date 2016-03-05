@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -42,6 +44,7 @@ public class FavouritesPanel extends JPanel {
         ActionListener removeListener = new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 int index = favouritedNumbers.getSelectedIndex();
+                favouritedNumbers.clearSelection();
                 listModel.remove(index);
                 if (listModel.size()==0){
                     removeButton.setEnabled(false);
@@ -55,6 +58,14 @@ public class FavouritesPanel extends JPanel {
         currentComplex.setVerticalAlignment(SwingConstants.CENTER);
         currentComplex.setHorizontalAlignment(SwingConstants.CENTER);
         favouritedNumbers = new JList<>(listModel);
+        favouritedNumbers.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                removeButton.setEnabled(true);
+                if (!favouritedNumbers.isSelectionEmpty()) {
+                    juliaFractal.changeConstant(favouritedNumbers.getSelectedValue());
+                }
+            }
+        });
         favouritedNumbers.setCellRenderer(new ComplexCellRenderer());
         favouritedNumbers.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         add(currentComplex);
