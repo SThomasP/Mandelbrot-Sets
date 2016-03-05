@@ -4,15 +4,10 @@
     <bookmark url="file://$PROJECT_DIR$/src/MandelFractal.java" line="45" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f93dee2c-b41e-40d7-a011-3e1ef107744f" name="Default" comment="Can now reset the Julia set and the mandelbrot set to default ranges  (and 0+0i for JS) now to work on adding removing favourites from the list and properly setting the list view up">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Mandlebrot-Sets/Seal_of_Quality.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/Seal_of_Quality.png" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Mandlebrot-Sets/MandelbrotViewer.class" afterPath="$PROJECT_DIR$/out/production/Mandlebrot-Sets/MandelbrotViewer.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/FavouritesPanel.java" afterPath="$PROJECT_DIR$/src/FavouritesPanel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/JuliaFractal.java" afterPath="$PROJECT_DIR$/src/JuliaFractal.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MandelFractal.java" afterPath="$PROJECT_DIR$/src/MandelFractal.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MandelbrotViewer.java" afterPath="$PROJECT_DIR$/src/MandelbrotViewer.java" />
+    <list default="true" id="f93dee2c-b41e-40d7-a011-3e1ef107744f" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Mandlebrot-Sets/FavouritesPanel.class" afterPath="$PROJECT_DIR$/out/production/Mandlebrot-Sets/FavouritesPanel.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Mandlebrot-Sets/JuliaFractal.class" afterPath="$PROJECT_DIR$/out/production/Mandlebrot-Sets/JuliaFractal.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Mandlebrot-Sets/MandelFractal.class" afterPath="$PROJECT_DIR$/out/production/Mandlebrot-Sets/MandelFractal.class" />
     </list>
     <ignored path="Mandlebrot-Sets.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -100,7 +95,7 @@
       <file leaf-file-name="JuliaFractal.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/JuliaFractal.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.49571183">
+            <state vertical-scroll-proportion="0.74677">
               <caret line="17" column="147" selection-start-line="17" selection-start-column="147" selection-end-line="17" selection-end-column="147" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -640,7 +635,13 @@
       <option name="project" value="LOCAL" />
       <updated>1457115981069</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Can now reset the Julia set and the mandelbrot set to default ranges  (and 0+0i for JS) now to work on adding removing favourites from the list and properly setting the list view up">
+      <created>1457181354648</created>
+      <option name="number" value="00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1457181354648</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TodoView">
@@ -654,7 +655,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32733223" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -662,7 +663,7 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.5030257" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3207856" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3207856" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39934534" sideWeight="0.4969743" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3289689" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1255,7 +1256,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/JuliaFractal.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.49571183">
+        <state vertical-scroll-proportion="0.74677">
           <caret line="17" column="147" selection-start-line="17" selection-start-column="147" selection-end-line="17" selection-end-column="147" />
           <folding>
             <element signature="imports" expanded="true" />
