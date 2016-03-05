@@ -39,8 +39,8 @@ public class RedrawButtonsPanel extends JPanel {
         redrawButton.setSize(100,25);
         ResetButtonAction resetAction = new ResetButtonAction(xMin,xMax,yMin,yMax,iterationsField,mF);
         RedrawButtonAction redrawAction = new RedrawButtonAction(xMin,xMax,yMin,yMax,iterationsField,mF);
-        mButton.addItemListener(new FractalSelector(mF,redrawAction,resetAction,xMin,xMax,yMin,yMax,iterationsField));
-        jButton.addItemListener(new FractalSelector(jF,redrawAction,resetAction,xMin,xMax,yMin,yMax,iterationsField));
+        mButton.addItemListener(new FractalSelector(mF,redrawAction,xMin,xMax,yMin,yMax,iterationsField));
+        jButton.addItemListener(new FractalSelector(jF,redrawAction,xMin,xMax,yMin,yMax,iterationsField));
         resetButton.addActionListener(resetAction);
         redrawButton.addActionListener(redrawAction);
         add(xMax);
