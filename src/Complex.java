@@ -30,6 +30,10 @@ public class Complex {
     }
 
 
+    public boolean equals(Complex c){
+        return ((c.getImaginary()==getImaginary())&&(c.getReal()==getReal()));
+    }
+
     public Complex getSquare(){
         double squaredReal = realPart*realPart - imaginaryPart*imaginaryPart;
         double squaredImaginary = 2*realPart*imaginaryPart;
