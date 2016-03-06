@@ -23,7 +23,6 @@ public class JuliaFractal extends FractalDrawer {
 
     public void resetToDefault(){
         redrawFractal(MandelbrotViewer.X_START,MandelbrotViewer.Y_START,MandelbrotViewer.X_END,MandelbrotViewer.Y_END,MandelbrotViewer.ITERATIONS);
-        changeConstant(MandelbrotViewer.DEFAULT_C);
     }
 
     public void redrawFractal(double xStart, double yStart, double xEnd, double yEnd, int iterations) {
@@ -34,6 +33,9 @@ public class JuliaFractal extends FractalDrawer {
         this.iterations=iterations;
         correctAspectRatio();
         generateJulias();
+        if (selected) {
+            rBP.setValues(this.xStart, this.xEnd, this.yStart, this.yEnd, this.iterations);
+        }
     }
 
     public void changeConstant(Complex baseNo){

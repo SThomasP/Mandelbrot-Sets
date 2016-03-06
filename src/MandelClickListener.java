@@ -14,7 +14,7 @@ public class MandelClickListener extends MouseAdapter {
         this.mF=mF;
     }
 
-    public void mousePressed(MouseEvent e) {
+    public void mouseClicked(MouseEvent e) {
         double realPart = mF.getxStart() + (mF.getxEnd()-mF.getxStart())*e.getX()/mF.getWidth();
         double iPart = mF.getyStart() + (mF.getyEnd()-mF.getyStart())*e.getY()/mF.getHeight();
         jF.changeConstant(new Complex(realPart,iPart));

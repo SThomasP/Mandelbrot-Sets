@@ -17,11 +17,6 @@ public class ResetButtonAction implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         mandelFractal.resetToDefault();
-        xMin.setText(Double.toString(MandelbrotViewer.X_START));
-        xMax.setText(Double.toString(MandelbrotViewer.X_END));
-        yMin.setText(Double.toString(MandelbrotViewer.Y_START));
-        yMax.setText(Double.toString(MandelbrotViewer.Y_END));
-        iterations.setText(Integer.toString(MandelbrotViewer.ITERATIONS));
     }
 
     public void changeFractal(FractalDrawer fractal){

@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 /**
@@ -9,12 +10,29 @@ import java.awt.image.BufferedImage;
  */
 public abstract class FractalDrawer extends JPanel {
 
+
     protected BufferedImage canvas;
     protected double xStart;
     protected double yStart;
     protected double xEnd;
     protected double yEnd;
     protected int iterations;
+    protected Rectangle2D rectangle;
+    protected boolean selected;
+    protected RedrawButtonsPanel rBP;
+
+
+    public void setrBP(RedrawButtonsPanel rBP) {
+        this.rBP = rBP;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
+    public void setRectangle(Rectangle2D rectangle) {
+        this.rectangle = rectangle;
+    }
 
     public FractalDrawer(){
         setBorder(BorderFactory.createLineBorder(Color.black));
@@ -40,6 +58,10 @@ public abstract class FractalDrawer extends JPanel {
 
             }
         });
+        FractalDragListener dragListener = new FractalDragListener(this);
+        addMouseListener(dragListener);
+        addMouseMotionListener(dragListener);
+        addMouseWheelListener(dragListener);
     }
 
     public double getxStart() {
@@ -67,6 +89,10 @@ public abstract class FractalDrawer extends JPanel {
         Graphics2D g2 = (Graphics2D) g;
 
         g2.drawImage(canvas, null, null);
+        if(!(rectangle==null)){
+            g2.setColor(Color.white);
+            g2.draw(rectangle);
+        }
     }
 
     public abstract void resetToDefault();

@@ -2,10 +2,9 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 
 /**
  * Created by Steffan on 04/03/2016.
@@ -17,6 +16,7 @@ public class FavouritesPanel extends JPanel {
     private DefaultListModel<Complex> listModel;
     private JLabel currentComplex;
     private JButton addButton;
+    private JButton copyButton;
     private JButton removeButton;
 
 
@@ -25,8 +25,7 @@ public class FavouritesPanel extends JPanel {
         this.juliaFractal.setfP(this);
         setBorder(BorderFactory.createLineBorder(Color.black));
         setLayout(new GridBagLayout());
-        //TODO get so currentConstant and favouriteNumbers doesn't expand all the time
-        currentComplex = new JLabel();
+        currentComplex = new JLabel("-0.0000 + 0.0000i");
         currentComplex.setHorizontalAlignment(JLabel.CENTER);
         GridBagConstraints c = new GridBagConstraints();
         c.gridx = 0;
@@ -34,6 +33,7 @@ public class FavouritesPanel extends JPanel {
         c.weighty = 0.0;
         c.gridwidth = 2;
         add(currentComplex, c);
+        setAllDimensions(currentComplex.getPreferredSize(),currentComplex);
         addButton = new JButton("+");
         c.fill = GridBagConstraints.NONE;
         c.gridy = 1;
@@ -79,8 +79,8 @@ public class FavouritesPanel extends JPanel {
         favouriteNumbers = new JList<>(listModel);
         favouriteNumbers.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
-                removeButton.setEnabled(true);
                 if (!favouriteNumbers.isSelectionEmpty()) {
+                    removeButton.setEnabled(true);
                     juliaFractal.changeConstant(favouriteNumbers.getSelectedValue());
                 }
             }
@@ -88,13 +88,35 @@ public class FavouritesPanel extends JPanel {
         favouriteNumbers.setCellRenderer(new ComplexCellRenderer());
         favouriteNumbers.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         c.fill = GridBagConstraints.BOTH;
-        c.ipady = 12;
         c.weighty = 1.0;
         c.gridwidth = 2;
         c.gridy = 2;
         c.gridx = 0;
         add(favouriteNumbers, c);
+        Dimension d = new Dimension(favouriteNumbers.getWidth(),favouriteNumbers.getHeight());
+        setAllDimensions(d, favouriteNumbers);
+        //TODO: export Julia and Export Mandelbrot buttons
+        copyButton = new JButton("Copy Julia Constant");
+        ActionListener copyListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(juliaFractal.getConstant().getFullStringValue()),null);
+                JOptionPane.showMessageDialog(juliaFractal, "Copied to Clipboard");
+            }
+        };
+        copyButton.addActionListener(copyListener);
+        c.fill= GridBagConstraints.NONE;
+        c.weighty=0;
+        c.anchor=GridBagConstraints.CENTER;
+        c.gridy=3;
+        add(copyButton,c);
         updateLabel();
+    }
+
+    public static void  setAllDimensions(Dimension d, Component c){
+        c.setMaximumSize(d);
+        c.setMinimumSize(d);
+        c.setPreferredSize(d);
     }
 
     public void updateLabel() {

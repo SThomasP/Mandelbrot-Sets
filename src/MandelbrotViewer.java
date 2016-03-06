@@ -10,66 +10,51 @@ public class MandelbrotViewer extends JFrame {
     protected JuliaFractal juliaFractal;
     protected RedrawButtonsPanel buttonsPanel;
     protected FavouritesPanel favouritesPanel;
-    protected JPanel exportButtons;
     public static  double X_START = -2.0;
     public static  double Y_START = -1.6;
     public static  double X_END = 2.0;
     public static  double Y_END = 1.6;
-    public static  int ITERATIONS = 255;
+    public static  int ITERATIONS = 100;
     public static  Complex DEFAULT_C = new Complex(0,0);
 
 
 
-    public  MandelbrotViewer(String t){
+    public  MandelbrotViewer(String t) {
         super(t);
         setSize(1300,700);
         setLayout(new GridBagLayout());
         GridBagConstraints bagConstraints = new GridBagConstraints();
-        mandelbrotFractal= new MandelFractal();
-        exportButtons = new JPanel();
+        mandelbrotFractal = new MandelFractal();
         juliaFractal = new JuliaFractal();
         favouritesPanel = new FavouritesPanel(juliaFractal);
-        mandelbrotFractal.addMouseListener(new MandelClickListener(juliaFractal,mandelbrotFractal));
-        buttonsPanel = new RedrawButtonsPanel(mandelbrotFractal,juliaFractal);
+        mandelbrotFractal.addMouseListener(new MandelClickListener(juliaFractal, mandelbrotFractal));
+        buttonsPanel = new RedrawButtonsPanel(mandelbrotFractal, juliaFractal);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        bagConstraints.gridheight=2;
-        bagConstraints.weighty=0.8;
-        bagConstraints.weightx=0.5;
-        bagConstraints.fill=GridBagConstraints.BOTH;
+        bagConstraints.weighty = 0.8;
+        bagConstraints.weightx = 0.5;
+        bagConstraints.fill = GridBagConstraints.BOTH;
+        bagConstraints.gridx = 0;
+        bagConstraints.gridy = 0;
+        add(mandelbrotFractal, bagConstraints);
+        bagConstraints.gridx = 1;
+        add(juliaFractal, bagConstraints);
+        bagConstraints.gridy = 0;
+        bagConstraints.gridx =2;
+        bagConstraints.gridheight = 2;
+        bagConstraints.weightx = 0.3;
+        bagConstraints.weighty=1.0;
+        add(favouritesPanel, bagConstraints);
+        Dimension d = new Dimension(favouritesPanel.getWidth(),favouritesPanel.getHeight());
+        FavouritesPanel.setAllDimensions(d,favouritesPanel);
         bagConstraints.gridx=0;
-        bagConstraints.gridy=0;
-        add(mandelbrotFractal,bagConstraints);
-        bagConstraints.weighty=0.2;
-        bagConstraints.gridheight=1;
-        bagConstraints.gridy=2;
-        add(buttonsPanel,bagConstraints);
-        bagConstraints.gridx=1;
+        bagConstraints.gridy=1;
+        bagConstraints.gridheight=0;
         bagConstraints.gridwidth=2;
-        bagConstraints.gridy=0;
-        bagConstraints.weightx=0.4;
-        bagConstraints.weighty=0.5;
-        add(juliaFractal,bagConstraints);
-        bagConstraints.gridy=1;
-        bagConstraints.gridwidth=1;
-        bagConstraints.gridheight=2;
-        bagConstraints.weightx=0.3;
-        bagConstraints.weighty=0.4;
-        add(favouritesPanel,bagConstraints);
-        bagConstraints.gridx=2;
-        bagConstraints.gridy=1;
-        bagConstraints.gridheight=1;
-        bagConstraints.weightx=0.2;
         bagConstraints.weighty=0.3;
+        add(buttonsPanel,bagConstraints);
+        d = new Dimension(buttonsPanel.getWidth(),buttonsPanel.getHeight());
+        FavouritesPanel.setAllDimensions(d, buttonsPanel);
         setResizable(true);
-        add(exportButtons,bagConstraints);
-        exportButtons.setLayout(new GridBagLayout());
-        exportButtons.setBorder(BorderFactory.createLineBorder(Color.black));
-        bagConstraints = new GridBagConstraints();
-        bagConstraints.anchor = GridBagConstraints.CENTER;
-        bagConstraints.fill = GridBagConstraints.HORIZONTAL;
-        exportButtons.add(new JButton("Export Mandelbrot"),bagConstraints);
-        bagConstraints.gridy=1;
-        exportButtons.add(new JButton("Export Julia"),bagConstraints);
     }
 
     public static void main(String[] args){

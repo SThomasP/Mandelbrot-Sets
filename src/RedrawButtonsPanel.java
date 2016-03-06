@@ -13,15 +13,18 @@ public class RedrawButtonsPanel extends JPanel {
 
     public RedrawButtonsPanel(MandelFractal mF, JuliaFractal jF){
         setBorder(BorderFactory.createLineBorder(Color.black));
+        mF.setrBP(this);
+        jF.setrBP(this);
         redrawButton = new JButton("Redraw");
         resetButton = new JButton("Reset");
         xRange = new JLabel("X Range");
         yRange = new JLabel("Y Range");
         iterationsLabel = new JLabel("Iterations");
-        xMin = new JTextField("-2.0");
-        xMax = new JTextField("2.0");
-        yMin = new JTextField("-1.6");
-        yMax = new JTextField("1.6");
+        //TODO:get these adjust based on the rescaleing of the fractal image
+        xMin = new JTextField(Complex.toFourDP(mF.getxStart()));
+        xMax = new JTextField(Complex.toFourDP(mF.getxEnd()));
+        yMin = new JTextField(Complex.toFourDP(mF.getyStart()));
+        yMax = new JTextField(Complex.toFourDP(mF.getyEnd()));
         ButtonGroup bGroup = new ButtonGroup();
         mButton = new JRadioButton("Mandelbrot Set");
         mButton.setSelected(true);
@@ -30,17 +33,16 @@ public class RedrawButtonsPanel extends JPanel {
         bGroup.add(mButton);
         setLayout(new GridBagLayout());
         GridBagConstraints gBC = new GridBagConstraints();
-        iterationsField = new JTextField("255");
+        iterationsField = new JTextField(Integer.toString(mF.getIterations()));
         ResetButtonAction resetAction = new ResetButtonAction(xMin,xMax,yMin,yMax,iterationsField,mF);
         RedrawButtonAction redrawAction = new RedrawButtonAction(xMin,xMax,yMin,yMax,iterationsField,mF);
-        mButton.addItemListener(new FractalSelector(mF,redrawAction,resetAction,xMin,xMax,yMin,yMax,iterationsField));
-        jButton.addItemListener(new FractalSelector(jF,redrawAction,resetAction,xMin,xMax,yMin,yMax,iterationsField));
+        mButton.addItemListener(new FractalSelector(mF,redrawAction,resetAction));
+        jButton.addItemListener(new FractalSelector(jF,redrawAction,resetAction));
         resetButton.addActionListener(resetAction);
         redrawButton.addActionListener(redrawAction);
         gBC.anchor=GridBagConstraints.LINE_END;
         gBC.insets= new Insets(5,2,2,5);
         gBC.fill=GridBagConstraints.HORIZONTAL;
-
         gBC.gridheight=2;
         gBC.gridx=0;
         gBC.weightx = 0.5;
@@ -78,6 +80,14 @@ public class RedrawButtonsPanel extends JPanel {
         gBC.ipadx =0;
         add(jButton,gBC);
 
+    }
+
+    public void setValues(double xStart, double xEnd, double yStart, double yEnd, int iterate){
+        xMin.setText(Complex.toFourDP(xStart));
+        xMax.setText(Complex.toFourDP(xEnd));
+        yMin.setText(Complex.toFourDP(yStart));
+        yMin.setText(Complex.toFourDP(yEnd));
+        iterationsField.setText(Integer.toString(iterate));
     }
 
 

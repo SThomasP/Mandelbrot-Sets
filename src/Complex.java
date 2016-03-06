@@ -2,7 +2,8 @@
  * Created by Steffan on 27/02/2016.
  */
 
-import java.math.*;
+import java.text.DecimalFormat;
+
 public class Complex {
     //Class for storing/getting details of Complex numbers
     protected double realPart;
@@ -22,10 +23,19 @@ public class Complex {
 
     public String getStringValue(){
         if(imaginaryPart<0){
-            return (realPart+" - "+Math.abs(imaginaryPart)+"i");
+            return (toFourDP(realPart)+" - "+ toFourDP(Math.abs(imaginaryPart))+"i");
         }
         else{
-            return (realPart+" + "+Math.abs(imaginaryPart)+"i");
+            return (toFourDP(realPart)+" + "+ toFourDP(Math.abs(imaginaryPart))+"i");
+        }
+    }
+
+    public String getFullStringValue(){
+        if(imaginaryPart<0){
+            return (realPart+" - "+ Math.abs(imaginaryPart)+"i");
+        }
+        else{
+            return (realPart+" + "+ Math.abs(imaginaryPart)+"i");
         }
     }
 
@@ -50,5 +60,10 @@ public class Complex {
         double sumImaginary = d.getImaginary()+getImaginary();
         return new Complex(sumReal, sumImaginary);
 
+    }
+
+    public static String toFourDP(double tooLong){
+        DecimalFormat d = new DecimalFormat("#0.0000");
+        return d.format(tooLong);
     }
 }
