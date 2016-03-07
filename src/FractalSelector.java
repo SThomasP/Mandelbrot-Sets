@@ -15,6 +15,7 @@ public class FractalSelector implements ItemListener {
             redrawButtonAction.changeFractal(fractalDrawer);
             resetButtonAction.changeFractal(fractalDrawer);
             fractalDrawer.setSelected(true);
+            fractalDrawer.getrBP().setValues(fractalDrawer.getxStart(),fractalDrawer.getxEnd(),fractalDrawer.getyStart(),fractalDrawer.getyEnd(),fractalDrawer.getIterations());
         }
         else{
             fractalDrawer.setSelected(false);

@@ -28,6 +28,9 @@ public class MandelFractal extends FractalDrawer {
         this.iterations=iterations;
         correctAspectRatio();
         generateMandlebrots();
+        if (selected) {
+            rBP.setValues(this.xStart, this.xEnd, this.yStart, this.yEnd, this.iterations);
+        }
     }
 
 

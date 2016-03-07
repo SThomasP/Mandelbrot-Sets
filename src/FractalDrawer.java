@@ -22,8 +22,12 @@ public abstract class FractalDrawer extends JPanel {
     protected RedrawButtonsPanel rBP;
 
 
-    public void setrBP(RedrawButtonsPanel rBP) {
+    public void setRBP(RedrawButtonsPanel rBP) {
         this.rBP = rBP;
+    }
+
+    public RedrawButtonsPanel getrBP(){
+        return rBP;
     }
 
     public void setSelected(boolean selected) {

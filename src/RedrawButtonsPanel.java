@@ -13,8 +13,8 @@ public class RedrawButtonsPanel extends JPanel {
 
     public RedrawButtonsPanel(MandelFractal mF, JuliaFractal jF){
         setBorder(BorderFactory.createLineBorder(Color.black));
-        mF.setrBP(this);
-        jF.setrBP(this);
+        mF.setRBP(this);
+        jF.setRBP(this);
         redrawButton = new JButton("Redraw");
         resetButton = new JButton("Reset");
         xRange = new JLabel("X Range");
@@ -86,7 +86,7 @@ public class RedrawButtonsPanel extends JPanel {
         xMin.setText(Complex.toFourDP(xStart));
         xMax.setText(Complex.toFourDP(xEnd));
         yMin.setText(Complex.toFourDP(yStart));
-        yMin.setText(Complex.toFourDP(yEnd));
+        yMax.setText(Complex.toFourDP(yEnd));
         iterationsField.setText(Integer.toString(iterate));
     }
 

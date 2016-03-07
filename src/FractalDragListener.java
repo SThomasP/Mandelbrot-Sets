@@ -65,9 +65,7 @@ public class FractalDragListener extends MouseAdapter{
 
     @Override
     public void mouseWheelMoved(MouseWheelEvent e) {
-        //TODO:Get fractal to scale based on mouse point rather than centre
         double scaleConstant;
-        System.out.println(e.getX()+" "+e.getY());
         if (e.getWheelRotation()==1){
             scaleConstant=1.5;
         }
@@ -75,14 +73,16 @@ public class FractalDragListener extends MouseAdapter{
             scaleConstant=0.75;
         }
 
-        double median = (fractalDrawer.getxStart()+fractalDrawer.getxEnd())/2.0;
-        double range = (median-fractalDrawer.getxStart())*scaleConstant;
-        double xStart = median-range;
-        double xEnd = median+range;
-        median = (fractalDrawer.getyStart()+fractalDrawer.getyEnd())/2.0;
-        range =(median-fractalDrawer.getyStart())*scaleConstant;
-        double yStart = median-range;
-        double yEnd = median+range;
+        double mousePoint = fractalDrawer.getxStart() + (fractalDrawer.getxEnd()-fractalDrawer.getxStart())*e.getX()/fractalDrawer.getWidth();
+        double range = (mousePoint-fractalDrawer.getxStart())*scaleConstant;
+        double xStart = mousePoint-range;
+        range =(fractalDrawer.getxEnd()-mousePoint)*scaleConstant;
+        double xEnd = mousePoint+range;
+        mousePoint = fractalDrawer.getyStart() + (fractalDrawer.getyEnd()-fractalDrawer.getyStart())*e.getY()/fractalDrawer.getHeight();
+        range =(mousePoint-fractalDrawer.getyStart())*scaleConstant;
+        double yStart = mousePoint-range;
+        range=(fractalDrawer.getyEnd()-mousePoint)*scaleConstant;
+        double yEnd = mousePoint+range;
         fractalDrawer.redrawFractal(xStart,yStart,xEnd,yEnd,fractalDrawer.getIterations());
     }
 
