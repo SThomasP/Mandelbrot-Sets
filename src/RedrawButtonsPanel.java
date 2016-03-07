@@ -15,6 +15,7 @@ public class RedrawButtonsPanel extends JPanel {
         setBorder(BorderFactory.createLineBorder(Color.black));
         mF.setRBP(this);
         jF.setRBP(this);
+        mF.setSelected(true);
         redrawButton = new JButton("Redraw");
         resetButton = new JButton("Reset");
         xRange = new JLabel("X Range");

@@ -20,6 +20,8 @@ public abstract class FractalDrawer extends JPanel {
     protected Rectangle2D rectangle;
     protected boolean selected;
     protected RedrawButtonsPanel rBP;
+    protected FractalThread[][] threads;
+    protected int coreRoot;
 
 
     public void setRBP(RedrawButtonsPanel rBP) {
@@ -39,9 +41,11 @@ public abstract class FractalDrawer extends JPanel {
     }
 
     public FractalDrawer(){
+        configureCores();
         setBorder(BorderFactory.createLineBorder(Color.black));
         addComponentListener(new ComponentListener() {
             @Override
+            //resizes the buffered image when the panel resizes
             public void componentResized(ComponentEvent e) {
                 canvas = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
                 redrawFractal(xStart,yStart,xEnd,yEnd,iterations);
@@ -66,6 +70,12 @@ public abstract class FractalDrawer extends JPanel {
         addMouseListener(dragListener);
         addMouseMotionListener(dragListener);
         addMouseWheelListener(dragListener);
+    }
+
+    private void configureCores(){
+        int cores = Runtime.getRuntime().availableProcessors();
+        cores = (int) (Math.sqrt(cores));
+        coreRoot =cores;
     }
 
     public double getxStart() {
@@ -122,6 +132,8 @@ public abstract class FractalDrawer extends JPanel {
     }
     public abstract void redrawFractal(double xStart, double yStart,double xEnd,double yEnd,int iterations );
 
+
+    //calculates the color of the pixel based on the constant and the complex point
     public Color colourPixel(Complex zOfZero, Complex constant) {
         int deviatesAt=0;
         boolean deviates = false;
