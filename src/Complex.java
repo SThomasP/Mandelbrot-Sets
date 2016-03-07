@@ -54,6 +54,7 @@ public class Complex {
         return realPart*realPart +imaginaryPart*imaginaryPart;
     }
 
+
     public Complex add(Complex d){
         //adds the imaginary and real parts of the two complex numbers, then returns a new complex number with the result
         double sumReal = d.getReal()+getReal();

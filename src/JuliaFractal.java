@@ -10,6 +10,11 @@ public class JuliaFractal extends FractalDrawer {
     private FavouritesPanel fP;
 
     public JuliaFractal(){
+
+    }
+
+    public void init(){
+        super.init();
         setSize(100,80);
         setPreferredSize(new Dimension(100,80));
         canvas =new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
@@ -49,7 +54,6 @@ public class JuliaFractal extends FractalDrawer {
     }
 
     public void generateJulias(){
-        //TODO: thread this method to make it run quicker for larger monitors
         for (int x = 0; x < getWidth(); x++){
             double realPart = xStart + (xEnd-xStart)*x/getWidth();
             for (int y = 0; y < getHeight(); y++){

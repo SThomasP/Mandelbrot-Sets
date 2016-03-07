@@ -21,7 +21,6 @@ public class RedrawButtonsPanel extends JPanel {
         xRange = new JLabel("X Range");
         yRange = new JLabel("Y Range");
         iterationsLabel = new JLabel("Iterations");
-        //TODO:get these adjust based on the rescaleing of the fractal image
         xMin = new JTextField(Complex.toFourDP(mF.getxStart()));
         xMax = new JTextField(Complex.toFourDP(mF.getxEnd()));
         yMin = new JTextField(Complex.toFourDP(mF.getyStart()));

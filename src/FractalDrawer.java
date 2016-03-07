@@ -20,8 +20,7 @@ public abstract class FractalDrawer extends JPanel {
     protected Rectangle2D rectangle;
     protected boolean selected;
     protected RedrawButtonsPanel rBP;
-    protected FractalThread[][] threads;
-    protected int coreRoot;
+    protected Color[] drawColors;
 
 
     public void setRBP(RedrawButtonsPanel rBP) {
@@ -41,11 +40,14 @@ public abstract class FractalDrawer extends JPanel {
     }
 
     public FractalDrawer(){
-        configureCores();
+
+    }
+
+    public void init(){
         setBorder(BorderFactory.createLineBorder(Color.black));
         addComponentListener(new ComponentListener() {
             @Override
-            //resizes the buffered image when the panel resizes
+            //resize the buffered image when the panel gets resized
             public void componentResized(ComponentEvent e) {
                 canvas = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
                 redrawFractal(xStart,yStart,xEnd,yEnd,iterations);
@@ -70,13 +72,14 @@ public abstract class FractalDrawer extends JPanel {
         addMouseListener(dragListener);
         addMouseMotionListener(dragListener);
         addMouseWheelListener(dragListener);
+        drawColors = new Color[5];
+        drawColors[0] = new Color(12288);
+        drawColors[1] = new Color(1591320);
+        drawColors[2] =  new Color(4749312);
+        drawColors[3] = new Color(10863104);
+        drawColors[4] = new Color(12768847);
     }
 
-    private void configureCores(){
-        int cores = Runtime.getRuntime().availableProcessors();
-        cores = (int) (Math.sqrt(cores));
-        coreRoot =cores;
-    }
 
     public double getxStart() {
         return xStart;
@@ -135,7 +138,7 @@ public abstract class FractalDrawer extends JPanel {
 
     //calculates the color of the pixel based on the constant and the complex point
     public Color colourPixel(Complex zOfZero, Complex constant) {
-        int deviatesAt=0;
+        int deviatesAt=iterations;
         boolean deviates = false;
         for (int i = 0; i < iterations; i++) {
             double mSquared = zOfZero.magnitudeSquared();
@@ -146,9 +149,18 @@ public abstract class FractalDrawer extends JPanel {
             zOfZero = zOfZero.getSquare().add(constant);
         }
         Color returnColour;
-        if (deviates){
-            int colourNo = deviatesAt*255/iterations;
-            returnColour = new Color(0,colourNo,100);
+        if (deviates) {
+            int range = iterations / (drawColors.length - 1);
+            int n = deviatesAt / range;
+            if (n==drawColors.length-1){
+                n=n-1;
+            }
+            Color c1 = drawColors[n];
+            Color c2 = drawColors[n + 1];
+            int red = c2.getRed()-((n+1)*range-deviatesAt)*(c2.getRed()-c1.getRed())/range;
+            int green = c2.getGreen()-((n+1)*range-deviatesAt)*(c2.getGreen()-c1.getGreen())/range;
+            int blue = c2.getBlue()-((n+1)*range-deviatesAt)*(c2.getBlue()-c1.getBlue())/range;
+            returnColour = new Color(red,green,blue);
         }
         else{
             returnColour = Color.black;

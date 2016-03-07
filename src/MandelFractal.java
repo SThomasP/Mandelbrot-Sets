@@ -8,6 +8,9 @@ public class MandelFractal extends FractalDrawer {
 
 
     public MandelFractal(){
+    }
+    public void init(){
+        super.init();
         setSize(100,80);
         setPreferredSize(new Dimension(100,80));
         canvas = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
