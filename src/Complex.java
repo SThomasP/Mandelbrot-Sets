@@ -14,6 +14,8 @@ public class Complex {
         this.realPart = realPart;
     }
 
+
+    //getters for the two parts of the complex number
     public double getReal(){
         return realPart;
     }
@@ -21,6 +23,8 @@ public class Complex {
         return imaginaryPart;
     }
 
+
+    //round the two parts of the Complex number to 4dp, then returns a string value in the form a+bi
     public String getStringValue(){
         if(imaginaryPart<0){
             return (toFourDP(realPart)+" - "+ toFourDP(Math.abs(imaginaryPart))+"i");
@@ -29,7 +33,7 @@ public class Complex {
             return (toFourDP(realPart)+" + "+ toFourDP(Math.abs(imaginaryPart))+"i");
         }
     }
-
+    //same as above, just without the rounding
     public String getFullStringValue(){
         if(imaginaryPart<0){
             return (realPart+" - "+ Math.abs(imaginaryPart)+"i");
@@ -39,17 +43,18 @@ public class Complex {
         }
     }
 
-
+    //checks whether a complex equals another complex, based on the values within, not location in memory
     public boolean equals(Complex c){
         return ((c.getImaginary()==getImaginary())&&(c.getReal()==getReal()));
     }
 
     public Complex getSquare(){
+        //returns the square of the number and creates a new complex for it
         double squaredReal = realPart*realPart - imaginaryPart*imaginaryPart;
         double squaredImaginary = 2*realPart*imaginaryPart;
         return new Complex(squaredReal,squaredImaginary);
     }
-
+    // returns the sum of the squares of the parts, as m^2=r^2+i^;
     public double magnitudeSquared(){
         return realPart*realPart +imaginaryPart*imaginaryPart;
     }
@@ -63,6 +68,8 @@ public class Complex {
 
     }
 
+
+    //static method that returns a string that has rounded a inputted double to 4dp, allowing the doubles in the program to appear a reasonable length
     public static String toFourDP(double tooLong){
         DecimalFormat d = new DecimalFormat("#0.0000");
         return d.format(tooLong);

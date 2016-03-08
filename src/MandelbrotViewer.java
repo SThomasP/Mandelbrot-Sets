@@ -31,8 +31,10 @@ public class MandelbrotViewer extends JFrame {
         juliaFractal = new JuliaFractal();
         juliaFractal.init();
         favouritesPanel = new FavouritesPanel(juliaFractal);
+        favouritesPanel.init();
         mandelbrotFractal.addMouseListener(new MandelClickListener(juliaFractal, mandelbrotFractal));
-        buttonsPanel = new RedrawButtonsPanel(mandelbrotFractal, juliaFractal);
+        buttonsPanel = new RedrawButtonsPanel();
+        buttonsPanel.init(mandelbrotFractal,juliaFractal);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         bagConstraints.weighty = 0.8;
         bagConstraints.weightx = 0.5;

@@ -72,12 +72,13 @@ public abstract class FractalDrawer extends JPanel {
         addMouseListener(dragListener);
         addMouseMotionListener(dragListener);
         addMouseWheelListener(dragListener);
-        drawColors = new Color[5];
-        drawColors[0] = new Color(12288);
-        drawColors[1] = new Color(1591320);
-        drawColors[2] =  new Color(4749312);
-        drawColors[3] = new Color(10863104);
-        drawColors[4] = new Color(12768847);
+        drawColors = new Color[6];
+        drawColors[0] = new Color(0,48,0);
+        drawColors[1] = new Color(24,72,24);
+        drawColors[2] =  new Color(72,120,0);
+        drawColors[3] = new Color(165,194,0);
+        drawColors[4] = new Color(194,214,79);
+        drawColors[5] = drawColors[0];
     }
 
 
@@ -135,7 +136,6 @@ public abstract class FractalDrawer extends JPanel {
     }
     public abstract void redrawFractal(double xStart, double yStart,double xEnd,double yEnd,int iterations );
 
-
     //calculates the color of the pixel based on the constant and the complex point
     public Color colourPixel(Complex zOfZero, Complex constant) {
         int deviatesAt=iterations;
@@ -150,13 +150,13 @@ public abstract class FractalDrawer extends JPanel {
         }
         Color returnColour;
         if (deviates) {
-            int range = iterations / (drawColors.length - 1);
-            int n = deviatesAt / range;
-            if (n==drawColors.length-1){
-                n=n-1;
-            }
+            int loopLength = iterations/3;
+            deviatesAt = deviatesAt%loopLength;
+            int range = loopLength / (drawColors.length - 1);
+            int n = (deviatesAt / range)%(drawColors.length-1);
             Color c1 = drawColors[n];
-            Color c2 = drawColors[n + 1];
+            Color c2 = drawColors[n+1];
+
             int red = c2.getRed()-((n+1)*range-deviatesAt)*(c2.getRed()-c1.getRed())/range;
             int green = c2.getGreen()-((n+1)*range-deviatesAt)*(c2.getGreen()-c1.getGreen())/range;
             int blue = c2.getBlue()-((n+1)*range-deviatesAt)*(c2.getBlue()-c1.getBlue())/range;

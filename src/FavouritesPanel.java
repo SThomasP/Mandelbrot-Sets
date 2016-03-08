@@ -24,6 +24,10 @@ public class FavouritesPanel extends JPanel {
         this.juliaFractal = juliaFractal;
         this.juliaFractal.setfP(this);
         setBorder(BorderFactory.createLineBorder(Color.black));
+    }
+
+    public void init(){
+        //initialises the favourites panel (the panel on the right of the screen)
         setLayout(new GridBagLayout());
         currentComplex = new JLabel("-0.0000 + 0.0000i");
         currentComplex.setHorizontalAlignment(JLabel.CENTER);
@@ -50,9 +54,11 @@ public class FavouritesPanel extends JPanel {
         addButton.setFont(buttonFont);
         removeButton.setFont(buttonFont);
         removeButton.setForeground(Color.red);
+        //disable the remove to avoid errors, button gets enabled when a item in the list is selected
         removeButton.setEnabled(false);
         addButton.setForeground(Color.green);
         ActionListener addListener = actionEvent -> {
+            //checks to see if a complex number is alread in the list of favourties before its added
             boolean inThere = false;
             for (int i = 0; i < listModel.getSize(); i++) {
                 if (listModel.get(i).equals(juliaFractal.getConstant())) {
@@ -63,6 +69,7 @@ public class FavouritesPanel extends JPanel {
                 listModel.addElement(juliaFractal.getConstant());
             }
         };
+        //
         ActionListener removeListener = new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 int index = favouriteNumbers.getSelectedIndex();
@@ -96,9 +103,11 @@ public class FavouritesPanel extends JPanel {
         Dimension d = new Dimension(favouriteNumbers.getWidth(),favouriteNumbers.getHeight());
         setAllDimensions(d, favouriteNumbers);
         //TODO: export Julia and Export Mandelbrot buttons
+        //TODO: save and load fractal buttons
         copyButton = new JButton("Copy Julia Constant");
         ActionListener copyListener = new ActionListener() {
             @Override
+            //add the value of the julia constant to the clipboard
             public void actionPerformed(ActionEvent e) {
                 Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(juliaFractal.getConstant().getFullStringValue()),null);
                 JOptionPane.showMessageDialog(juliaFractal, "Copied to Clipboard");
@@ -112,13 +121,15 @@ public class FavouritesPanel extends JPanel {
         add(copyButton,c);
         updateLabel();
     }
-
+    //sets the maximum size, preffered size and minimum size to the dimensions specified, used to deal with some resizing issues that I was having
     public static void  setAllDimensions(Dimension d, Component c){
         c.setMaximumSize(d);
         c.setMinimumSize(d);
         c.setPreferredSize(d);
     }
 
+
+    //updates the User selected point label to the one currently represented by the Julia fractal
     public void updateLabel() {
         currentComplex.setText(juliaFractal.getConstant().getStringValue());
     }

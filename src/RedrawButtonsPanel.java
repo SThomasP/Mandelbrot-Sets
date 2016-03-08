@@ -11,8 +11,14 @@ public class RedrawButtonsPanel extends JPanel {
     private JTextField xMin,xMax,yMin,yMax,iterationsField;
     private JRadioButton mButton, jButton;
 
-    public RedrawButtonsPanel(MandelFractal mF, JuliaFractal jF){
+    public RedrawButtonsPanel(){
         setBorder(BorderFactory.createLineBorder(Color.black));
+
+
+    }
+
+    public  void init(MandelFractal mF, JuliaFractal jF){
+        //TODO: gradient customization
         mF.setRBP(this);
         jF.setRBP(this);
         mF.setSelected(true);
@@ -79,7 +85,6 @@ public class RedrawButtonsPanel extends JPanel {
         gBC.gridx=6;
         gBC.ipadx =0;
         add(jButton,gBC);
-
     }
 
     public void setValues(double xStart, double xEnd, double yStart, double yEnd, int iterate){
