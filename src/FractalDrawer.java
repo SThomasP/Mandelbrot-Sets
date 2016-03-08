@@ -21,6 +21,7 @@ public abstract class FractalDrawer extends JPanel {
     protected boolean selected;
     protected RedrawButtonsPanel rBP;
     protected Color[] drawColors;
+    protected int loopCount;
 
 
     public void setRBP(RedrawButtonsPanel rBP) {
@@ -79,6 +80,7 @@ public abstract class FractalDrawer extends JPanel {
         drawColors[3] = new Color(165,194,0);
         drawColors[4] = new Color(194,214,79);
         drawColors[5] = drawColors[0];
+        loopCount = 3;
     }
 
 
@@ -150,7 +152,7 @@ public abstract class FractalDrawer extends JPanel {
         }
         Color returnColour;
         if (deviates) {
-            int loopLength = iterations/3;
+            int loopLength = iterations/loopCount;
             deviatesAt = deviatesAt%loopLength;
             int range = loopLength / (drawColors.length - 1);
             int n = (deviatesAt / range)%(drawColors.length-1);

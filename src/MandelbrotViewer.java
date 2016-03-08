@@ -54,7 +54,7 @@ public class MandelbrotViewer extends JFrame {
         FavouritesPanel.setAllDimensions(d, favouritesPanel);
         bagConstraints.gridx = 0;
         bagConstraints.gridy = 1;
-        bagConstraints.gridheight = 0;
+        bagConstraints.gridheight = 1;
         bagConstraints.gridwidth = 2;
         bagConstraints.weighty = 0.3;
         add(buttonsPanel, bagConstraints);

@@ -10,6 +10,8 @@ public class RedrawButtonsPanel extends JPanel {
     private JLabel xRange,yRange, iterationsLabel;
     private JTextField xMin,xMax,yMin,yMax,iterationsField;
     private JRadioButton mButton, jButton;
+    private JList<Color> gradientColors;
+    private DefaultListModel<Color> gradientModel;
 
     public RedrawButtonsPanel(){
         setBorder(BorderFactory.createLineBorder(Color.black));
@@ -18,10 +20,14 @@ public class RedrawButtonsPanel extends JPanel {
     }
 
     public  void init(MandelFractal mF, JuliaFractal jF){
-        //TODO: gradient customization
         mF.setRBP(this);
         jF.setRBP(this);
         mF.setSelected(true);
+        /*
+        TODO: Gradient customizer,
+         JList, horizontal shows colored squares, squares can be dragged around, add button loads color selector
+         which adds a color to the list,
+         */
         redrawButton = new JButton("Redraw");
         resetButton = new JButton("Reset");
         xRange = new JLabel("X Range");

@@ -27,7 +27,7 @@ public class RedrawButtonAction implements ActionListener {
         mandelFractal = f;
     }
 
-    public RedrawButtonAction(JTextField xMin, JTextField xMax, JTextField yMin, JTextField yMax, JTextField iterations, MandelFractal mandelFractal){
+    public RedrawButtonAction(JTextField xMin, JTextField xMax, JTextField yMin, JTextField yMax, JTextField iterations, FractalDrawer mandelFractal){
         this.xMax=xMax;
         this.xMin=xMin;
         this.yMax=yMax;
