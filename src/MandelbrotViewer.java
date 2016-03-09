@@ -6,16 +6,12 @@ import java.awt.*;
  */
 public class MandelbrotViewer extends JFrame {
 
+
+    //TODO: Tooltips and comments for everything
     protected MandelFractal mandelbrotFractal;
     protected JuliaFractal juliaFractal;
     protected RedrawButtonsPanel buttonsPanel;
     protected FavouritesPanel favouritesPanel;
-    public static double X_START = -2.0;
-    public static double Y_START = -1.6;
-    public static double X_END = 2.0;
-    public static double Y_END = 1.6;
-    public static int ITERATIONS = 100;
-    public static Complex DEFAULT_C = new Complex(0, 0);
 
 
     public MandelbrotViewer(String t) {

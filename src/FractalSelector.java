@@ -7,6 +7,7 @@ import java.awt.event.ItemListener;
 public class FractalSelector implements ItemListener {
 
     private FractalDrawer fractalDrawer;
+    private RedrawButtonsPanel redrawButtonsPanel;
     private RedrawButtonAction redrawButtonAction;
     private ResetButtonAction resetButtonAction;
 
@@ -15,7 +16,8 @@ public class FractalSelector implements ItemListener {
             redrawButtonAction.changeFractal(fractalDrawer);
             resetButtonAction.changeFractal(fractalDrawer);
             fractalDrawer.setSelected(true);
-            fractalDrawer.getrBP().setValues(fractalDrawer.getxStart(),fractalDrawer.getxEnd(),fractalDrawer.getyStart(),fractalDrawer.getyEnd(),fractalDrawer.getIterations());
+            redrawButtonsPanel.setValues(fractalDrawer.getxStart(), fractalDrawer.getxEnd(), fractalDrawer.getyStart(), fractalDrawer.getyEnd(), fractalDrawer.getIterations());
+            redrawButtonsPanel.setColors(fractalDrawer.getColors(), fractalDrawer.getLoopCount());
         }
         else{
             fractalDrawer.setSelected(false);
@@ -26,6 +28,6 @@ public class FractalSelector implements ItemListener {
         this.fractalDrawer = fractalDrawer;
         this.resetButtonAction =resetButtonAction;
         this.redrawButtonAction = redrawButtonAction;
-
+        this.redrawButtonsPanel = fractalDrawer.getrBP();
     }
 }

@@ -8,27 +8,22 @@ import java.awt.event.ActionListener;
 public class ResetButtonAction implements ActionListener {
 
 
-    protected JTextField xMin;
-    protected JTextField xMax;
-    protected JTextField yMin;
-    protected JTextField yMax;
-    protected JTextField iterations;
+
     protected FractalDrawer mandelFractal;
+    protected RedrawButtonsPanel buttonsPanel;
 
     public void actionPerformed(ActionEvent e) {
         mandelFractal.resetToDefault();
+        buttonsPanel.setValues(mandelFractal.getxStart(), mandelFractal.getxEnd(), mandelFractal.getyStart(), mandelFractal.getyEnd(), mandelFractal.getIterations());
+        buttonsPanel.setColors(mandelFractal.getColors(), mandelFractal.getLoopCount());
     }
 
     public void changeFractal(FractalDrawer fractal){
         mandelFractal = fractal;
     }
 
-    public ResetButtonAction(JTextField xMin, JTextField xMax, JTextField yMin, JTextField yMax,JTextField iterations, FractalDrawer fD){
+    public ResetButtonAction(RedrawButtonsPanel buttonsPanel, FractalDrawer fD) {
         mandelFractal =fD;
-        this.xMin=xMin;
-        this.xMax=xMax;
-        this.yMin=yMin;
-        this.yMax=yMax;
-        this.iterations=iterations;
+        this.buttonsPanel = buttonsPanel;
     }
 }

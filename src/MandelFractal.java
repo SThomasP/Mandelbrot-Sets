@@ -18,10 +18,6 @@ public class MandelFractal extends FractalDrawer {
         setBackground(Color.blue);
     }
 
-    public void resetToDefault(){
-        redrawFractal(MandelbrotViewer.X_START,MandelbrotViewer.Y_START,MandelbrotViewer.X_END,MandelbrotViewer.Y_END,MandelbrotViewer.ITERATIONS);
-
-    }
 
     public void redrawFractal(double xStart, double yStart,double xEnd,double yEnd,int iterations ){
         this.xStart=xStart;
@@ -41,7 +37,7 @@ public class MandelFractal extends FractalDrawer {
     }
 
     public Complex getConstant(){
-        return MandelbrotViewer.DEFAULT_C;
+        return DEFAULT_C;
     }
 
     public void generateMandlebrots(){

@@ -22,17 +22,14 @@ public class JuliaFractal extends FractalDrawer {
         setSize(100,80);
         setPreferredSize(new Dimension(100,80));
         canvas =new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
-        baseNo = MandelbrotViewer.DEFAULT_C;
-        redrawFractal(MandelbrotViewer.X_START,MandelbrotViewer.Y_START,MandelbrotViewer.X_END,MandelbrotViewer.Y_END,MandelbrotViewer.ITERATIONS);
+        baseNo = DEFAULT_C;
+        redrawFractal(X_START, Y_START, X_END, Y_END, ITERATIONS);
     }
 
     public void setfP(FavouritesPanel fP) {
         this.fP = fP;
     }
 
-    public void resetToDefault(){
-        redrawFractal(MandelbrotViewer.X_START,MandelbrotViewer.Y_START,MandelbrotViewer.X_END,MandelbrotViewer.Y_END,MandelbrotViewer.ITERATIONS);
-    }
 
     public void redrawFractal(double xStart, double yStart, double xEnd, double yEnd, int iterations) {
         this.xStart=xStart;

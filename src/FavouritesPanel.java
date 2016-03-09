@@ -50,7 +50,7 @@ public class FavouritesPanel extends JPanel {
         c.anchor = GridBagConstraints.LINE_START;
         removeButton = new JButton("-");
         add(removeButton, c);
-        Font buttonFont = new Font("Arial", Font.BOLD, 12);
+        Font buttonFont = new Font("Arial", Font.BOLD, 15);
         listModel = new DefaultListModel<>();
         addButton.setFont(buttonFont);
         removeButton.setFont(buttonFont);
@@ -102,7 +102,7 @@ public class FavouritesPanel extends JPanel {
         Dimension d = new Dimension(favouriteNumbers.getWidth(),favouriteNumbers.getHeight());
         setAllDimensions(d, favouriteNumbers);
         //TODO: export Julia and Export Mandelbrot buttons
-        //TODO: save and load fractal buttons
+        //TODO: load fractal buttons
         copyButton = new JButton("Copy Julia Constant");
         ActionListener copyListener = new ActionListener() {
             @Override

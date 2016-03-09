@@ -7,32 +7,20 @@ import java.awt.event.ActionListener;
  */
 public class RedrawButtonAction implements ActionListener {
 
-    protected JTextField xMin;
-    protected JTextField xMax;
-    protected JTextField yMin;
-    protected JTextField yMax;
-    protected JTextField iterations;
+    protected RedrawButtonsPanel buttonsPanel;
     protected FractalDrawer mandelFractal;
 
     public void actionPerformed(ActionEvent e) {
-        Double x0 = new Double(xMin.getText());
-        Double x1 = new Double(xMax.getText());
-        Double y0 = new Double(yMin.getText());
-        Double y1 = new Double(yMax.getText());
-        Integer iterationCount = new Integer(iterations.getText());
-        mandelFractal.redrawFractal(x0,y0,x1,y1,iterationCount);
+        mandelFractal.redrawFractal(buttonsPanel.getXMin(), buttonsPanel.getYMin(), buttonsPanel.getXMax(), buttonsPanel.getYMax(), buttonsPanel.getIterations());
+        mandelFractal.setColors(buttonsPanel.getColours(), buttonsPanel.getLoopCount());
     }
 
     public void changeFractal(FractalDrawer f){
         mandelFractal = f;
     }
 
-    public RedrawButtonAction(JTextField xMin, JTextField xMax, JTextField yMin, JTextField yMax, JTextField iterations, FractalDrawer mandelFractal){
-        this.xMax=xMax;
-        this.xMin=xMin;
-        this.yMax=yMax;
-        this.yMin=yMin;
-        this.iterations = iterations;
+    public RedrawButtonAction(RedrawButtonsPanel buttonsPanel, FractalDrawer mandelFractal) {
+        this.buttonsPanel = buttonsPanel;
         this.mandelFractal = mandelFractal;
     }
 }

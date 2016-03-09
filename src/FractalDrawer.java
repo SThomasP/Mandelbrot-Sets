@@ -22,6 +22,14 @@ public abstract class FractalDrawer extends JPanel {
     protected RedrawButtonsPanel rBP;
     protected Color[] drawColors;
     protected int loopCount;
+    public static double X_START = -2.0;
+    public static double Y_START = -1.6;
+    public static double X_END = 2.0;
+    public static double Y_END = 1.6;
+    public static int ITERATIONS = 100;
+    public static Complex DEFAULT_C = new Complex(0, 0);
+    public static Color[] DEFAULT_COLOURS = {new Color(-11181456), new Color(-11612732), new Color(-3672988), new Color(-38037), new Color(-3912360)};
+    public static int LOOP_COUNT = 5;
 
 
     public void setRBP(RedrawButtonsPanel rBP) {
@@ -73,23 +81,17 @@ public abstract class FractalDrawer extends JPanel {
         addMouseListener(dragListener);
         addMouseMotionListener(dragListener);
         addMouseWheelListener(dragListener);
-        drawColors = new Color[6];
-        drawColors[0] = new Color(-11181456);
-        drawColors[1] = new Color(-11612732);
-        drawColors[2] =  new Color(-3672988);
-        drawColors[3] = new Color(-38037);
-        drawColors[4] = new Color(-3912360);
-        drawColors[5] = drawColors[0];
-        loopCount =5;
+        drawColors = DEFAULT_COLOURS;
+        loopCount = LOOP_COUNT;
     }
 
 
     public Color[] getColors(){
-        Color[] exportColors = new Color[drawColors.length-1];
-        for (int i=0;i<exportColors.length;i++){
-            exportColors[i] = drawColors[i];
-        }
-        return exportColors;
+        return drawColors;
+    }
+
+    public void setColors(Color[] tempColors, int loopCount) {
+        drawColors = tempColors;
     }
 
     public double getxStart() {
@@ -123,7 +125,10 @@ public abstract class FractalDrawer extends JPanel {
         }
     }
 
-    public abstract void resetToDefault();
+    public void resetToDefault() {
+        redrawFractal(X_START, Y_START, X_END, Y_END, ITERATIONS);
+        setColors(DEFAULT_COLOURS, LOOP_COUNT);
+    }
 
 
     //sets the Aspect Ratio of the image to the ideal ratio
@@ -170,10 +175,10 @@ public abstract class FractalDrawer extends JPanel {
         if (deviates) {
             int loopLength = iterations/loopCount;
             deviatesAt = deviatesAt%loopLength;
-            int range = loopLength / (drawColors.length - 1);
-            int n = (deviatesAt / range)%(drawColors.length-1);
+            int range = loopLength / (drawColors.length);
+            int n = (deviatesAt / range) % (drawColors.length);
             Color c1 = drawColors[n];
-            Color c2 = drawColors[n+1];
+            Color c2 = drawColors[(n + 1) % drawColors.length];
             n = deviatesAt/range;
             int red = c2.getRed()-((n+1)*range-deviatesAt)*(c2.getRed()-c1.getRed())/range;
             int green = c2.getGreen()-((n+1)*range-deviatesAt)*(c2.getGreen()-c1.getGreen())/range;
