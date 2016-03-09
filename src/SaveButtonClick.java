@@ -9,33 +9,50 @@ import java.io.PrintStream;
  */
 public class SaveButtonClick implements ActionListener {
 
-    private FractalDrawer drawer;
+    private  FractalDrawer drawer;
+    JFileChooser fileChooser;
 
-    public SaveButtonClick(FractalDrawer drawer){
+    public SaveButtonClick(FractalDrawer drawer, JFileChooser fileChooser){
         this.drawer=drawer;
+        this.fileChooser=fileChooser;
+    }
+
+    public void saveToFile(){
+        try {
+            PrintStream stream = new PrintStream(fileChooser.getSelectedFile());
+            stream.println("<FractalType=|" + drawer.getType() + "|>");
+            stream.println("<XRange=|" + drawer.getxStart() + "|" + drawer.getxEnd() + "|>");
+            stream.println("<YRange=|" + drawer.getyStart() + "|" + drawer.getyEnd() + "|>");
+            stream.println("<Iterations=|" + drawer.getIterations() + "|>");
+            stream.println("<Constant=|" + drawer.getConstant().getReal() + "|" + drawer.getConstant().getImaginary() + "|>");
+            stream.print("<GradientColours=|");
+            for (Color c : drawer.getColors()) {
+                stream.print(c.getRGB() + "|");
+            }
+            stream.println(">");
+            stream.println("<Loop=|" + drawer.getLoopCount() + "|>");
+            stream.close();
+        }
+        catch(Exception ignored) {
+        }
     }
 
     public void actionPerformed(ActionEvent e) {
-        try {
-            JFileChooser fileChooser = new JFileChooser();
-            int returnValue = fileChooser.showSaveDialog(drawer);
-            if (returnValue==JFileChooser.APPROVE_OPTION) {
-                PrintStream stream = new PrintStream(fileChooser.getSelectedFile());
-                stream.println("<FractalType=|" + drawer.getType() + "|>");
-                stream.println("<XRange=|" + drawer.getxStart() + "|" + drawer.getxEnd() + "|>");
-                stream.println("<YRange=|" + drawer.getyStart() + "|" + drawer.getyEnd() + "|>");
-                stream.println("<Iterations=|" + drawer.getIterations() + "|>");
-                stream.println("<Constant=|" + drawer.getConstant().getReal() + "|" + drawer.getConstant().getImaginary() + "|>");
-                stream.print("<GradientColours=|");
-                for (Color c : drawer.getColors()) {
-                    stream.print(c.getRGB() + "|");
+        int returnValue = fileChooser.showSaveDialog(drawer);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            //ask the user to confirm the overwriting of an existing file
+            if (fileChooser.getSelectedFile().exists()){
+                String[] options={"Yes","No"};
+                int n = JOptionPane.showOptionDialog(drawer,(fileChooser.getSelectedFile().getName()+" Already exists, \n"
+                +"would you like to overwrite it"),"File exists", JOptionPane.YES_NO_OPTION,JOptionPane.WARNING_MESSAGE,null
+                        ,options,options[0]);
+                if(n==JOptionPane.YES_OPTION){
+                    saveToFile();
                 }
-                stream.println(">");
-                stream.println("<Loop=|" + drawer.getLoopCount() + "|>");
-                stream.close();
             }
-        }
-        catch(Exception e1) {
+            else {
+                saveToFile();
+            }
         }
     }
 }

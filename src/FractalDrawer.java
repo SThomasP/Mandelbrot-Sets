@@ -80,7 +80,7 @@ public abstract class FractalDrawer extends JPanel {
         drawColors[3] = new Color(-38037);
         drawColors[4] = new Color(-3912360);
         drawColors[5] = drawColors[0];
-        loopCount = 3;
+        loopCount =5;
     }
 
 

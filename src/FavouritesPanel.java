@@ -120,8 +120,9 @@ public class FavouritesPanel extends JPanel {
         add(copyButton,c);
         saveJ = new JButton("Save Julia");
         saveM = new JButton("Save Mandelbrot");
-        saveJ.addActionListener(new SaveButtonClick(juliaFractal));
-        saveM.addActionListener(new SaveButtonClick(mandelFractal));
+        JFileChooser saveChooser=new JFileChooser();
+        saveJ.addActionListener(new SaveButtonClick(juliaFractal,saveChooser));
+        saveM.addActionListener(new SaveButtonClick(mandelFractal,saveChooser));
         c.gridwidth=1;
         c.gridy=4;
         add(saveM,c);
