@@ -6,7 +6,7 @@ import java.awt.*;
  */
 public class RedrawButtonsPanel extends JPanel {
 
-    private JButton redrawButton, resetButton;
+    private JButton redrawButton, resetButton, addColourButton, removeColourButton;
     private JLabel xRange,yRange, iterationsLabel;
     private JTextField xMin,xMax,yMin,yMax,iterationsField;
     private JRadioButton mButton, jButton;
@@ -43,6 +43,31 @@ public class RedrawButtonsPanel extends JPanel {
         jButton = new JRadioButton("Julia Set");
         bGroup.add(jButton);
         bGroup.add(mButton);
+        gradientModel = new DefaultListModel<>();
+        Color[] colors = mF.getColors();
+        for (int i=0;i<colors.length;i++){
+            gradientModel.add(i,colors[i]);
+        }
+        gradientColors = new JList<>(gradientModel);
+        gradientColors.setDragEnabled(true);
+        gradientColors.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        gradientColors.setDropMode(DropMode.INSERT);
+        gradientColors.setCellRenderer(new ListCellRenderer<Color>() {
+            @Override
+            public Component getListCellRendererComponent(JList<? extends Color> list, Color value, int index, boolean isSelected, boolean cellHasFocus) {
+                JLabel colourThing = new JLabel("    ");
+                colourThing.setSize(50,50);
+                colourThing.setOpaque(true);
+                colourThing.setBackground(value);
+                if (isSelected){
+                    colourThing.setBorder(BorderFactory.createLineBorder(Color.black));
+                }
+                else{
+                    colourThing.setBorder(null);
+                }
+                return colourThing;
+            }
+        });
         setLayout(new GridBagLayout());
         GridBagConstraints gBC = new GridBagConstraints();
         iterationsField = new JTextField(Integer.toString(mF.getIterations()));
@@ -91,6 +116,10 @@ public class RedrawButtonsPanel extends JPanel {
         gBC.gridx=6;
         gBC.ipadx =0;
         add(jButton,gBC);
+        gBC.gridx=0;
+        gBC.gridy=2;
+        gBC.gridwidth=GridBagConstraints.REMAINDER;
+        add(gradientColors,gBC);
     }
 
     public void setValues(double xStart, double xEnd, double yStart, double yEnd, int iterate){

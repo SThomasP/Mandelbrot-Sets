@@ -17,6 +17,7 @@ public class FavouritesPanel extends JPanel {
     private JLabel currentComplex;
     private JButton addButton;
     private JButton copyButton;
+    private JButton saveM, saveJ;
     private JButton removeButton;
 
 
@@ -26,7 +27,7 @@ public class FavouritesPanel extends JPanel {
         setBorder(BorderFactory.createLineBorder(Color.black));
     }
 
-    public void init(){
+    public void init(MandelFractal mandelFractal){
         //initialises the favourites panel (the panel on the right of the screen)
         setLayout(new GridBagLayout());
         currentComplex = new JLabel("-0.0000 + 0.0000i");
@@ -75,9 +76,7 @@ public class FavouritesPanel extends JPanel {
                 int index = favouriteNumbers.getSelectedIndex();
                 favouriteNumbers.clearSelection();
                 listModel.remove(index);
-                if (listModel.size() == 0) {
-                    removeButton.setEnabled(false);
-                }
+                removeButton.setEnabled(false);
             }
         };
 
@@ -119,9 +118,18 @@ public class FavouritesPanel extends JPanel {
         c.anchor=GridBagConstraints.CENTER;
         c.gridy=3;
         add(copyButton,c);
+        saveJ = new JButton("Save Julia");
+        saveM = new JButton("Save Mandelbrot");
+        saveJ.addActionListener(new SaveButtonClick(juliaFractal));
+        saveM.addActionListener(new SaveButtonClick(mandelFractal));
+        c.gridwidth=1;
+        c.gridy=4;
+        add(saveM,c);
+        c.gridx=1;
+        add(saveJ,c);
         updateLabel();
     }
-    //sets the maximum size, preffered size and minimum size to the dimensions specified, used to deal with some resizing issues that I was having
+    //sets the maximum size, preferred size and minimum size to the dimensions specified, used to deal with some resizing issues that I was having
     public static void  setAllDimensions(Dimension d, Component c){
         c.setMaximumSize(d);
         c.setMinimumSize(d);

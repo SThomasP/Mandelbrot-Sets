@@ -13,6 +13,10 @@ public class JuliaFractal extends FractalDrawer {
 
     }
 
+     public String getType(){
+         return "JULIA";
+     }
+
     public void init(){
         super.init();
         setSize(100,80);

@@ -36,6 +36,13 @@ public class MandelFractal extends FractalDrawer {
         }
     }
 
+    public String getType() {
+        return "MANDELBROT";
+    }
+
+    public Complex getConstant(){
+        return MandelbrotViewer.DEFAULT_C;
+    }
 
     public void generateMandlebrots(){
         for (int x = 0; x < canvas.getWidth(); x++){

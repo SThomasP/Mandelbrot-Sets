@@ -31,7 +31,7 @@ public class MandelbrotViewer extends JFrame {
         juliaFractal = new JuliaFractal();
         juliaFractal.init();
         favouritesPanel = new FavouritesPanel(juliaFractal);
-        favouritesPanel.init();
+        favouritesPanel.init(mandelbrotFractal);
         mandelbrotFractal.addMouseListener(new MandelClickListener(juliaFractal, mandelbrotFractal));
         buttonsPanel = new RedrawButtonsPanel();
         buttonsPanel.init(mandelbrotFractal,juliaFractal);

@@ -13,12 +13,15 @@ public class ComplexCellRenderer extends JLabel implements ListCellRenderer<Comp
     }
 
     public Component getListCellRendererComponent(JList<? extends Complex> jList, Complex complex, int index, boolean isSelected, boolean hasFocus) {
-        //if this value is selected, set the text colour to blue, if not the text is black
+        //Set the colors of the JLabels to match the JList
+        setOpaque(true);
         if (isSelected) {
-            setForeground(Color.blue);
+            setForeground(jList.getSelectionForeground());
+            setBackground(jList.getSelectionBackground());
         }
         else {
-            setForeground(Color.black);
+            setForeground(jList.getForeground());
+            setBackground(jList.getBackground());
         }
         setFont(jList.getFont());
         setText(complex.getStringValue());
