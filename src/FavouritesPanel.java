@@ -17,7 +17,7 @@ public class FavouritesPanel extends JPanel {
     private JLabel currentComplex;
     private JButton addButton;
     private JButton copyButton;
-    private JButton saveM, saveJ;
+    private JButton saveM, saveJ, loadM, loadJ, exportM, exportJ;
     private JButton removeButton;
 
 
@@ -31,6 +31,7 @@ public class FavouritesPanel extends JPanel {
         //initialises the favourites panel (the panel on the right of the screen)
         setLayout(new GridBagLayout());
         currentComplex = new JLabel("-0.0000 + 0.0000i");
+        currentComplex.setToolTipText("The constant of the Julia Fractal");
         currentComplex.setHorizontalAlignment(JLabel.CENTER);
         GridBagConstraints c = new GridBagConstraints();
         c.gridx = 0;
@@ -40,6 +41,7 @@ public class FavouritesPanel extends JPanel {
         add(currentComplex, c);
         setAllDimensions(currentComplex.getPreferredSize(),currentComplex);
         addButton = new JButton("+");
+        addButton.setToolTipText("Add this constant to a favourites list");
         c.fill = GridBagConstraints.NONE;
         c.gridy = 1;
         c.anchor = GridBagConstraints.LINE_END;
@@ -49,6 +51,7 @@ public class FavouritesPanel extends JPanel {
         c.gridx = 1;
         c.anchor = GridBagConstraints.LINE_START;
         removeButton = new JButton("-");
+        removeButton.setToolTipText("Remove this constant from the favourites list");
         add(removeButton, c);
         Font buttonFont = new Font("Arial", Font.BOLD, 15);
         listModel = new DefaultListModel<>();
@@ -83,6 +86,7 @@ public class FavouritesPanel extends JPanel {
         addButton.addActionListener(addListener);
         removeButton.addActionListener(removeListener);
         favouriteNumbers = new JList<>(listModel);
+        favouriteNumbers.setToolTipText("A list of your favourite Julia constants");
         favouriteNumbers.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
                 if (!favouriteNumbers.isSelectionEmpty()) {
@@ -104,6 +108,7 @@ public class FavouritesPanel extends JPanel {
         //TODO: export Julia and Export Mandelbrot buttons
         //TODO: load fractal buttons
         copyButton = new JButton("Copy Julia Constant");
+        copyButton.setToolTipText("Copy the constant of the Julia fractal to the clipboard");
         ActionListener copyListener = new ActionListener() {
             @Override
             //add the value of the julia constant to the clipboard
@@ -119,7 +124,9 @@ public class FavouritesPanel extends JPanel {
         c.gridy=3;
         add(copyButton,c);
         saveJ = new JButton("Save Julia");
+        saveJ.setToolTipText("Save the Julia Fractal to an ftl file");
         saveM = new JButton("Save Mandelbrot");
+        saveM.setToolTipText("Save the Mandelbrot Fractal to an ftl file");
         JFileChooser saveChooser=new JFileChooser();
         saveJ.addActionListener(new SaveButtonClick(juliaFractal,saveChooser));
         saveM.addActionListener(new SaveButtonClick(mandelFractal,saveChooser));
