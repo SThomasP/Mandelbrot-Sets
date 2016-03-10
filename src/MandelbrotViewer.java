@@ -23,6 +23,7 @@ public class MandelbrotViewer extends JFrame {
         setLayout(new GridBagLayout());
         GridBagConstraints bagConstraints = new GridBagConstraints();
         mandelbrotFractal = new MandelFractal();
+        mandelbrotFractal.setToolTipText("The Mandelbrot fractal");
         mandelbrotFractal.init();
         juliaFractal = new JuliaFractal();
         juliaFractal.init();

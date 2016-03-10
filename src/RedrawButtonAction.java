@@ -11,8 +11,9 @@ public class RedrawButtonAction implements ActionListener {
     protected FractalDrawer mandelFractal;
 
     public void actionPerformed(ActionEvent e) {
-        mandelFractal.redrawFractal(buttonsPanel.getXMin(), buttonsPanel.getYMin(), buttonsPanel.getXMax(), buttonsPanel.getYMax(), buttonsPanel.getIterations());
         mandelFractal.setColors(buttonsPanel.getColours(), buttonsPanel.getLoopCount());
+        mandelFractal.redrawFractal(buttonsPanel.getXMin(), buttonsPanel.getYMin(), buttonsPanel.getXMax(), buttonsPanel.getYMax(), buttonsPanel.getIterations());
+
     }
 
     public void changeFractal(FractalDrawer f){

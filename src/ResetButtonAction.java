@@ -14,8 +14,9 @@ public class ResetButtonAction implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         mandelFractal.resetToDefault();
-        buttonsPanel.setValues(mandelFractal.getxStart(), mandelFractal.getxEnd(), mandelFractal.getyStart(), mandelFractal.getyEnd(), mandelFractal.getIterations());
         buttonsPanel.setColors(mandelFractal.getColors(), mandelFractal.getLoopCount());
+        buttonsPanel.setValues(mandelFractal.getxStart(), mandelFractal.getxEnd(), mandelFractal.getyStart(), mandelFractal.getyEnd(), mandelFractal.getIterations());
+
     }
 
     public void changeFractal(FractalDrawer fractal){

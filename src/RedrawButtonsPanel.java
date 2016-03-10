@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.geom.Arc2D;
 
 /**
@@ -155,6 +156,8 @@ public class RedrawButtonsPanel extends JPanel {
         gBC.gridy = 3;
         gBC.anchor = GridBagConstraints.LINE_END;
         add(moveColourUp, gBC);
+        moveColourUp.addActionListener(new GradientModifierAction(gradientColors, -1));
+        moveColourDown.addActionListener(new GradientModifierAction(gradientColors, 1));
         gBC.gridx = 1;
         add(addColourButton, gBC);
         gBC.anchor = GridBagConstraints.LINE_START;
