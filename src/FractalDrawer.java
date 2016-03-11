@@ -22,6 +22,7 @@ public abstract class FractalDrawer extends JPanel {
     protected RedrawButtonsPanel rBP;
     protected Color[] drawColors;
     protected int loopCount;
+    //store the default loading information as static allowing it to be easily accessed by all methods
     public static double X_START = -2.0;
     public static double Y_START = -1.6;
     public static double X_END = 2.0;
@@ -129,8 +130,8 @@ public abstract class FractalDrawer extends JPanel {
     }
 
     public void resetToDefault() {
-        redrawFractal(X_START, Y_START, X_END, Y_END, ITERATIONS);
         setColors(DEFAULT_COLOURS, LOOP_COUNT);
+        redrawFractal(X_START, Y_START, X_END, Y_END, ITERATIONS);
     }
 
 

@@ -30,7 +30,6 @@ public class RedrawButtonsPanel extends JPanel {
         jF.setRBP(this);
         //tell the mandelbrot fractal that it is selected
         mF.setSelected(true);
-        //TODO: Gradient customizer
         redrawButton = new JButton("Redraw");
         redrawButton.setToolTipText("Redraw the fractal with the selected text");
         resetButton = new JButton("Reset");
@@ -73,7 +72,9 @@ public class RedrawButtonsPanel extends JPanel {
         ButtonGroup bGroup = new ButtonGroup();
         mButton = new JRadioButton("Mandelbrot Set");
         mButton.setSelected(true);
+        mButton.setToolTipText("Select the Mandelbrot set for editing");
         jButton = new JRadioButton("Julia Set");
+        jButton.setToolTipText("Select the Julia set for editing");
         bGroup.add(jButton);
         bGroup.add(mButton);
         gradientModel = new DefaultListModel<>();
@@ -82,13 +83,14 @@ public class RedrawButtonsPanel extends JPanel {
             gradientModel.add(i,colors[i]);
         }
         gradientColors = new JList<>(gradientModel);
+        gradientColors.setToolTipText("The colours in the gradient in the fractal");
         gradientColors.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         gradientColors.setVisibleRowCount(1);
         gradientColors.setLayoutOrientation(JList.HORIZONTAL_WRAP);
         //fixes the width of gradientColors, making it look nicer.
-        Dimension d = new Dimension(80 * 5, 16);
+        Dimension d = new Dimension(100 * 5, 16);
         gradientColors.setSize(d);
-        gradientColors.setFixedCellWidth(80);
+        gradientColors.setFixedCellWidth(100);
         FavouritesPanel.setAllDimensions(d, gradientColors);
         gradientColors.setSelectedIndex(0);
         gradientColors.setCellRenderer(new ListCellRenderer<Color>() {
@@ -130,6 +132,7 @@ public class RedrawButtonsPanel extends JPanel {
         setLayout(new GridBagLayout());
         GridBagConstraints gBC = new GridBagConstraints();
         iterationsField = new JSpinner(new SpinnerNumberModel(mF.getIterations(), 50, 1000, 1));
+        iterationsField.setToolTipText("The number of times the formula will be iterated over before a colour is chosen");
         ResetButtonAction resetAction = new ResetButtonAction(this, mF);
         RedrawButtonAction redrawAction = new RedrawButtonAction(this, mF);
         mButton.addItemListener(new FractalSelector(mF,redrawAction,resetAction));
@@ -141,10 +144,33 @@ public class RedrawButtonsPanel extends JPanel {
         addColourButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                //show a colour chooser then add the selected colour to the list, just in front of the currently selected one
+                Color tempColor = JColorChooser.showDialog(addColourButton,"Add a new colour for the gradient",gradientColors.getSelectedValue());
+                if(tempColor != null){
+                    gradientModel.insertElementAt(tempColor,gradientColors.getSelectedIndex());
+                }
+            }
+        });
+        removeColourButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                //if the list only has one colour in it, do not allow removal of the colour from the list
+                if(gradientModel.getSize()>1){
+                    //remove the colour from the list then select the previous one
+                    int index = gradientColors.getSelectedIndex();
+                    gradientColors.clearSelection();
+                    gradientModel.remove(index);
+                    int newIndex = index-1;
+                    newIndex = (newIndex + gradientModel.getSize()) % gradientModel.getSize();
+                    gradientColors.setSelectedIndex(newIndex);
+                }
+                else{
+                    JOptionPane.showMessageDialog(jF,"Cannot have an empty gradient");
+                }
             }
         });
         //sets the constraints of everything and add it to the panel's layout then adds it to the panel, layout manager then puts it in the right place;
+        // the layout is far from perfect
         gBC.anchor=GridBagConstraints.LINE_END;
         gBC.insets= new Insets(5,2,2,5);
         gBC.fill=GridBagConstraints.HORIZONTAL;

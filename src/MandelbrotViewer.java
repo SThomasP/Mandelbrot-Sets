@@ -7,7 +7,7 @@ import java.awt.*;
 public class MandelbrotViewer extends JFrame {
 
 
-    //TODO: Tooltips and comments for everything
+    //TODO:comments for everything
     protected MandelFractal mandelbrotFractal;
     protected JuliaFractal juliaFractal;
     protected RedrawButtonsPanel buttonsPanel;
@@ -54,7 +54,7 @@ public class MandelbrotViewer extends JFrame {
         bagConstraints.gridy = 1;
         bagConstraints.gridheight = 1;
         bagConstraints.gridwidth = 2;
-        bagConstraints.weighty = 0.3;
+        bagConstraints.weighty = 0.2;
         add(buttonsPanel, bagConstraints);
         d = new Dimension(buttonsPanel.getWidth(), buttonsPanel.getHeight());
         FavouritesPanel.setAllDimensions(d, buttonsPanel);

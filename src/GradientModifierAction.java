@@ -26,7 +26,5 @@ public class GradientModifierAction implements ActionListener {
         listModel.remove(index);
         listModel.insertElementAt(selectedColor, newIndex);
         colorList.setSelectedIndex(newIndex);
-
-
     }
 }
