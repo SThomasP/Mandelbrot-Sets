@@ -141,6 +141,7 @@ public class FavouritesPanel extends JPanel {
         saveJ.addActionListener(new SaveButtonClick(juliaFractal,saveChooser));
         saveM.addActionListener(new SaveButtonClick(mandelFractal,saveChooser));
         loadFractal = new JButton("Load a Fractal");
+        loadFractal.addActionListener(new LoadButtonClick(mandelFractal, juliaFractal, saveChooser));
         loadFractal.setToolTipText("Load a fractal from an ftl file");
         c.weightx = 0.5;
         c.gridy=4;

@@ -20,17 +20,17 @@ public class SaveButtonClick implements ActionListener {
     public void saveToFile(){
         try {
             PrintStream stream = new PrintStream(fileChooser.getSelectedFile());
-            stream.println("<FractalType=|" + drawer.getType() + "|>");
-            stream.println("<XRange=|" + drawer.getxStart() + "|" + drawer.getxEnd() + "|>");
-            stream.println("<YRange=|" + drawer.getyStart() + "|" + drawer.getyEnd() + "|>");
-            stream.println("<Iterations=|" + drawer.getIterations() + "|>");
-            stream.println("<Constant=|" + drawer.getConstant().getReal() + "|" + drawer.getConstant().getImaginary() + "|>");
-            stream.print("<GradientColours=|");
+            stream.println("<FractalType='" + drawer.getType() + "'>");
+            stream.println("<XRange='" + drawer.getxStart() + "'" + drawer.getxEnd() + "'>");
+            stream.println("<YRange='" + drawer.getyStart() + "'" + drawer.getyEnd() + "'>");
+            stream.println("<Iterations='" + drawer.getIterations() + "'>");
+            stream.println("<Constant='" + drawer.getConstant().getReal() + "'" + drawer.getConstant().getImaginary() + "'>");
+            stream.print("<GradientColours='");
             for (Color c : drawer.getColors()) {
-                stream.print(c.getRGB() + "|");
+                stream.print(c.getRGB() + "'");
             }
             stream.println(">");
-            stream.println("<Loop=|" + drawer.getLoopCount() + "|>");
+            stream.println("<Loop='" + drawer.getLoopCount() + "'>");
             stream.close();
         }
         catch(Exception ignored) {
@@ -38,6 +38,8 @@ public class SaveButtonClick implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
+        fileChooser.resetChoosableFileFilters();
+        fileChooser.setFileFilter(new ExtensionFileFilter("ftl"));
         int returnValue = fileChooser.showSaveDialog(drawer);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             //ask the user to confirm the overwriting of an existing file

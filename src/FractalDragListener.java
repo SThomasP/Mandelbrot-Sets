@@ -23,12 +23,14 @@ public class FractalDragListener extends MouseAdapter{
             double y1 = fractalDrawer.getyStart() + (fractalDrawer.getyEnd() - fractalDrawer.getyStart()) * (r.getY()) / fractalDrawer.getHeight();
             double y2 = fractalDrawer.getyStart() + (fractalDrawer.getyEnd() - fractalDrawer.getyStart()) * (r.getY() + r.getHeight()) / fractalDrawer.getHeight();
             fractalDrawer.redrawFractal(x1, y1, x2, y2, fractalDrawer.getIterations());
+            //set the rectangles to null afterwards, to prevent a bug where the fractal zooms in upon click
             r=null;
             fractalDrawer.setRectangle(null);
         }
     }
     @Override
     public void mouseDragged(MouseEvent e) {
+        //calculates a rectangle based on the mouses current point and the start point
         p2 =e.getPoint();
         Point startPoint;
         Dimension rectDimensions;
@@ -49,11 +51,9 @@ public class FractalDragListener extends MouseAdapter{
             startPoint = new Point((int)p2.getX(), (int) p1.getY());
             rectDimensions = new Dimension((int) (p1.getX()-p2.getX()),(int) (p2.getY()-p1.getY()));
         }
-        if (rectDimensions.getWidth()>5) {
-            r = new Rectangle(startPoint, rectDimensions);
-            fractalDrawer.setRectangle(r);
-            fractalDrawer.repaint();
-        }
+        r = new Rectangle(startPoint, rectDimensions);
+        fractalDrawer.setRectangle(r);
+        fractalDrawer.repaint();
 
     }
 
@@ -64,6 +64,8 @@ public class FractalDragListener extends MouseAdapter{
 
 
     @Override
+
+    //zooms in if scrolled foward and out if scrolled back
     public void mouseWheelMoved(MouseWheelEvent e) {
         double scaleConstant;
         if (e.getWheelRotation()==1){
