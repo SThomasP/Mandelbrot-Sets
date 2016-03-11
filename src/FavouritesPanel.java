@@ -17,13 +17,13 @@ public class FavouritesPanel extends JPanel {
     private JLabel currentComplex;
     private JButton addButton;
     private JButton copyButton;
-    private JButton saveM, saveJ, loadM, loadJ, exportM, exportJ;
+    private JButton saveM, saveJ, loadFractal, exportM, exportJ;
     private JButton removeButton;
 
 
     public FavouritesPanel(JuliaFractal juliaFractal) {
         this.juliaFractal = juliaFractal;
-        this.juliaFractal.setfP(this);
+        juliaFractal.setfP(this);
         setBorder(BorderFactory.createLineBorder(Color.black));
     }
 
@@ -39,6 +39,7 @@ public class FavouritesPanel extends JPanel {
         c.weighty = 0.0;
         c.gridwidth = 2;
         add(currentComplex, c);
+        //fixes the size of currentComplex, ensuring that it doesn't unnecessarily resize the fractals
         setAllDimensions(currentComplex.getPreferredSize(),currentComplex);
         addButton = new JButton("+");
         addButton.setToolTipText("Add this constant to a favourites list");
@@ -61,19 +62,22 @@ public class FavouritesPanel extends JPanel {
         //disable the remove to avoid errors, button gets enabled when a item in the list is selected
         removeButton.setEnabled(false);
         addButton.setForeground(Color.green);
-        ActionListener addListener = actionEvent -> {
-            //checks to see if a complex number is alread in the list of favourties before its added
-            boolean inThere = false;
-            for (int i = 0; i < listModel.getSize(); i++) {
-                if (listModel.get(i).equals(juliaFractal.getConstant())) {
-                    inThere = true;
+        ActionListener addListener = new ActionListener() {
+            //checks to see if a complex number is already in the list of favourites before its added
+            public void actionPerformed(ActionEvent actionEvent) {
+                boolean inThere = false;
+                for (int i = 0; i < listModel.getSize(); i++) {
+                    if (listModel.get(i).equals(juliaFractal.getConstant())) {
+                        inThere = true;
+                    }
+                }
+                //if the number isn't already in there it gets added to the list
+                if (!inThere) {
+                    listModel.addElement(juliaFractal.getConstant());
                 }
             }
-            if (!inThere) {
-                listModel.addElement(juliaFractal.getConstant());
-            }
         };
-        //
+        //removes an element from the list, clears the selection of the list, and disables the remove button again
         ActionListener removeListener = new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {
                 int index = favouriteNumbers.getSelectedIndex();
@@ -90,11 +94,13 @@ public class FavouritesPanel extends JPanel {
         favouriteNumbers.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
                 if (!favouriteNumbers.isSelectionEmpty()) {
+                    //if a fractal is selected, enable the remove button and switch the Julia fractals constant to the selected number
                     removeButton.setEnabled(true);
                     juliaFractal.changeConstant(favouriteNumbers.getSelectedValue());
                 }
             }
         });
+        //sets favouriteNumbers up to display the Complex numbers correctly,
         favouriteNumbers.setCellRenderer(new ComplexCellRenderer());
         favouriteNumbers.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         c.fill = GridBagConstraints.BOTH;
@@ -102,7 +108,7 @@ public class FavouritesPanel extends JPanel {
         c.gridwidth = 2;
         c.gridy = 2;
         c.gridx = 0;
-        add(favouriteNumbers, c);
+        add(new JScrollPane(favouriteNumbers), c);
         Dimension d = new Dimension(favouriteNumbers.getWidth(),favouriteNumbers.getHeight());
         setAllDimensions(d, favouriteNumbers);
         //TODO: export Julia and Export Mandelbrot buttons
@@ -118,11 +124,15 @@ public class FavouritesPanel extends JPanel {
             }
         };
         copyButton.addActionListener(copyListener);
-        c.fill= GridBagConstraints.NONE;
+        c.fill = GridBagConstraints.HORIZONTAL;
         c.weighty=0;
         c.anchor=GridBagConstraints.CENTER;
         c.gridy=3;
         add(copyButton,c);
+        exportM = new JButton("Export Mandelbrot");
+        exportM.setToolTipText("Export the Mandelbrot fractal to an image file");
+        exportJ = new JButton("Export Julia");
+        exportJ.setToolTipText("Export the Julia fractal to an image file");
         saveJ = new JButton("Save Julia");
         saveJ.setToolTipText("Save the Julia Fractal to an ftl file");
         saveM = new JButton("Save Mandelbrot");
@@ -130,11 +140,23 @@ public class FavouritesPanel extends JPanel {
         JFileChooser saveChooser=new JFileChooser();
         saveJ.addActionListener(new SaveButtonClick(juliaFractal,saveChooser));
         saveM.addActionListener(new SaveButtonClick(mandelFractal,saveChooser));
-        c.gridwidth=1;
+        loadFractal = new JButton("Load a Fractal");
+        loadFractal.setToolTipText("Load a fractal from an ftl file");
+        c.weightx = 0.5;
         c.gridy=4;
+        c.gridwidth = 1;
+        add(exportM, c);
+        c.gridx = 1;
+        add(exportJ, c);
+        c.gridx = 0;
+        c.gridy = 5;
         add(saveM,c);
         c.gridx=1;
         add(saveJ,c);
+        c.gridwidth = 2;
+        c.gridx = 0;
+        c.gridy = 6;
+        add(loadFractal, c);
         updateLabel();
     }
     //sets the maximum size, preferred size and minimum size to the dimensions specified, used to deal with some resizing issues that I was having

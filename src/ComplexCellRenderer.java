@@ -13,7 +13,7 @@ public class ComplexCellRenderer extends JLabel implements ListCellRenderer<Comp
     }
 
     public Component getListCellRendererComponent(JList<? extends Complex> jList, Complex complex, int index, boolean isSelected, boolean hasFocus) {
-        //Set the colors of the JLabels to match the JList
+        //Set the colours of the JLabels to match the JList
         setOpaque(true);
         if (isSelected) {
             setForeground(jList.getSelectionForeground());
