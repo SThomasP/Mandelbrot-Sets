@@ -18,15 +18,14 @@ public class FractalSelector implements ItemListener {
             fractalDrawer.setSelected(true);
             redrawButtonsPanel.setValues(fractalDrawer.getxStart(), fractalDrawer.getxEnd(), fractalDrawer.getyStart(), fractalDrawer.getyEnd(), fractalDrawer.getIterations());
             redrawButtonsPanel.setColors(fractalDrawer.getColors(), fractalDrawer.getLoopCount());
-        }
-        else{
+        } else {
             fractalDrawer.setSelected(false);
         }
     }
 
-    public FractalSelector(FractalDrawer fractalDrawer, RedrawButtonAction redrawButtonAction, ResetButtonAction resetButtonAction){
+    public FractalSelector(FractalDrawer fractalDrawer, RedrawButtonAction redrawButtonAction, ResetButtonAction resetButtonAction) {
         this.fractalDrawer = fractalDrawer;
-        this.resetButtonAction =resetButtonAction;
+        this.resetButtonAction = resetButtonAction;
         this.redrawButtonAction = redrawButtonAction;
         this.redrawButtonsPanel = fractalDrawer.getrBP();
     }

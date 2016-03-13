@@ -14,12 +14,12 @@ public class SaveButtonClick implements ActionListener {
     protected JFileChooser fileChooser;
     protected File f;
 
-    public SaveButtonClick(FractalDrawer drawer, JFileChooser fileChooser){
-        this.drawer=drawer;
-        this.fileChooser=fileChooser;
+    public SaveButtonClick(FractalDrawer drawer, JFileChooser fileChooser) {
+        this.drawer = drawer;
+        this.fileChooser = fileChooser;
     }
 
-    public void saveToFile(){
+    public void saveToFile() {
         try {
 
             //Writes the Fractal to a text file using a makeup language, allows compatibility without using binary
@@ -36,8 +36,7 @@ public class SaveButtonClick implements ActionListener {
             stream.println(">");
             stream.println("<Loop='" + drawer.getLoopCount() + "'>");
             stream.close();
-        }
-        catch(Exception ignored) {
+        } catch (Exception ignored) {
         }
     }
 

@@ -37,7 +37,7 @@ public abstract class FractalDrawer extends JPanel {
         this.rBP = rBP;
     }
 
-    public RedrawButtonsPanel getrBP(){
+    public RedrawButtonsPanel getrBP() {
         return rBP;
     }
 
@@ -59,18 +59,18 @@ public abstract class FractalDrawer extends JPanel {
         this.rectangle = rectangle;
     }
 
-    public FractalDrawer(){
+    public FractalDrawer() {
 
     }
 
-    public void init(){
+    public void init() {
         setBorder(BorderFactory.createLineBorder(Color.black));
         addComponentListener(new ComponentListener() {
             @Override
             //resize the buffered image when the panel gets resized
             public void componentResized(ComponentEvent e) {
-                canvas = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
-                redrawFractal(xStart,yStart,xEnd,yEnd,iterations);
+                canvas = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
+                redrawFractal(xStart, yStart, xEnd, yEnd, iterations);
             }
 
             @Override
@@ -95,7 +95,7 @@ public abstract class FractalDrawer extends JPanel {
     }
 
 
-    public Color[] getColors(){
+    public Color[] getColors() {
         return drawColors;
     }
 
@@ -120,7 +120,7 @@ public abstract class FractalDrawer extends JPanel {
         return yEnd;
     }
 
-    public int getIterations(){
+    public int getIterations() {
         return iterations;
     }
 
@@ -129,7 +129,7 @@ public abstract class FractalDrawer extends JPanel {
         Graphics2D g2 = (Graphics2D) g;
 
         g2.drawImage(canvas, null, null);
-        if(!(rectangle==null)){
+        if (!(rectangle == null)) {
             g2.setColor(Color.white);
             g2.draw(rectangle);
         }
@@ -146,36 +146,36 @@ public abstract class FractalDrawer extends JPanel {
 
 
     //sets the Aspect Ratio of the image to the ideal ratio
-    public void correctAspectRatio(){
-        double aspectRatio =( (xEnd-xStart)/(yEnd-yStart));
+    public void correctAspectRatio() {
+        double aspectRatio = ((xEnd - xStart) / (yEnd - yStart));
         double width = getWidth();
         double height = getHeight();
-        double idealRatio =(width/height);
+        double idealRatio = (width / height);
         double median;
-        if (aspectRatio>idealRatio){
-            median = (yEnd+yStart)/2;
-            yStart = median-(xEnd-xStart)/(2*idealRatio);
-            yEnd = median+(xEnd-xStart)/(2*idealRatio);
-        }
-        else if (aspectRatio<idealRatio){
-            median = (xEnd+xStart)/2;
-            xStart = median -(yEnd-yStart)*(idealRatio/2);
-            xEnd =median +(yEnd-yStart)*(idealRatio/2);
+        if (aspectRatio > idealRatio) {
+            median = (yEnd + yStart) / 2;
+            yStart = median - (xEnd - xStart) / (2 * idealRatio);
+            yEnd = median + (xEnd - xStart) / (2 * idealRatio);
+        } else if (aspectRatio < idealRatio) {
+            median = (xEnd + xStart) / 2;
+            xStart = median - (yEnd - yStart) * (idealRatio / 2);
+            xEnd = median + (yEnd - yStart) * (idealRatio / 2);
         }
     }
-    public abstract void redrawFractal(double xStart, double yStart,double xEnd,double yEnd,int iterations );
+
+    public abstract void redrawFractal(double xStart, double yStart, double xEnd, double yEnd, int iterations);
 
     public abstract String getType();
 
     public abstract Complex getConstant();
 
-    public int getLoopCount(){
+    public int getLoopCount() {
         return loopCount;
     }
 
     //calculates the color of the pixel based on the constant and the complex point
     public Color colourPixel(Complex zOfZero, Complex constant) {
-        int deviatesAt=iterations;
+        int deviatesAt = iterations;
         boolean deviates = false;
         for (int i = 0; i < iterations; i++) {
             double mSquared = zOfZero.magnitudeSquared();
@@ -187,19 +187,18 @@ public abstract class FractalDrawer extends JPanel {
         }
         Color returnColour;
         if (deviates) {
-            int loopLength = iterations/loopCount;
-            deviatesAt = deviatesAt%loopLength;
+            int loopLength = iterations / loopCount;
+            deviatesAt = deviatesAt % loopLength;
             int range = loopLength / (drawColors.length);
             int n = (deviatesAt / range) % (drawColors.length);
             Color c1 = drawColors[n];
             Color c2 = drawColors[(n + 1) % drawColors.length];
-            n = deviatesAt/range;
-            int red = c2.getRed()-((n+1)*range-deviatesAt)*(c2.getRed()-c1.getRed())/range;
-            int green = c2.getGreen()-((n+1)*range-deviatesAt)*(c2.getGreen()-c1.getGreen())/range;
-            int blue = c2.getBlue()-((n+1)*range-deviatesAt)*(c2.getBlue()-c1.getBlue())/range;
-            returnColour = new Color(red,green,blue);
-        }
-        else{
+            n = deviatesAt / range;
+            int red = c2.getRed() - ((n + 1) * range - deviatesAt) * (c2.getRed() - c1.getRed()) / range;
+            int green = c2.getGreen() - ((n + 1) * range - deviatesAt) * (c2.getGreen() - c1.getGreen()) / range;
+            int blue = c2.getBlue() - ((n + 1) * range - deviatesAt) * (c2.getBlue() - c1.getBlue()) / range;
+            returnColour = new Color(red, green, blue);
+        } else {
             returnColour = Color.black;
         }
         return returnColour;

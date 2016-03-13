@@ -7,7 +7,7 @@ import java.awt.*;
 public class ComplexCellRenderer extends JLabel implements ListCellRenderer<Complex> {
 
     //renders the labels in the JList to actually show the values of the complex numbers, not just their location in memory
-    public  ComplexCellRenderer(){
+    public ComplexCellRenderer() {
         setHorizontalAlignment(CENTER);
         setVerticalAlignment(CENTER);
     }
@@ -18,8 +18,7 @@ public class ComplexCellRenderer extends JLabel implements ListCellRenderer<Comp
         if (isSelected) {
             setForeground(jList.getSelectionForeground());
             setBackground(jList.getSelectionBackground());
-        }
-        else {
+        } else {
             setForeground(jList.getForeground());
             setBackground(jList.getBackground());
         }

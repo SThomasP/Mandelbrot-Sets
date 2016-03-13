@@ -27,7 +27,7 @@ public class FavouritesPanel extends JPanel {
         setBorder(BorderFactory.createLineBorder(Color.black));
     }
 
-    public void init(MandelFractal mandelFractal){
+    public void init(MandelFractal mandelFractal) {
         //initialises the favourites panel (the panel on the right of the screen)
         setLayout(new GridBagLayout());
         currentComplex = new JLabel("-0.0000 + 0.0000i");
@@ -40,7 +40,7 @@ public class FavouritesPanel extends JPanel {
         c.gridwidth = 2;
         add(currentComplex, c);
         //fixes the size of currentComplex, ensuring that it doesn't unnecessarily resize the fractals
-        setAllDimensions(currentComplex.getPreferredSize(),currentComplex);
+        setAllDimensions(currentComplex.getPreferredSize(), currentComplex);
         addButton = new JButton("+");
         addButton.setToolTipText("Add this constant to a favourites list");
         c.fill = GridBagConstraints.NONE;
@@ -109,7 +109,7 @@ public class FavouritesPanel extends JPanel {
         c.gridy = 2;
         c.gridx = 0;
         add(new JScrollPane(favouriteNumbers), c);
-        Dimension d = new Dimension(favouriteNumbers.getWidth(),favouriteNumbers.getHeight());
+        Dimension d = new Dimension(favouriteNumbers.getWidth(), favouriteNumbers.getHeight());
         setAllDimensions(d, favouriteNumbers);
         //TODO: export Julia and Export Mandelbrot buttons
         copyButton = new JButton("Copy Julia Constant");
@@ -118,16 +118,16 @@ public class FavouritesPanel extends JPanel {
             @Override
             //add the value of the julia constant to the clipboard
             public void actionPerformed(ActionEvent e) {
-                Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(juliaFractal.getConstant().getFullStringValue()),null);
+                Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(juliaFractal.getConstant().getFullStringValue()), null);
                 JOptionPane.showMessageDialog(juliaFractal, "Copied to Clipboard");
             }
         };
         copyButton.addActionListener(copyListener);
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.weighty=0;
-        c.anchor=GridBagConstraints.CENTER;
-        c.gridy=3;
-        add(copyButton,c);
+        c.weighty = 0;
+        c.anchor = GridBagConstraints.CENTER;
+        c.gridy = 3;
+        add(copyButton, c);
         exportM = new JButton("Export Mandelbrot");
         exportM.setToolTipText("Export the Mandelbrot fractal to an image file");
         exportJ = new JButton("Export Julia");
@@ -145,30 +145,31 @@ public class FavouritesPanel extends JPanel {
         saveChooser = new JFileChooser();
         saveChooser.setFileFilter(new ExtensionFileFilter(MandelbrotViewer.fileExtension, "file"));
         saveChooser.setAcceptAllFileFilterUsed(false);
-        saveJ.addActionListener(new SaveButtonClick(juliaFractal,saveChooser));
-        saveM.addActionListener(new SaveButtonClick(mandelFractal,saveChooser));
+        saveJ.addActionListener(new SaveButtonClick(juliaFractal, saveChooser));
+        saveM.addActionListener(new SaveButtonClick(mandelFractal, saveChooser));
         loadFractal = new JButton("Load a Fractal");
         loadFractal.addActionListener(new LoadButtonClick(mandelFractal, juliaFractal, saveChooser));
         loadFractal.setToolTipText("Load a fractal from an ftl file");
         c.weightx = 0.5;
-        c.gridy=4;
+        c.gridy = 4;
         c.gridwidth = 1;
         add(exportM, c);
         c.gridx = 1;
         add(exportJ, c);
         c.gridx = 0;
         c.gridy = 5;
-        add(saveM,c);
-        c.gridx=1;
-        add(saveJ,c);
+        add(saveM, c);
+        c.gridx = 1;
+        add(saveJ, c);
         c.gridwidth = 2;
         c.gridx = 0;
         c.gridy = 6;
         add(loadFractal, c);
         updateLabel();
     }
+
     //sets the maximum size, preferred size and minimum size to the dimensions specified, used to deal with some resizing issues that I was having
-    public static void  setAllDimensions(Dimension d, Component c){
+    public static void setAllDimensions(Dimension d, Component c) {
         c.setMaximumSize(d);
         c.setMinimumSize(d);
         c.setPreferredSize(d);

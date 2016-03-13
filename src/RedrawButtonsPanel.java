@@ -4,7 +4,6 @@ import javax.swing.event.ListDataListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.Arc2D;
 
 /**
  * Created by Steffan on 04/03/2016.
@@ -18,13 +17,13 @@ public class RedrawButtonsPanel extends JPanel {
     private JList<Color> gradientColors;
     private DefaultListModel<Color> gradientModel;
 
-    public RedrawButtonsPanel(){
+    public RedrawButtonsPanel() {
         setBorder(BorderFactory.createLineBorder(Color.black));
 
 
     }
 
-    public  void init(MandelFractal mF, JuliaFractal jF){
+    public void init(MandelFractal mF, JuliaFractal jF) {
         //allow the fractals to adjust the values of the the spinners in this panel
         mF.setRBP(this);
         jF.setRBP(this);
@@ -79,8 +78,8 @@ public class RedrawButtonsPanel extends JPanel {
         bGroup.add(mButton);
         gradientModel = new DefaultListModel<>();
         Color[] colors = mF.getColors();
-        for (int i=0;i<colors.length;i++){
-            gradientModel.add(i,colors[i]);
+        for (int i = 0; i < colors.length; i++) {
+            gradientModel.add(i, colors[i]);
         }
         gradientColors = new JList<>(gradientModel);
         gradientColors.setToolTipText("The colours in the gradient in the fractal");
@@ -100,10 +99,9 @@ public class RedrawButtonsPanel extends JPanel {
                 JLabel colourThing = new JLabel(" ");
                 colourThing.setOpaque(true);
                 colourThing.setBackground(value);
-                if (isSelected){
+                if (isSelected) {
                     colourThing.setBorder(BorderFactory.createLineBorder(Color.black));
-                }
-                else{
+                } else {
                     colourThing.setBorder(null);
                 }
                 return colourThing;
@@ -135,20 +133,19 @@ public class RedrawButtonsPanel extends JPanel {
         iterationsField.setToolTipText("The number of times the formula will be iterated over before a colour is chosen");
         ResetButtonAction resetAction = new ResetButtonAction(this, mF);
         RedrawButtonAction redrawAction = new RedrawButtonAction(this, mF);
-        mButton.addItemListener(new FractalSelector(mF,redrawAction,resetAction));
-        jButton.addItemListener(new FractalSelector(jF,redrawAction,resetAction));
+        mButton.addItemListener(new FractalSelector(mF, redrawAction, resetAction));
+        jButton.addItemListener(new FractalSelector(jF, redrawAction, resetAction));
         resetButton.addActionListener(resetAction);
         redrawButton.addActionListener(redrawAction);
         moveColourUp.addActionListener(new GradientModifierAction(gradientColors, -1));
         moveColourDown.addActionListener(new GradientModifierAction(gradientColors, 1));
-        JColorChooser colorChooser = new JColorChooser();
         addColourButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //show a colour chooser then add the selected colour to the list, just in front of the currently selected one
                 Color tempColor = JColorChooser.showDialog(mF, "Add a colour to the gradient", gradientColors.getSelectedValue());
-                if(tempColor != null){
-                    gradientModel.insertElementAt(tempColor,gradientColors.getSelectedIndex());
+                if (tempColor != null) {
+                    gradientModel.insertElementAt(tempColor, gradientColors.getSelectedIndex());
                 }
             }
         });
@@ -156,75 +153,74 @@ public class RedrawButtonsPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 //if the list only has one colour in it, do not allow removal of the colour from the list
-                if(gradientModel.getSize()>1){
+                if (gradientModel.getSize() > 1) {
                     //remove the colour from the list then select the previous one
                     int index = gradientColors.getSelectedIndex();
                     gradientColors.clearSelection();
                     gradientModel.remove(index);
-                    int newIndex = index-1;
+                    int newIndex = index - 1;
                     newIndex = (newIndex + gradientModel.getSize()) % gradientModel.getSize();
                     gradientColors.setSelectedIndex(newIndex);
-                }
-                else{
-                    JOptionPane.showMessageDialog(jF,"Cannot have an empty gradient");
+                } else {
+                    JOptionPane.showMessageDialog(jF, "Cannot have an empty gradient");
                 }
             }
         });
         //sets the constraints of everything and add it to the panel's layout then adds it to the panel, layout manager then puts it in the right place;
         // the layout is far from perfect
-        gBC.anchor=GridBagConstraints.LINE_END;
-        gBC.insets= new Insets(5,2,2,5);
-        gBC.fill=GridBagConstraints.HORIZONTAL;
-        gBC.gridheight=2;
-        gBC.gridx=0;
-        gBC.weightx = 0.5;
-        gBC.gridy=0;
-        add(xRange,gBC);
-        gBC.gridx=2;
-        add(yRange,gBC);
-        gBC.gridx=4;
-        gBC.ipadx=10;
-        add(iterationsLabel,gBC);
-        gBC.gridwidth = 1;
-        gBC.ipadx=0;
-        gBC.gridx=5;
-        add(iterationsField,gBC);
-        gBC.gridheight=1;
-        gBC.anchor =GridBagConstraints.PAGE_END;
-        gBC.gridx=1;
-        gBC.ipadx=10;
-        add(xMin,gBC);
-        gBC.gridx=3;
-        add(yMin,gBC);
-        gBC.gridx=6;
-        gBC.ipadx=0;
+        gBC.anchor = GridBagConstraints.LINE_END;
+        gBC.insets = new Insets(5, 2, 2, 5);
+        gBC.fill = GridBagConstraints.HORIZONTAL;
         gBC.gridheight = 2;
-        add(mButton,gBC);
+        gBC.gridx = 0;
+        gBC.weightx = 0.5;
         gBC.gridy = 0;
-        gBC.gridx=7;
-        add(redrawButton,gBC);
+        add(xRange, gBC);
+        gBC.gridx = 2;
+        add(yRange, gBC);
+        gBC.gridx = 4;
+        gBC.ipadx = 10;
+        add(iterationsLabel, gBC);
+        gBC.gridwidth = 1;
+        gBC.ipadx = 0;
+        gBC.gridx = 5;
+        add(iterationsField, gBC);
+        gBC.gridheight = 1;
+        gBC.anchor = GridBagConstraints.PAGE_END;
+        gBC.gridx = 1;
+        gBC.ipadx = 10;
+        add(xMin, gBC);
+        gBC.gridx = 3;
+        add(yMin, gBC);
+        gBC.gridx = 6;
+        gBC.ipadx = 0;
+        gBC.gridheight = 2;
+        add(mButton, gBC);
+        gBC.gridy = 0;
+        gBC.gridx = 7;
+        add(redrawButton, gBC);
         gBC.gridy = 2;
-        gBC.anchor =GridBagConstraints.PAGE_START;
-        add(resetButton,gBC);
+        gBC.anchor = GridBagConstraints.PAGE_START;
+        add(resetButton, gBC);
         gBC.gridheight = 1;
         gBC.gridy = 1;
-        gBC.gridx=1;
-        gBC.ipadx=10;
-        add(xMax,gBC);
-        gBC.gridx=3;
-        add(yMax,gBC);
+        gBC.gridx = 1;
+        gBC.ipadx = 10;
+        add(xMax, gBC);
+        gBC.gridx = 3;
+        add(yMax, gBC);
         gBC.gridheight = 2;
-        gBC.gridx=6;
+        gBC.gridx = 6;
         gBC.gridy = 2;
         gBC.ipadx = 0;
-        add(jButton,gBC);
+        add(jButton, gBC);
         gBC.gridheight = 1;
-        gBC.gridx=0;
-        gBC.gridy=2;
+        gBC.gridx = 0;
+        gBC.gridy = 2;
         gBC.anchor = GridBagConstraints.CENTER;
         gBC.fill = GridBagConstraints.NONE;
         gBC.gridwidth = 4;
-        add(gradientColors,gBC);
+        add(gradientColors, gBC);
         gBC.fill = GridBagConstraints.NONE;
         gBC.gridheight = 1;
         gBC.gridwidth = 1;
@@ -250,12 +246,12 @@ public class RedrawButtonsPanel extends JPanel {
     }
 
     //allows another class to set the values of the fields invoked when the fractals are being redrawn by resizing of the image or the mouse exploration
-    public void setValues(double xStart, double xEnd, double yStart, double yEnd, int iterate){
-        xMin.setValue(new Double(xStart));
-        xMax.setValue(new Double(xEnd));
-        yMin.setValue(new Double(yStart));
-        yMax.setValue(new Double(yEnd));
-        iterationsField.setValue(new Integer(iterate));
+    public void setValues(double xStart, double xEnd, double yStart, double yEnd, int iterate) {
+        xMin.setValue(xStart);
+        xMax.setValue(xEnd);
+        yMin.setValue(yStart);
+        yMax.setValue(yEnd);
+        iterationsField.setValue(iterate);
     }
 
     public double getXMin() {
@@ -297,10 +293,9 @@ public class RedrawButtonsPanel extends JPanel {
         for (Color c : colors) {
             gradientModel.addElement(c);
         }
-        loopField.setValue(new Integer(loopCount));
+        loopField.setValue(loopCount);
         gradientColors.setSelectedIndex(0);
     }
-
 
 
 }

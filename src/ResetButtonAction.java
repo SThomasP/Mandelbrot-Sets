@@ -1,4 +1,3 @@
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -6,7 +5,6 @@ import java.awt.event.ActionListener;
  * Created by Steffan on 04/03/2016.
  */
 public class ResetButtonAction implements ActionListener {
-
 
 
     protected FractalDrawer mandelFractal;
@@ -19,12 +17,12 @@ public class ResetButtonAction implements ActionListener {
 
     }
 
-    public void changeFractal(FractalDrawer fractal){
+    public void changeFractal(FractalDrawer fractal) {
         mandelFractal = fractal;
     }
 
     public ResetButtonAction(RedrawButtonsPanel buttonsPanel, FractalDrawer fD) {
-        mandelFractal =fD;
+        mandelFractal = fD;
         this.buttonsPanel = buttonsPanel;
     }
 }
