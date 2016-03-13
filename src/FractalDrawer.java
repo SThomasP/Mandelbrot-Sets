@@ -45,6 +45,12 @@ public abstract class FractalDrawer extends JPanel {
         return selected;
     }
 
+    public abstract FractalDrawer clone(int width, int height);
+
+    public BufferedImage getCanvas() {
+        return canvas;
+    }
+
     public void setSelected(boolean selected) {
         this.selected = selected;
     }
@@ -86,8 +92,6 @@ public abstract class FractalDrawer extends JPanel {
         addMouseListener(dragListener);
         addMouseMotionListener(dragListener);
         addMouseWheelListener(dragListener);
-        drawColors = DEFAULT_COLOURS;
-        loopCount = LOOP_COUNT;
     }
 
 
@@ -97,9 +101,7 @@ public abstract class FractalDrawer extends JPanel {
 
     public void setColors(Color[] tempColors, int loopCount) {
         drawColors = tempColors;
-        if (loopCount * drawColors.length <= iterations) {
-            this.loopCount = loopCount;
-        }
+        this.loopCount = loopCount;
     }
 
     public double getxStart() {
@@ -133,9 +135,13 @@ public abstract class FractalDrawer extends JPanel {
         }
     }
 
-    public void resetToDefault() {
+    public void setInitialFractal() {
         setColors(DEFAULT_COLOURS, LOOP_COUNT);
         redrawFractal(X_START, Y_START, X_END, Y_END, ITERATIONS);
+    }
+
+    public void resetToDefault() {
+        redrawFractal(X_START, Y_START, X_END, Y_END, iterations);
     }
 
 

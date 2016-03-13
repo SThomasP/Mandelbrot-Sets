@@ -9,15 +9,26 @@ public class MandelFractal extends FractalDrawer {
 
     public MandelFractal(){
     }
-    public void init(){
+
+    public void init(int width, int height) {
         super.init();
-        setSize(100,80);
-        setPreferredSize(new Dimension(100,80));
+        setSize(width, height);
         canvas = new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
-        resetToDefault();
         setBackground(Color.blue);
+        setInitialFractal();
     }
 
+    public void init() {
+        init(100, 80);
+    }
+
+    public FractalDrawer clone(int width, int height) {
+        MandelFractal tempFractal = new MandelFractal();
+        tempFractal.init(width, height);
+        tempFractal.setColors(drawColors, loopCount);
+        tempFractal.redrawFractal(xStart, yStart, xEnd, yEnd, iterations);
+        return tempFractal;
+    }
 
     public void redrawFractal(double xStart, double yStart,double xEnd,double yEnd,int iterations ){
         this.xStart=xStart;
@@ -26,8 +37,8 @@ public class MandelFractal extends FractalDrawer {
         this.yEnd=yEnd;
         this.iterations=iterations;
         correctAspectRatio();
-        generateMandlebrots();
-        if (selected) {
+        generateMandelbrot();
+        if (selected && rBP != null) {
             rBP.setValues(this.xStart, this.xEnd, this.yStart, this.yEnd, this.iterations);
         }
     }
@@ -40,7 +51,7 @@ public class MandelFractal extends FractalDrawer {
         return DEFAULT_C;
     }
 
-    public void generateMandlebrots(){
+    public void generateMandelbrot() {
         for (int x = 0; x < canvas.getWidth(); x++){
             double realPart = xStart + (xEnd-xStart)*x/canvas.getWidth();
             for (int y = 0; y < canvas.getHeight(); y++){

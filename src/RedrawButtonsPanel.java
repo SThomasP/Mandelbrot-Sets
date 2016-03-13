@@ -31,9 +31,9 @@ public class RedrawButtonsPanel extends JPanel {
         //tell the mandelbrot fractal that it is selected
         mF.setSelected(true);
         redrawButton = new JButton("Redraw");
-        redrawButton.setToolTipText("Redraw the fractal with the selected text");
+        redrawButton.setToolTipText("Redraw the fractal with the selected values");
         resetButton = new JButton("Reset");
-        resetButton.setToolTipText("Reset the fractal to the default values");
+        resetButton.setToolTipText("Reset the fractal to the default zoom");
         loopLabel = new JLabel("Gradient Loops");
         loopField = new JSpinner(new SpinnerNumberModel(mF.getLoopCount(), 1, 20, 1));
         loopField.setToolTipText("The number of times the gradient of the fractal loops in the image");
@@ -141,11 +141,12 @@ public class RedrawButtonsPanel extends JPanel {
         redrawButton.addActionListener(redrawAction);
         moveColourUp.addActionListener(new GradientModifierAction(gradientColors, -1));
         moveColourDown.addActionListener(new GradientModifierAction(gradientColors, 1));
+        JColorChooser colorChooser = new JColorChooser();
         addColourButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //show a colour chooser then add the selected colour to the list, just in front of the currently selected one
-                Color tempColor = JColorChooser.showDialog(addColourButton,"Add a new colour for the gradient",gradientColors.getSelectedValue());
+                Color tempColor = JColorChooser.showDialog(mF, "Add a colour to the gradient", gradientColors.getSelectedValue());
                 if(tempColor != null){
                     gradientModel.insertElementAt(tempColor,gradientColors.getSelectedIndex());
                 }

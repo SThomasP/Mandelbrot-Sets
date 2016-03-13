@@ -23,7 +23,7 @@ public class FavouritesPanel extends JPanel {
 
     public FavouritesPanel(JuliaFractal juliaFractal) {
         this.juliaFractal = juliaFractal;
-        juliaFractal.setfP(this);
+        juliaFractal.setFP(this);
         setBorder(BorderFactory.createLineBorder(Color.black));
     }
 
@@ -112,7 +112,6 @@ public class FavouritesPanel extends JPanel {
         Dimension d = new Dimension(favouriteNumbers.getWidth(),favouriteNumbers.getHeight());
         setAllDimensions(d, favouriteNumbers);
         //TODO: export Julia and Export Mandelbrot buttons
-        //TODO: load fractal buttons
         copyButton = new JButton("Copy Julia Constant");
         copyButton.setToolTipText("Copy the constant of the Julia fractal to the clipboard");
         ActionListener copyListener = new ActionListener() {
@@ -133,11 +132,19 @@ public class FavouritesPanel extends JPanel {
         exportM.setToolTipText("Export the Mandelbrot fractal to an image file");
         exportJ = new JButton("Export Julia");
         exportJ.setToolTipText("Export the Julia fractal to an image file");
+        JFileChooser saveChooser = new JFileChooser();
+        saveChooser.setFileFilter(new ExtensionFileFilter("png", "image"));
+        saveChooser.addChoosableFileFilter(new ExtensionFileFilter("gif", "image"));
+        saveChooser.setAcceptAllFileFilterUsed(false);
+        exportM.addActionListener(new ExportButtonClick(mandelFractal, saveChooser));
+        exportJ.addActionListener(new ExportButtonClick(juliaFractal, saveChooser));
         saveJ = new JButton("Save Julia");
         saveJ.setToolTipText("Save the Julia Fractal to an ftl file");
         saveM = new JButton("Save Mandelbrot");
         saveM.setToolTipText("Save the Mandelbrot Fractal to an ftl file");
-        JFileChooser saveChooser=new JFileChooser();
+        saveChooser = new JFileChooser();
+        saveChooser.setFileFilter(new ExtensionFileFilter(MandelbrotViewer.fileExtension, "file"));
+        saveChooser.setAcceptAllFileFilterUsed(false);
         saveJ.addActionListener(new SaveButtonClick(juliaFractal,saveChooser));
         saveM.addActionListener(new SaveButtonClick(mandelFractal,saveChooser));
         loadFractal = new JButton("Load a Fractal");

@@ -25,64 +25,68 @@ public class LoadButtonClick implements ActionListener {
     public void actionPerformed(ActionEvent actionEvent) {
         try {
             FractalDrawer newImage = null;
-            fileChooser.resetChoosableFileFilters();
-            fileChooser.setFileFilter(new ExtensionFileFilter("ftl"));
             int selected = fileChooser.showOpenDialog(mandel);
             if (selected == JFileChooser.APPROVE_OPTION) {
-                double xMin = 0, xMax = 0, yMin = 0, yMax = 0;
-                int iterations = 0, loopCount = 0;
-                Complex constant = null;
-                Color[] colours = new Color[1];
                 File fileToLoad = fileChooser.getSelectedFile();
-                BufferedReader br = new BufferedReader(new FileReader(fileToLoad));
-                String line;
-                String[] parts;
-                while ((line = br.readLine()) != null) {
-                    parts = line.split("'");
-                    if (parts[0].charAt(1) == 'F') {
-                        if (parts[1].equals("MANDELBROT")) {
-                            newImage = mandel;
-                        } else if (parts[1].equals("JULIA")) {
-                            newImage = julia;
+                if (fileChooser.accept(fileToLoad)) {
+                    double xMin = 0, xMax = 0, yMin = 0, yMax = 0;
+                    int iterations = 0, loopCount = 0;
+                    Complex constant = null;
+                    Color[] colours = new Color[1];
+
+                    BufferedReader br = new BufferedReader(new FileReader(fileToLoad));
+                    String line;
+                    String[] parts;
+                    while ((line = br.readLine()) != null) {
+                        parts = line.split("'");
+                        if (parts[0].charAt(1) == 'F') {
+                            if (parts[1].equals("MANDELBROT")) {
+                                newImage = mandel;
+                            } else if (parts[1].equals("JULIA")) {
+                                newImage = julia;
+                            } else {
+                                throw new Exception("Not a valid fractal type");
+                            }
+                        } else if (parts[0].charAt(1) == 'X') {
+                            xMin = Double.valueOf(parts[1]);
+                            xMax = Double.valueOf(parts[2]);
+                        } else if (parts[0].charAt(1) == 'Y') {
+                            yMin = Double.valueOf(parts[1]);
+                            yMax = Double.valueOf(parts[2]);
+                        } else if (parts[0].charAt(1) == 'I') {
+                            iterations = Integer.valueOf(parts[1]);
+                        } else if (parts[0].charAt(1) == 'C') {
+                            constant = new Complex(Double.valueOf(parts[1]), Double.valueOf(parts[2]));
+                        } else if (parts[0].charAt(1) == 'G') {
+                            colours = new Color[parts.length - 2];
+                            for (int i = 0; i < colours.length; i++) {
+                                colours[i] = new Color(Integer.valueOf(parts[i + 1]));
+                            }
+                        } else if (parts[0].charAt(1) == 'L') {
+                            loopCount = Integer.valueOf(parts[1]);
                         } else {
-                            throw new Exception("Not a valid fractal type");
+                            throw new Exception("Unrecognized file tag");
                         }
-                    } else if (parts[0].charAt(1) == 'X') {
-                        xMin = Double.valueOf(parts[1]);
-                        xMax = Double.valueOf(parts[2]);
-                    } else if (parts[0].charAt(1) == 'Y') {
-                        yMin = Double.valueOf(parts[1]);
-                        yMax = Double.valueOf(parts[2]);
-                    } else if (parts[0].charAt(1) == 'I') {
-                        iterations = Integer.valueOf(parts[1]);
-                    } else if (parts[0].charAt(1) == 'C') {
-                        constant = new Complex(Double.valueOf(parts[1]), Double.valueOf(parts[2]));
-                    } else if (parts[0].charAt(1) == 'G') {
-                        colours = new Color[parts.length - 2];
-                        for (int i = 0; i < colours.length; i++) {
-                            colours[i] = new Color(Integer.valueOf(parts[i + 1]));
-                        }
-                    } else if (parts[0].charAt(1) == 'L') {
-                        loopCount = Integer.valueOf(parts[1]);
-                    } else {
-                        throw new Exception("Unrecognized file tag");
+
                     }
+                    br.close();
+                    if (newImage instanceof JuliaFractal) {
+                        ((JuliaFractal) newImage).changeConstant(constant);
+                    }
+                    newImage.setColors(colours, loopCount);
+                    if (newImage.isSelected()) {
+                        newImage.getrBP().setColors(colours, loopCount);
+                    }
+                    newImage.redrawFractal(xMin, yMin, xMax, yMax, iterations);
+                    JOptionPane.showMessageDialog(newImage, "Fractal loaded");
 
+                } else {
+                    throw new Exception("Not a ." + MandelbrotViewer.fileExtension + " file");
                 }
-                br.close();
-                if (newImage instanceof JuliaFractal) {
-                    ((JuliaFractal) newImage).changeConstant(constant);
-                }
-                newImage.setColors(colours, loopCount);
-                if (newImage.isSelected()) {
-                    newImage.getrBP().setColors(colours, loopCount);
-                }
-                newImage.redrawFractal(xMin, yMin, xMax, yMax, iterations);
-
-
             }
+
         } catch (Exception e) {
-            System.err.println(e);
+            JOptionPane.showMessageDialog(mandel, e.getMessage());
 
         }
 

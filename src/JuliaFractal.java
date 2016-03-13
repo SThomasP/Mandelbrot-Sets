@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
  */
 public class JuliaFractal extends FractalDrawer {
 
-    private Complex baseNo;
+    private Complex constantComplex;
     private FavouritesPanel fP;
 
     public JuliaFractal(){
@@ -17,16 +17,28 @@ public class JuliaFractal extends FractalDrawer {
          return "JULIA";
      }
 
-    public void init(){
+    public void init(int width, int height) {
         super.init();
-        setSize(100,80);
-        setPreferredSize(new Dimension(100,80));
+        setSize(width, height);
         canvas =new BufferedImage(getWidth(),getHeight(),BufferedImage.TYPE_INT_ARGB);
-        baseNo = DEFAULT_C;
-        redrawFractal(X_START, Y_START, X_END, Y_END, ITERATIONS);
+        constantComplex = DEFAULT_C;
+        setInitialFractal();
     }
 
-    public void setfP(FavouritesPanel fP) {
+    public void init() {
+        init(100, 80);
+    }
+
+    public FractalDrawer clone(int width, int height) {
+        JuliaFractal tempFractal = new JuliaFractal();
+        tempFractal.init(width, height);
+        tempFractal.setColors(drawColors, loopCount);
+        tempFractal.redrawFractal(xStart, yStart, xEnd, yEnd, iterations);
+        tempFractal.changeConstant(constantComplex);
+        return tempFractal;
+    }
+
+    public void setFP(FavouritesPanel fP) {
         this.fP = fP;
     }
 
@@ -38,29 +50,31 @@ public class JuliaFractal extends FractalDrawer {
         this.yEnd=yEnd;
         this.iterations=iterations;
         correctAspectRatio();
-        generateJulias();
-        if (selected) {
+        generateJulia();
+        if (selected && rBP != null) {
             rBP.setValues(this.xStart, this.xEnd, this.yStart, this.yEnd, this.iterations);
         }
     }
 
     public void changeConstant(Complex baseNo){
-        this.baseNo = baseNo;
-        generateJulias();
-        fP.updateLabel();
+        this.constantComplex = baseNo;
+        generateJulia();
+        if (fP != null) {
+            fP.updateLabel();
+        }
     }
 
     public Complex getConstant(){
-        return baseNo;
+        return constantComplex;
     }
 
-    public void generateJulias(){
+    public void generateJulia() {
         for (int x = 0; x < getWidth(); x++){
             double realPart = xStart + (xEnd-xStart)*x/getWidth();
             for (int y = 0; y < getHeight(); y++){
                 double iPart =yStart + (yEnd-yStart)*y/getHeight();
                 Complex zOfZero = new Complex(realPart,iPart);
-                Color pixelColour = colourPixel(zOfZero,baseNo);
+                Color pixelColour = colourPixel(zOfZero, constantComplex);
                 canvas.setRGB(x,y,pixelColour.getRGB());
 
             }

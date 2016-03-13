@@ -12,6 +12,7 @@ public class MandelbrotViewer extends JFrame {
     protected JuliaFractal juliaFractal;
     protected RedrawButtonsPanel buttonsPanel;
     protected FavouritesPanel favouritesPanel;
+    public static String fileExtension = "ftl";
 
 
     public MandelbrotViewer(String t) {
