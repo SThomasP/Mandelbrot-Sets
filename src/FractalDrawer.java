@@ -22,6 +22,7 @@ public abstract class FractalDrawer extends JPanel {
     protected RedrawButtonsPanel rBP;
     protected Color[] drawColors;
     protected int loopCount;
+    protected  FractalThread[] imageThreads;
     //store the default loading information as static allowing it to be easily accessed by all methods
     public static double X_START = -2.0;
     public static double Y_START = -1.6;
@@ -127,7 +128,6 @@ public abstract class FractalDrawer extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-
         g2.drawImage(canvas, null, null);
         if (!(rectangle == null)) {
             g2.setColor(Color.white);
