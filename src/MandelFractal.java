@@ -14,7 +14,6 @@ public class MandelFractal extends FractalDrawer {
         super.init();
         setSize(width, height);
         canvas = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
-        setBackground(Color.blue);
         setInitialFractal();
     }
 
