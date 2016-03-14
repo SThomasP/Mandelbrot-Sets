@@ -102,6 +102,7 @@ public abstract class FractalDrawer extends JPanel {
 
     public void setColors(Color[] tempColors, int loopCount) {
         drawColors = tempColors;
+        setBackground(drawColors[0]);
         this.loopCount = loopCount;
     }
 
