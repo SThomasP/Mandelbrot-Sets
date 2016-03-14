@@ -1,19 +1,20 @@
-import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /**
  * Created by Steffan on 28/02/2016.
  */
-public class MandelFractal extends FractalDrawer {
+public class MandelbrotFractal extends FractalDrawer {
 
 
-    public MandelFractal() {
+    public MandelbrotFractal() {
     }
 
     public void init(int width, int height) {
-        super.init();
+        threadCount = (int) Math.sqrt(Runtime.getRuntime().availableProcessors());
+        imageThreads = new FractalThread[threadCount][threadCount];
         setSize(width, height);
         canvas = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
+        super.init();
         setInitialFractal();
     }
 
@@ -22,7 +23,7 @@ public class MandelFractal extends FractalDrawer {
     }
 
     public FractalDrawer clone(int width, int height) {
-        MandelFractal tempFractal = new MandelFractal();
+        MandelbrotFractal tempFractal = new MandelbrotFractal();
         tempFractal.init(width, height);
         tempFractal.setColors(drawColors, loopCount);
         tempFractal.redrawFractal(xStart, yStart, xEnd, yEnd, iterations);
@@ -51,16 +52,23 @@ public class MandelFractal extends FractalDrawer {
     }
 
     public void generateMandelbrot() {
-        for (int x = 0; x < canvas.getWidth(); x++) {
-            double realPart = xStart + (xEnd - xStart) * x / canvas.getWidth();
-            for (int y = 0; y < canvas.getHeight(); y++) {
-                double iPart = yStart + (yEnd - yStart) * y / canvas.getHeight();
-                Complex zOfZero = new Complex(realPart, iPart);
-                Color pixelColour = colourPixel(zOfZero, zOfZero);
-                canvas.setRGB(x, y, pixelColour.getRGB());
+        try {
+            for (int x = 0; x < threadCount; x++) {
+                for (int y = 0; y < threadCount; y++) {
+                    imageThreads[x][y] = new MandelbrotThread(this, x, y, threadCount);
+                    imageThreads[x][y].start();
+                }
             }
+            for (int x = 0; x < threadCount; x++) {
+                for (int y = 0; y < threadCount; y++) {
+                    imageThreads[x][y].join(0);
+                }
+            }
+            repaint();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        repaint();
+
     }
 
 

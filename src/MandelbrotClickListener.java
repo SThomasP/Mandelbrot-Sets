@@ -4,12 +4,12 @@ import java.awt.event.MouseEvent;
 /**
  * Created by Steffan on 29/02/2016.
  */
-public class MandelClickListener extends MouseAdapter {
+public class MandelbrotClickListener extends MouseAdapter {
 
     private JuliaFractal jF;
-    private MandelFractal mF;
+    private MandelbrotFractal mF;
 
-    public MandelClickListener(JuliaFractal jF, MandelFractal mF) {
+    public MandelbrotClickListener(JuliaFractal jF, MandelbrotFractal mF) {
         this.jF = jF;
         this.mF = mF;
     }

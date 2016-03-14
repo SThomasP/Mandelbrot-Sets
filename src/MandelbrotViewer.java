@@ -8,7 +8,7 @@ public class MandelbrotViewer extends JFrame {
 
 
     //TODO:comments for everything
-    protected MandelFractal mandelbrotFractal;
+    protected MandelbrotFractal mandelbrotFractal;
     protected JuliaFractal juliaFractal;
     protected RedrawButtonsPanel buttonsPanel;
     protected FavouritesPanel favouritesPanel;
@@ -23,17 +23,12 @@ public class MandelbrotViewer extends JFrame {
         setSize(1300, 700);
         setLayout(new GridBagLayout());
         GridBagConstraints bagConstraints = new GridBagConstraints();
-        mandelbrotFractal = new MandelFractal();
+        mandelbrotFractal = new MandelbrotFractal();
         mandelbrotFractal.setToolTipText("The Mandelbrot fractal");
-        mandelbrotFractal.init();
         juliaFractal = new JuliaFractal();
-        juliaFractal.init();
         juliaFractal.setToolTipText("The Julia fractal");
         favouritesPanel = new FavouritesPanel(juliaFractal);
-        favouritesPanel.init(mandelbrotFractal);
-        mandelbrotFractal.addMouseListener(new MandelClickListener(juliaFractal, mandelbrotFractal));
         buttonsPanel = new RedrawButtonsPanel();
-        buttonsPanel.init(mandelbrotFractal, juliaFractal);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         bagConstraints.weighty = 0.8;
         bagConstraints.weightx = 0.5;
@@ -59,6 +54,11 @@ public class MandelbrotViewer extends JFrame {
         add(buttonsPanel, bagConstraints);
         d = new Dimension(buttonsPanel.getWidth(), buttonsPanel.getHeight());
         FavouritesPanel.setAllDimensions(d, buttonsPanel);
+        mandelbrotFractal.init();
+        juliaFractal.init();
+        favouritesPanel.init(mandelbrotFractal);
+        buttonsPanel.init(mandelbrotFractal, juliaFractal);
+        mandelbrotFractal.addMouseListener(new MandelbrotClickListener(juliaFractal, mandelbrotFractal));
         setResizable(true);
         setVisible(true);
     }

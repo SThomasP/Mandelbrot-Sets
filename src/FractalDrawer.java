@@ -22,7 +22,8 @@ public abstract class FractalDrawer extends JPanel {
     protected RedrawButtonsPanel rBP;
     protected Color[] drawColors;
     protected int loopCount;
-    protected  FractalThread[] imageThreads;
+    protected int threadCount;
+    protected FractalThread[][] imageThreads;
     //store the default loading information as static allowing it to be easily accessed by all methods
     public static double X_START = -2.0;
     public static double Y_START = -1.6;
@@ -129,7 +130,9 @@ public abstract class FractalDrawer extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        g2.drawImage(canvas, null, null);
+        synchronized (canvas) {
+            g2.drawImage(canvas, null, null);
+        }
         if (!(rectangle == null)) {
             g2.setColor(Color.white);
             g2.draw(rectangle);
@@ -175,33 +178,4 @@ public abstract class FractalDrawer extends JPanel {
     }
 
     //calculates the color of the pixel based on the constant and the complex point
-    public Color colourPixel(Complex zOfZero, Complex constant) {
-        int deviatesAt = iterations;
-        boolean deviates = false;
-        for (int i = 0; i < iterations; i++) {
-            double mSquared = zOfZero.magnitudeSquared();
-            if ((mSquared > 4.0) && (!deviates)) {
-                deviatesAt = i;
-                deviates = true;
-            }
-            zOfZero = zOfZero.getSquare().add(constant);
-        }
-        Color returnColour;
-        if (deviates) {
-            int loopLength = iterations / loopCount;
-            deviatesAt = deviatesAt % loopLength;
-            int range = loopLength / (drawColors.length);
-            int n = (deviatesAt / range) % (drawColors.length);
-            Color c1 = drawColors[n];
-            Color c2 = drawColors[(n + 1) % drawColors.length];
-            n = deviatesAt / range;
-            int red = c2.getRed() - ((n + 1) * range - deviatesAt) * (c2.getRed() - c1.getRed()) / range;
-            int green = c2.getGreen() - ((n + 1) * range - deviatesAt) * (c2.getGreen() - c1.getGreen()) / range;
-            int blue = c2.getBlue() - ((n + 1) * range - deviatesAt) * (c2.getBlue() - c1.getBlue()) / range;
-            returnColour = new Color(red, green, blue);
-        } else {
-            returnColour = Color.black;
-        }
-        return returnColour;
-    }
 }

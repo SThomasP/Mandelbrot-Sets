@@ -23,7 +23,7 @@ public class RedrawButtonsPanel extends JPanel {
 
     }
 
-    public void init(MandelFractal mF, JuliaFractal jF) {
+    public void init(MandelbrotFractal mF, JuliaFractal jF) {
         //allow the fractals to adjust the values of the the spinners in this panel
         mF.setRBP(this);
         jF.setRBP(this);

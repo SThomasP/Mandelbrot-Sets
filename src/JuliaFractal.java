@@ -18,8 +18,10 @@ public class JuliaFractal extends FractalDrawer {
     }
 
     public void init(int width, int height) {
-        super.init();
+        threadCount = (int) Math.sqrt(Runtime.getRuntime().availableProcessors());
+        imageThreads = new FractalThread[threadCount][threadCount];
         setSize(width, height);
+        super.init();
         canvas = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
         constantComplex = DEFAULT_C;
         setInitialFractal();
@@ -69,17 +71,24 @@ public class JuliaFractal extends FractalDrawer {
     }
 
     public void generateJulia() {
-        for (int x = 0; x < getWidth(); x++) {
-            double realPart = xStart + (xEnd - xStart) * x / getWidth();
-            for (int y = 0; y < getHeight(); y++) {
-                double iPart = yStart + (yEnd - yStart) * y / getHeight();
-                Complex zOfZero = new Complex(realPart, iPart);
-                Color pixelColour = colourPixel(zOfZero, constantComplex);
-                canvas.setRGB(x, y, pixelColour.getRGB());
-
+        try {
+            for (int x = 0; x < threadCount; x++) {
+                for (int y = 0; y < threadCount; y++) {
+                    imageThreads[x][y] = new JuliaThread(this, x, y, threadCount);
+                    imageThreads[x][y].start();
+                }
             }
+            for (int x = 0; x < threadCount; x++) {
+                for (int y = 0; y < threadCount; y++) {
+                    imageThreads[x][y].join(0);
+                }
+            }
+            repaint();
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        repaint();
+
     }
 
 }

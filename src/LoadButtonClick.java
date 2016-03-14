@@ -12,11 +12,11 @@ import java.io.FileReader;
 public class LoadButtonClick implements ActionListener {
 
 
-    private MandelFractal mandel;
+    private MandelbrotFractal mandel;
     private JuliaFractal julia;
     private JFileChooser fileChooser;
 
-    public LoadButtonClick(MandelFractal mandel, JuliaFractal julia, JFileChooser fileChooser) {
+    public LoadButtonClick(MandelbrotFractal mandel, JuliaFractal julia, JFileChooser fileChooser) {
         this.mandel = mandel;
         this.julia = julia;
         this.fileChooser = fileChooser;

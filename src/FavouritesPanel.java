@@ -27,7 +27,7 @@ public class FavouritesPanel extends JPanel {
         setBorder(BorderFactory.createLineBorder(Color.black));
     }
 
-    public void init(MandelFractal mandelFractal) {
+    public void init(MandelbrotFractal mandelbrotFractal) {
         //initialises the favourites panel (the panel on the right of the screen)
         setLayout(new GridBagLayout());
         currentComplex = new JLabel("-0.0000 + 0.0000i");
@@ -136,7 +136,7 @@ public class FavouritesPanel extends JPanel {
         saveChooser.setFileFilter(new ExtensionFileFilter("png", "image"));
         saveChooser.addChoosableFileFilter(new ExtensionFileFilter("gif", "image"));
         saveChooser.setAcceptAllFileFilterUsed(false);
-        exportM.addActionListener(new ExportButtonClick(mandelFractal, saveChooser));
+        exportM.addActionListener(new ExportButtonClick(mandelbrotFractal, saveChooser));
         exportJ.addActionListener(new ExportButtonClick(juliaFractal, saveChooser));
         saveJ = new JButton("Save Julia");
         saveJ.setToolTipText("Save the Julia Fractal to an ftl file");
@@ -146,9 +146,9 @@ public class FavouritesPanel extends JPanel {
         saveChooser.setFileFilter(new ExtensionFileFilter(MandelbrotViewer.fileExtension, "file"));
         saveChooser.setAcceptAllFileFilterUsed(false);
         saveJ.addActionListener(new SaveButtonClick(juliaFractal, saveChooser));
-        saveM.addActionListener(new SaveButtonClick(mandelFractal, saveChooser));
+        saveM.addActionListener(new SaveButtonClick(mandelbrotFractal, saveChooser));
         loadFractal = new JButton("Load a Fractal");
-        loadFractal.addActionListener(new LoadButtonClick(mandelFractal, juliaFractal, saveChooser));
+        loadFractal.addActionListener(new LoadButtonClick(mandelbrotFractal, juliaFractal, saveChooser));
         loadFractal.setToolTipText("Load a fractal from an ftl file");
         c.weightx = 0.5;
         c.gridy = 4;
