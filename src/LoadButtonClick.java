@@ -75,7 +75,7 @@ public class LoadButtonClick implements ActionListener {
                     }
                     newImage.setColors(colours, loopCount);
                     if (newImage.isSelected()) {
-                        newImage.getrBP().setColors(colours, loopCount);
+                        newImage.getRBP().setColors(colours, loopCount);
                     }
                     newImage.redrawFractal(xMin, yMin, xMax, yMax, iterations);
                     JOptionPane.showMessageDialog(newImage, "Fractal loaded");

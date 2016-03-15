@@ -17,11 +17,11 @@ public class FractalDragListener extends MouseAdapter {
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        if (!(r == null)) {
-            double x1 = fractalDrawer.getxStart() + (fractalDrawer.getxEnd() - fractalDrawer.getxStart()) * (r.getX()) / fractalDrawer.getWidth();
-            double x2 = fractalDrawer.getxStart() + (fractalDrawer.getxEnd() - fractalDrawer.getxStart()) * (r.getX() + r.getWidth()) / fractalDrawer.getWidth();
-            double y1 = fractalDrawer.getyStart() + (fractalDrawer.getyEnd() - fractalDrawer.getyStart()) * (r.getY()) / fractalDrawer.getHeight();
-            double y2 = fractalDrawer.getyStart() + (fractalDrawer.getyEnd() - fractalDrawer.getyStart()) * (r.getY() + r.getHeight()) / fractalDrawer.getHeight();
+        if (r != null && (r.getWidth() > 5 && r.getHeight() > 5)) {
+            double x1 = fractalDrawer.getXStart() + (fractalDrawer.getXEnd() - fractalDrawer.getXStart()) * (r.getX()) / fractalDrawer.getWidth();
+            double x2 = fractalDrawer.getXStart() + (fractalDrawer.getXEnd() - fractalDrawer.getXStart()) * (r.getX() + r.getWidth()) / fractalDrawer.getWidth();
+            double y1 = fractalDrawer.getYStart() + (fractalDrawer.getYEnd() - fractalDrawer.getYStart()) * (r.getY()) / fractalDrawer.getHeight();
+            double y2 = fractalDrawer.getYStart() + (fractalDrawer.getYEnd() - fractalDrawer.getYStart()) * (r.getY() + r.getHeight()) / fractalDrawer.getHeight();
             fractalDrawer.redrawFractal(x1, y1, x2, y2, fractalDrawer.getIterations());
             //set the rectangles to null afterwards, to prevent a bug where the fractal zooms in upon click
             r = null;
@@ -35,6 +35,7 @@ public class FractalDragListener extends MouseAdapter {
         p2 = e.getPoint();
         Point startPoint;
         Dimension rectDimensions;
+        //the start and end point of the rectangle move based on where p2 is in relation to p1
         if ((p1.getX() >= p2.getX()) && (p1.getY() >= p2.getY())) {
             startPoint = p2;
             rectDimensions = new Dimension((int) (p1.getX() - p2.getX()), (int) (p1.getY() - p2.getY()));
@@ -50,9 +51,14 @@ public class FractalDragListener extends MouseAdapter {
             rectDimensions = new Dimension((int) (p1.getX() - p2.getX()), (int) (p2.getY() - p1.getY()));
         }
         r = new Rectangle(startPoint, rectDimensions);
-        fractalDrawer.setRectangle(r);
-        fractalDrawer.repaint();
-
+        //pass the rectangle back to the panel, if its size is greater that 3
+        if (r.getWidth() > 5 && r.getHeight() > 5) {
+            fractalDrawer.setRectangle(r);
+            fractalDrawer.repaint();
+        } else {
+            r = null;
+            fractalDrawer.setRectangle(null);
+        }
     }
 
     @Override
@@ -67,20 +73,22 @@ public class FractalDragListener extends MouseAdapter {
     public void mouseWheelMoved(MouseWheelEvent e) {
         double scaleConstant;
         if (e.getWheelRotation() == 1) {
+            //zooms out to 1.5 times
             scaleConstant = 1.5;
         } else {
+            //zooms in to 1.5 times
             scaleConstant = 0.75;
         }
-
-        double mousePoint = fractalDrawer.getxStart() + (fractalDrawer.getxEnd() - fractalDrawer.getxStart()) * e.getX() / fractalDrawer.getWidth();
-        double range = (mousePoint - fractalDrawer.getxStart()) * scaleConstant;
+        //finds the location of the mouse and then scales the image, based on that
+        double mousePoint = fractalDrawer.getXStart() + (fractalDrawer.getXEnd() - fractalDrawer.getXStart()) * e.getX() / fractalDrawer.getWidth();
+        double range = (mousePoint - fractalDrawer.getXStart()) * scaleConstant;
         double xStart = mousePoint - range;
-        range = (fractalDrawer.getxEnd() - mousePoint) * scaleConstant;
+        range = (fractalDrawer.getXEnd() - mousePoint) * scaleConstant;
         double xEnd = mousePoint + range;
-        mousePoint = fractalDrawer.getyStart() + (fractalDrawer.getyEnd() - fractalDrawer.getyStart()) * e.getY() / fractalDrawer.getHeight();
-        range = (mousePoint - fractalDrawer.getyStart()) * scaleConstant;
+        mousePoint = fractalDrawer.getYStart() + (fractalDrawer.getYEnd() - fractalDrawer.getYStart()) * e.getY() / fractalDrawer.getHeight();
+        range = (mousePoint - fractalDrawer.getYStart()) * scaleConstant;
         double yStart = mousePoint - range;
-        range = (fractalDrawer.getyEnd() - mousePoint) * scaleConstant;
+        range = (fractalDrawer.getYEnd() - mousePoint) * scaleConstant;
         double yEnd = mousePoint + range;
         fractalDrawer.redrawFractal(xStart, yStart, xEnd, yEnd, fractalDrawer.getIterations());
     }

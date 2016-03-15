@@ -22,6 +22,7 @@ public class ComplexCellRenderer extends JLabel implements ListCellRenderer<Comp
             setForeground(jList.getForeground());
             setBackground(jList.getBackground());
         }
+        //set the text of the label to the value of the constant
         setFont(jList.getFont());
         setText(complex.getStringValue());
         return this;

@@ -1,4 +1,3 @@
-import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /**
@@ -18,7 +17,7 @@ public class JuliaFractal extends FractalDrawer {
     }
 
     public void init(int width, int height) {
-        threadCount = (int) Math.sqrt(Runtime.getRuntime().availableProcessors());
+        threadCount = (int) Math.sqrt(Runtime.getRuntime().availableProcessors()) + 1;
         imageThreads = new FractalThread[threadCount][threadCount];
         setSize(width, height);
         super.init();

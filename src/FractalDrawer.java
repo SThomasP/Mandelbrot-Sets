@@ -39,7 +39,7 @@ public abstract class FractalDrawer extends JPanel {
         this.rBP = rBP;
     }
 
-    public RedrawButtonsPanel getrBP() {
+    public RedrawButtonsPanel getRBP() {
         return rBP;
     }
 
@@ -103,23 +103,24 @@ public abstract class FractalDrawer extends JPanel {
 
     public void setColors(Color[] tempColors, int loopCount) {
         drawColors = tempColors;
+        //set the background of the panel to be the same colour as the base of the image, meaning that the resize is less noticable
         setBackground(drawColors[0]);
         this.loopCount = loopCount;
     }
 
-    public double getxStart() {
+    public double getXStart() {
         return xStart;
     }
 
-    public double getyStart() {
+    public double getYStart() {
         return yStart;
     }
 
-    public double getxEnd() {
+    public double getXEnd() {
         return xEnd;
     }
 
-    public double getyEnd() {
+    public double getYEnd() {
         return yEnd;
     }
 
@@ -130,6 +131,7 @@ public abstract class FractalDrawer extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+        //make sure none of the threads are setting colours to the canvas
         synchronized (canvas) {
             g2.drawImage(canvas, null, null);
         }
@@ -140,16 +142,19 @@ public abstract class FractalDrawer extends JPanel {
     }
 
     public void setInitialFractal() {
+
+        //set up the fractal to the default values
         setColors(DEFAULT_COLOURS, LOOP_COUNT);
         redrawFractal(X_START, Y_START, X_END, Y_END, ITERATIONS);
     }
 
+    //resets the fractal to the default values
     public void resetToDefault() {
         redrawFractal(X_START, Y_START, X_END, Y_END, iterations);
     }
 
 
-    //sets the Aspect Ratio of the image to the ideal ratio
+    //sets the Aspect Ratio of the image to the ideal ratio aka, the ratio of the panel at the moment
     public void correctAspectRatio() {
         double aspectRatio = ((xEnd - xStart) / (yEnd - yStart));
         double width = getWidth();
@@ -157,20 +162,24 @@ public abstract class FractalDrawer extends JPanel {
         double idealRatio = (width / height);
         double median;
         if (aspectRatio > idealRatio) {
+            //if the "black bars" would appear at the top and bottom, increase the height of the image
             median = (yEnd + yStart) / 2;
             yStart = median - (xEnd - xStart) / (2 * idealRatio);
             yEnd = median + (xEnd - xStart) / (2 * idealRatio);
         } else if (aspectRatio < idealRatio) {
+            //if they appear at the sides, increase the width
             median = (xEnd + xStart) / 2;
             xStart = median - (yEnd - yStart) * (idealRatio / 2);
             xEnd = median + (yEnd - yStart) * (idealRatio / 2);
         }
+        //change is calculated based on the median point, so it will still focus on the same point
     }
 
     public abstract void redrawFractal(double xStart, double yStart, double xEnd, double yEnd, int iterations);
 
     public abstract String getType();
 
+    //allow for saving to file to be done easier
     public abstract Complex getConstant();
 
     public int getLoopCount() {

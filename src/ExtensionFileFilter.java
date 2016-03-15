@@ -6,6 +6,8 @@ import java.io.File;
  */
 public class ExtensionFileFilter extends FileFilter {
 
+
+    //a basic file filter, that removes all the files without a specified extension
     private String extension;
     private String fileType;
 
@@ -26,6 +28,7 @@ public class ExtensionFileFilter extends FileFilter {
         return extension + " " + fileType;
     }
 
+    //get the specified extension
     public String getExtension() {
         return extension;
     }

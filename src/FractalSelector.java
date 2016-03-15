@@ -13,12 +13,16 @@ public class FractalSelector implements ItemListener {
 
     public void itemStateChanged(ItemEvent e) {
         if (e.getStateChange() == ItemEvent.SELECTED) {
+            //changes the referenced fractal in the redraw and reset buttons
             redrawButtonAction.changeFractal(fractalDrawer);
             resetButtonAction.changeFractal(fractalDrawer);
+            //tell the fractal that it is selected
             fractalDrawer.setSelected(true);
-            redrawButtonsPanel.setValues(fractalDrawer.getxStart(), fractalDrawer.getxEnd(), fractalDrawer.getyStart(), fractalDrawer.getyEnd(), fractalDrawer.getIterations());
+            //update the buttons panel, to list the values of the current fractal
+            redrawButtonsPanel.setValues(fractalDrawer.getXStart(), fractalDrawer.getXEnd(), fractalDrawer.getYStart(), fractalDrawer.getYEnd(), fractalDrawer.getIterations());
             redrawButtonsPanel.setColors(fractalDrawer.getColors(), fractalDrawer.getLoopCount());
         } else {
+            //tell the fractal that it is no longer selected
             fractalDrawer.setSelected(false);
         }
     }
@@ -27,6 +31,6 @@ public class FractalSelector implements ItemListener {
         this.fractalDrawer = fractalDrawer;
         this.resetButtonAction = resetButtonAction;
         this.redrawButtonAction = redrawButtonAction;
-        this.redrawButtonsPanel = fractalDrawer.getrBP();
+        this.redrawButtonsPanel = fractalDrawer.getRBP();
     }
 }

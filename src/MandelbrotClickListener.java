@@ -15,8 +15,8 @@ public class MandelbrotClickListener extends MouseAdapter {
     }
 
     public void mouseClicked(MouseEvent e) {
-        double realPart = mF.getxStart() + (mF.getxEnd() - mF.getxStart()) * e.getX() / mF.getWidth();
-        double iPart = mF.getyStart() + (mF.getyEnd() - mF.getyStart()) * e.getY() / mF.getHeight();
+        double realPart = mF.getXStart() + (mF.getXEnd() - mF.getXStart()) * e.getX() / mF.getWidth();
+        double iPart = mF.getYStart() + (mF.getYEnd() - mF.getYStart()) * e.getY() / mF.getHeight();
         jF.changeConstant(new Complex(realPart, iPart));
     }
 }

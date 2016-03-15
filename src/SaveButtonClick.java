@@ -25,8 +25,8 @@ public class SaveButtonClick implements ActionListener {
             //Writes the Fractal to a text file using a makeup language, allows compatibility without using binary
             PrintStream stream = new PrintStream(f);
             stream.println("<FractalType='" + drawer.getType() + "'>");
-            stream.println("<XRange='" + drawer.getxStart() + "'" + drawer.getxEnd() + "'>");
-            stream.println("<YRange='" + drawer.getyStart() + "'" + drawer.getyEnd() + "'>");
+            stream.println("<XRange='" + drawer.getXStart() + "'" + drawer.getXEnd() + "'>");
+            stream.println("<YRange='" + drawer.getYStart() + "'" + drawer.getYEnd() + "'>");
             stream.println("<Iterations='" + drawer.getIterations() + "'>");
             stream.println("<Constant='" + drawer.getConstant().getReal() + "'" + drawer.getConstant().getImaginary() + "'>");
             stream.print("<GradientColours='");

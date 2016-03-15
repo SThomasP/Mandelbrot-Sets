@@ -133,15 +133,18 @@ public class FavouritesPanel extends JPanel {
         exportJ = new JButton("Export Julia");
         exportJ.setToolTipText("Export the Julia fractal to an image file");
         JFileChooser saveChooser = new JFileChooser();
+        //there's a problem with the jpg export format, so only pngs and gifs
         saveChooser.setFileFilter(new ExtensionFileFilter("png", "image"));
         saveChooser.addChoosableFileFilter(new ExtensionFileFilter("gif", "image"));
         saveChooser.setAcceptAllFileFilterUsed(false);
+        //allow both export buttons to use the same file chooser
         exportM.addActionListener(new ExportButtonClick(mandelbrotFractal, saveChooser));
         exportJ.addActionListener(new ExportButtonClick(juliaFractal, saveChooser));
         saveJ = new JButton("Save Julia");
         saveJ.setToolTipText("Save the Julia Fractal to an ftl file");
         saveM = new JButton("Save Mandelbrot");
         saveM.setToolTipText("Save the Mandelbrot Fractal to an ftl file");
+        //allow the two save buttons and the load button to use the same file choosers
         saveChooser = new JFileChooser();
         saveChooser.setFileFilter(new ExtensionFileFilter(MandelbrotViewer.fileExtension, "file"));
         saveChooser.setAcceptAllFileFilterUsed(false);

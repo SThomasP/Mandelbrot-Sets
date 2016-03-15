@@ -56,16 +56,16 @@ public class RedrawButtonsPanel extends JPanel {
         moveColourUp.setFont(buttonFont);
         iterationsLabel.setHorizontalAlignment(JLabel.RIGHT);
         //round these values to 4 decimal places, keeping the display format nice
-        xMin = new JSpinner(new SpinnerNumberModel(mF.getxStart(), -3.0, 3.0, 0.0001));
+        xMin = new JSpinner(new SpinnerNumberModel(mF.getXStart(), -3.0, 3.0, 0.0001));
         xMin.setEditor(new JSpinner.NumberEditor(xMin, "0.0000"));
         xMin.setToolTipText("The position of the left bound of the fractal");
-        xMax = new JSpinner(new SpinnerNumberModel(mF.getxEnd(), -3.0, 3.0, 0.0001));
+        xMax = new JSpinner(new SpinnerNumberModel(mF.getXEnd(), -3.0, 3.0, 0.0001));
         xMax.setToolTipText("The position of the right bound of the fractal");
         xMax.setEditor(new JSpinner.NumberEditor(xMax, "0.0000"));
-        yMin = new JSpinner(new SpinnerNumberModel(mF.getyStart(), -3.0, 3.0, 0.0001));
+        yMin = new JSpinner(new SpinnerNumberModel(mF.getYStart(), -3.0, 3.0, 0.0001));
         yMin.setToolTipText("The position of the top the image");
         yMin.setEditor(new JSpinner.NumberEditor(yMin, "0.0000"));
-        yMax = new JSpinner(new SpinnerNumberModel(mF.getyEnd(), -3.0, 3.0, 0.0001));
+        yMax = new JSpinner(new SpinnerNumberModel(mF.getYEnd(), -3.0, 3.0, 0.0001));
         yMax.setEditor(new JSpinner.NumberEditor(yMax, "0.0000"));
         yMax.setToolTipText("The position of the bottom of the image");
         ButtonGroup bGroup = new ButtonGroup();
