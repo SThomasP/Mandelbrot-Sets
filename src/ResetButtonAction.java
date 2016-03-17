@@ -1,9 +1,6 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- * Created by Steffan on 04/03/2016.
- */
 public class ResetButtonAction implements ActionListener {
 
 
@@ -11,12 +8,14 @@ public class ResetButtonAction implements ActionListener {
     protected RedrawButtonsPanel buttonsPanel;
 
     public void actionPerformed(ActionEvent e) {
+        //set the zoom of the image back to the default
         mandelFractal.resetToDefault();
-        buttonsPanel.setColors(mandelFractal.getColors(), mandelFractal.getLoopCount());
         buttonsPanel.setValues(mandelFractal.getXStart(), mandelFractal.getXEnd(), mandelFractal.getYStart(), mandelFractal.getYEnd(), mandelFractal.getIterations());
 
     }
 
+
+    //change fractals when the selected fractal is changes
     public void changeFractal(FractalDrawer fractal) {
         mandelFractal = fractal;
     }

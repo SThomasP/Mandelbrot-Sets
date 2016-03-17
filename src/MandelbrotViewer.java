@@ -1,17 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * Created by Steffan on 28/02/2016.
- */
 public class MandelbrotViewer extends JFrame {
 
 
-    //TODO:comments for everything
     protected MandelbrotFractal mandelbrotFractal;
     protected JuliaFractal juliaFractal;
     protected RedrawButtonsPanel buttonsPanel;
     protected FavouritesPanel favouritesPanel;
+    //static file extension for saving and loading to file
     public static String fileExtension = "ftl";
 
 
@@ -20,9 +17,12 @@ public class MandelbrotViewer extends JFrame {
     }
 
     public void init() {
+        //set the initial size of the window
         setSize(1300, 700);
+        //set up a new layout manager
         setLayout(new GridBagLayout());
         GridBagConstraints bagConstraints = new GridBagConstraints();
+        //create and initialise the 4 different panels in the window
         mandelbrotFractal = new MandelbrotFractal();
         mandelbrotFractal.setToolTipText("The Mandelbrot fractal");
         juliaFractal = new JuliaFractal();
@@ -30,6 +30,7 @@ public class MandelbrotViewer extends JFrame {
         favouritesPanel = new FavouritesPanel(juliaFractal);
         buttonsPanel = new RedrawButtonsPanel();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //add everything to the layout
         bagConstraints.weighty = 0.8;
         bagConstraints.weightx = 0.5;
         bagConstraints.fill = GridBagConstraints.BOTH;
@@ -44,6 +45,7 @@ public class MandelbrotViewer extends JFrame {
         bagConstraints.weightx = 0.3;
         bagConstraints.weighty = 1.0;
         add(favouritesPanel, bagConstraints);
+        //lock the favourites panel into it's current size and shape
         Dimension d = new Dimension(favouritesPanel.getWidth(), favouritesPanel.getHeight());
         FavouritesPanel.setAllDimensions(d, favouritesPanel);
         bagConstraints.gridx = 0;
@@ -53,18 +55,20 @@ public class MandelbrotViewer extends JFrame {
         bagConstraints.weighty = 0.2;
         add(buttonsPanel, bagConstraints);
         d = new Dimension(buttonsPanel.getWidth(), buttonsPanel.getHeight());
+        //lock the buttons panel to it's current size and shape
         FavouritesPanel.setAllDimensions(d, buttonsPanel);
         mandelbrotFractal.init();
         juliaFractal.init();
         favouritesPanel.init(mandelbrotFractal);
         buttonsPanel.init(mandelbrotFractal, juliaFractal);
+        //finally add the click to change julia constant listener to the mandelbrot fractal
         mandelbrotFractal.addMouseListener(new MandelbrotClickListener(juliaFractal, mandelbrotFractal));
         setResizable(true);
         setVisible(true);
     }
 
     public static void main(String[] args) {
-
+        //Ensuring that a GUI component is not called by the main thread
         SwingUtilities.invokeLater(
                 new Runnable() {
                     public void run() {

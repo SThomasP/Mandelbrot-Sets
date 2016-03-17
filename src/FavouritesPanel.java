@@ -6,9 +6,6 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- * Created by Steffan on 04/03/2016.
- */
 public class FavouritesPanel extends JPanel {
 
     private JuliaFractal juliaFractal;

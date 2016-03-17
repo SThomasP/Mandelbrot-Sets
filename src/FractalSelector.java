@@ -1,9 +1,6 @@
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
-/**
- * Created by Steffan on 04/03/2016.
- */
 public class FractalSelector implements ItemListener {
 
     private FractalDrawer fractalDrawer;

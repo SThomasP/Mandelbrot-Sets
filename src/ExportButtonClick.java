@@ -3,9 +3,6 @@ import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-/**
- * Created by Steffan on 12/03/2016.
- */
 public class ExportButtonClick extends SaveButtonClick {
 
 

@@ -1,13 +1,12 @@
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- * Created by Steffan on 04/03/2016.
- */
 public class RedrawButtonsPanel extends JPanel {
 
     private JButton redrawButton, resetButton, addColourButton, removeColourButton, moveColourUp, moveColourDown;
@@ -112,6 +111,7 @@ public class RedrawButtonsPanel extends JPanel {
             @Override
             public void intervalAdded(ListDataEvent e) {
                 gradientColors.setFixedCellWidth(gradientColors.getWidth() / gradientModel.getSize());
+                ((SpinnerNumberModel) loopField.getModel()).setMaximum((int) iterationsField.getValue() / gradientModel.getSize());
             }
 
             @Override
@@ -119,6 +119,7 @@ public class RedrawButtonsPanel extends JPanel {
                 //avoid throwing errors when the list is emptied switching between fractals
                 if (gradientModel.getSize() > 0) {
                     gradientColors.setFixedCellWidth(gradientColors.getWidth() / gradientModel.getSize());
+                    ((SpinnerNumberModel) loopField.getModel()).setMaximum((int) iterationsField.getValue() / gradientModel.getSize());
                 }
             }
 
@@ -130,6 +131,13 @@ public class RedrawButtonsPanel extends JPanel {
         setLayout(new GridBagLayout());
         GridBagConstraints gBC = new GridBagConstraints();
         iterationsField = new JSpinner(new SpinnerNumberModel(mF.getIterations(), 50, 1000, 1));
+        iterationsField.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                // loopCount <= iterations/colours.length must be true or else a dividing by zero error happens.
+                ((SpinnerNumberModel) loopField.getModel()).setMaximum((int) iterationsField.getValue() / gradientModel.getSize());
+            }
+        });
         iterationsField.setToolTipText("The number of times the formula will be iterated over before a colour is chosen");
         ResetButtonAction resetAction = new ResetButtonAction(this, mF);
         RedrawButtonAction redrawAction = new RedrawButtonAction(this, mF);

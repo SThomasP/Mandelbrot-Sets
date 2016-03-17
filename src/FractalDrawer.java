@@ -5,9 +5,6 @@ import java.awt.event.ComponentListener;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
-/**
- * Created by Steffan on 03/03/2016.
- */
 public abstract class FractalDrawer extends JPanel {
 
 
@@ -90,6 +87,7 @@ public abstract class FractalDrawer extends JPanel {
 
             }
         });
+        //add a fractal drag listener to the panel, allowing the zooming
         FractalDragListener dragListener = new FractalDragListener(this);
         addMouseListener(dragListener);
         addMouseMotionListener(dragListener);

@@ -1,7 +1,3 @@
-/**
- * Created by Steffan on 27/02/2016.
- */
-
 import java.text.DecimalFormat;
 
 public class Complex {

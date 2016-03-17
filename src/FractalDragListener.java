@@ -4,9 +4,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.geom.Rectangle2D;
 
-/**
- * Created by Steffan on 06/03/2016.
- */
 public class FractalDragListener extends MouseAdapter {
 
     private FractalDrawer fractalDrawer;

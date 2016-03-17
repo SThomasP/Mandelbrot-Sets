@@ -1,9 +1,6 @@
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-/**
- * Created by stp1g15 on 14/03/2016.
- */
 public abstract class FractalThread extends Thread {
 
     protected FractalDrawer fractalDrawer;

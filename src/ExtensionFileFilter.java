@@ -1,9 +1,6 @@
 import javax.swing.filechooser.FileFilter;
 import java.io.File;
 
-/**
- * Created by Steffan on 11/03/2016.
- */
 public class ExtensionFileFilter extends FileFilter {
 
 

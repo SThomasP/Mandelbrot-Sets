@@ -1,8 +1,5 @@
 import java.awt.*;
 
-/**
- * Created by Steffan on 14/03/2016.
- */
 public class JuliaThread extends FractalThread {
 
     protected Complex constant;
@@ -18,6 +15,7 @@ public class JuliaThread extends FractalThread {
             for (int y = 0; y < height; y++) {
                 double iPart = yStart + (yEnd - yStart) * y / height;
                 Complex zOfZero = new Complex(realPart, iPart);
+                //colour pixel using the constant of the fractal, and the position in the image
                 Color pixelColour = colourPixel(zOfZero, constant);
                 synchronized (canvas) {
                     canvas.setRGB(x + xPos * width, y + yPos * height, pixelColour.getRGB());
@@ -29,6 +27,7 @@ public class JuliaThread extends FractalThread {
 
     public void setValues() {
         super.setValues();
+        //run the super value of the method, then get the constant of the fractal
         synchronized (fractalDrawer) {
             constant = fractalDrawer.getConstant();
         }

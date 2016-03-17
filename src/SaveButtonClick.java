@@ -21,13 +21,15 @@ public class SaveButtonClick implements ActionListener {
 
     public void saveToFile() {
         try {
-
             //Writes the Fractal to a text file using a makeup language, allows compatibility without using binary
             PrintStream stream = new PrintStream(f);
+            //using ' between the values, to make it easier to read
             stream.println("<FractalType='" + drawer.getType() + "'>");
             stream.println("<XRange='" + drawer.getXStart() + "'" + drawer.getXEnd() + "'>");
             stream.println("<YRange='" + drawer.getYStart() + "'" + drawer.getYEnd() + "'>");
+            //Each tag also has a unique first letter again to make it easier to read
             stream.println("<Iterations='" + drawer.getIterations() + "'>");
+            //Mandelbrot fractals return a constant of 0+0i, avoiding the if statement
             stream.println("<Constant='" + drawer.getConstant().getReal() + "'" + drawer.getConstant().getImaginary() + "'>");
             stream.print("<GradientColours='");
             for (Color c : drawer.getColors()) {
@@ -54,9 +56,12 @@ public class SaveButtonClick implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
+        //When the button is clicked, show a save dialog
         int returnValue = fileChooser.showSaveDialog(drawer);
+        //if the user clicks okay
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             f = fileChooser.getSelectedFile();
+            //check for the correct extension and that the file doesn't already exist
             if (isOfExtension() && confirmOverwrite()) {
                 saveToFile();
             }
